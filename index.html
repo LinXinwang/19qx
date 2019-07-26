@@ -1,14 +1,11 @@
-<!DOCTYPE html>
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
 <html>
-
-	<head>
-		<meta name="format-detection" content="telephone=no">
-		<meta name="msapplication-tap-highlight" content="no">
-		<meta name="viewport" content="user-scalable=no, initial-scale=1, maximum-scale=1, minimum-scale=1, width=device-width">
-		<meta charset="UTF-8">
-		<meta http-equiv="expires" content="0">
-		<meta http-equiv="pragma" content="no-cache">
-		<meta http-equiv="cache-control" content="no-cache">
+<head>
+    <meta http-equiv="expires" content="0">
+    <meta http-equiv="pragma" content="no-cache">
+    <meta http-equiv="cache-control" content="no-cache">
+    <meta name="msapplication-tap-highlight" content="no">
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 		<link rel="stylesheet" href="css/style.css">
 		<title>拆礼盒</title>
 		<script>
@@ -22,14 +19,8 @@
 
 	<body>
 		<div id="deviceready" class="blink">
-			<input id="lotteryAwardMemberId" type="hidden" />
-			<span style="display:none" id="startTime"></span>
-			<span style="display:none" id="endTime"></span>
-			<span style="display:none" id="access_token"></span>
-
-			<div class="goldContent" id="index" style="display:block">
+			<div class="goldContent" id="index" style="display:none">
 				<div class="goldEggsDiv">
-					<img class="centerPage_Img" id="video_bg" src="images/indexPageTx.jpg" alt="砸金蛋" title="砸金蛋">
 					<div id="chance"><span style="display:none" id="remainAwardNum"></span></div>
 					<div class="list_EggsDiv" id="carousel">
 						<div>
@@ -59,81 +50,15 @@
 							<span class="coocaabtn" id="user_login"><img height="40" src="images/btn8.png"></span>
 						</ul>
 						<ul class="header_prize"><span class="coocaabtn" id="my_prize"><img height="40" src="images/btn7.png"></span></ul>
-
 					</div>
 
 					<div id="rule">
-						<span style="height:40px; line-height:40px">您还有<span id="chanceCount">0</span>次机会</span>
-						<p class="rule-text">活动期间，购买包季会员可得1次拆礼物的机会，购买影视包年会员可得2次机会。
+						<p style="height:40px; line-height:40px"><span id="chanceCount">0</span></p>
+						<p class="rule-text">活动期间，购买影视包季会员可得1次拆礼物的机会，购买包年会员可得2次机会。
 							<a class="coocaabtn" id="ruleMore">更多>></a>
 						</p>
 					</div>
 
-					<div id="demo">
-						<div id="indemo">
-							<div id="demo1">
-								<div class="prize-info">
-									<div><img src="images/6.jpg"></div>
-									<p>49寸酷开电视</p>
-								</div>
-								<div class="prize-info">
-									<div><img src="images/5.jpg"></div>
-									<p>免单卡</p>
-								</div>
-								<div class="prize-info">
-									<div><img src="images/11.jpg"></div>
-									<p>飞利浦电动牙刷</p>
-								</div>
-								<div class="prize-info">
-									<div><img src="images/10.jpg"></div>
-									<p>奔腾加湿器</p>
-								</div>
-								<div class="prize-info">
-									<div><img src="images/2.jpg"></div>
-									<p>50元京东E卡</p>
-								</div>
-
-								<div class="prize-info">
-									<div><img src="images/13.jpg"></div>
-									<p>游戏手柄</p>
-								</div>
-								<div class="prize-info">
-									<div><img src="images/12.jpg"></div>
-									<p>酷开玩偶</p>
-								</div>
-								<div class="prize-info">
-									<div><img src="images/1.jpg"></div>
-									<p>ofo红包券</p>
-								</div>
-
-								<div class="prize-info">
-									<div><img src="images/3.jpg"></div>
-									<p>购物优惠券</p>
-								</div>
-
-							</div>
-							<div id="demo2"></div>
-						</div>
-					</div>
-
-					<script>
-						var speed = 30
-						demo2.innerHTML = demo1.innerHTML
-						function Marquee() {
-							if(demo2.offsetWidth - demo.scrollLeft <= 0)
-								demo.scrollLeft -= demo1.offsetWidth
-							else {
-								demo.scrollLeft++
-							}
-						}
-						var MyMar = setInterval(Marquee, speed)
-						demo.onmouseover = function() {
-							clearInterval(MyMar)
-						}
-						demo.onmouseout = function() {
-							MyMar = setInterval(Marquee, speed)
-						}
-					</script>
 					<div id="awardList">
 						<div id="awardListTwo">
 							<ul id="awardul">
@@ -281,26 +206,7 @@
 				</div>
 			</div>
 
-			<div id="changePhone" class="jiangPinResult" style="display:none; padding-top:8px">
-				<p class="font26">请输入领取免单资格的手机号</p>
-				<input type="hidden" id="mobile" maxlength="11">
-				<div class="box-input-value" id="box-input-value"></div>
-				<div id="errorInfo">输入信息有误</div>
-				<div class="box-key">
-					<div class="coocaabtn numbtn" id="numbtn1">1</div>
-					<div class="coocaabtn numbtn">2</div>
-					<div class="coocaabtn numbtn">3</div>
-					<div class="coocaabtn numbtn">4</div>
-					<div class="coocaabtn numbtn">5</div>
-					<div class="coocaabtn numbtn">6</div>
-					<div class="coocaabtn numbtn">7</div>
-					<div class="coocaabtn numbtn">8</div>
-					<div class="coocaabtn numbtn">9</div>
-					<div class="coocaabtn numbtn del">删除</div>
-					<div class="coocaabtn numbtn">0</div>
-					<div class="coocaabtn numbtn com event_button" id="sub_mobile" bt-name="next_button">确定</div>
-				</div>
-			</div>
+
 
 		</div>
 

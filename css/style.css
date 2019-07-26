@@ -1,106 +1,31 @@
-@charset "UTF-8";
-/* line 5, G:/sass/Ruby23-x64/lib/ruby/gems/2.3.0/gems/compass-core-1.0.3/stylesheets/compass/reset/_utilities.scss */
-html, body, div, span, applet, object, iframe,
-h1, h2, h3, h4, h5, h6, p, blockquote, pre,
-a, abbr, acronym, address, big, cite, code,
-del, dfn, em, img, ins, kbd, q, s, samp,
-small, strike, strong, sub, sup, tt, var,
-b, u, i, center,
-dl, dt, dd, ol, ul, li,
-fieldset, form, label, legend,
-table, caption, tbody, tfoot, thead, tr, th, td,
-article, aside, canvas, details, embed,
-figure, figcaption, footer, header, hgroup,
-menu, nav, output, ruby, section, summary,
-time, mark, audio, video {
-  margin: 0;
-  padding: 0;
-  border: 0;
-  font: inherit;
-  font-size: 100%;
-  vertical-align: baseline;
-}
+@charset "utf-8";
 
-/* line 22, G:/sass/Ruby23-x64/lib/ruby/gems/2.3.0/gems/compass-core-1.0.3/stylesheets/compass/reset/_utilities.scss */
-html {
-  line-height: 1;
+body {
+	width: 100%;
+	height: 100%;
+	color: #E4E4E4;
 }
+.clearfix {
+  overflow: auto;
+  zoom: 1;
+}
+* {
+	margin: 0;
+	padding: 0;
+	outline: none;
+	z-index: 0;
+}
+img {
+	outline: none;
+	border: 0;
+}
+div {
+	outline: none;
+	border: 0;
+	/*border-radius: 10px 0 10px 10px;边角弧度*/
+}
+ul li{list-style: none}
 
-/* line 24, G:/sass/Ruby23-x64/lib/ruby/gems/2.3.0/gems/compass-core-1.0.3/stylesheets/compass/reset/_utilities.scss */
-ol, ul {
-  list-style: none;
-}
-/*button{
-  outline: 0;
-}*/
-/* line 26, G:/sass/Ruby23-x64/lib/ruby/gems/2.3.0/gems/compass-core-1.0.3/stylesheets/compass/reset/_utilities.scss */
-table {
-  border-collapse: collapse;
-  border-spacing: 0;
-}
-
-/* line 28, G:/sass/Ruby23-x64/lib/ruby/gems/2.3.0/gems/compass-core-1.0.3/stylesheets/compass/reset/_utilities.scss */
-caption, th, td {
-  text-align: left;
-  font-weight: normal;
-  vertical-align: middle;
-}
-
-/* line 30, G:/sass/Ruby23-x64/lib/ruby/gems/2.3.0/gems/compass-core-1.0.3/stylesheets/compass/reset/_utilities.scss */
-q, blockquote {
-  quotes: none;
-}
-/* line 103, G:/sass/Ruby23-x64/lib/ruby/gems/2.3.0/gems/compass-core-1.0.3/stylesheets/compass/reset/_utilities.scss */
-q:before, q:after, blockquote:before, blockquote:after {
-  content: "";
-  content: none;
-}
-
-/* line 32, G:/sass/Ruby23-x64/lib/ruby/gems/2.3.0/gems/compass-core-1.0.3/stylesheets/compass/reset/_utilities.scss */
-a img {
-  border: none;
-}
-
-/* line 116, G:/sass/Ruby23-x64/lib/ruby/gems/2.3.0/gems/compass-core-1.0.3/stylesheets/compass/reset/_utilities.scss */
-article, aside, details, figcaption, figure, footer, header, hgroup, main, menu, nav, section, summary {
-  display: block;
-}
-
-/* line 4, ../sass/model/_indexStyle.scss */
-/* line 7, ../sass/model/_indexStyle.scss */
-body .loadingDiv {
-  position: fixed;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  background: #fff;
-  z-index: 111111;
-}
-/* line 16, ../sass/model/_indexStyle.scss */
-body .loadingDiv p {
-  color: #aaa;
-  position: absolute;
-  width: 100%;
-  top: 40%;
-  height: 30px;
-  text-align: center;
-  font-family: "Microsoft YaHei";
-  font-size: 20px;
-  font-weight: bold;
-  -webkit-background-clip: text;
-  /*设置背景颜色应用于text的位版本上*/
-  -webkit-text-fill-color: transparent;
-  /*将文字的颜色设置为透明*/
-  background-color: #aaa;
-  /*设置文字的背景色*/
-  background-image: -webkit-linear-gradient(-45deg, rgba(55, 55, 55, 0.6) 30%, #ccc 50%, rgba(55, 55, 55, 0.6) 70%);
-  /*设置文字的线性渐变颜色分布*/
-  background-blend-mode: hard-light;
-  /*css混合模式中的强光模式*/
-  background-size: 200%;
-  -webkit-animation: shine 4s infinite;
-}
 @-webkit-keyframes shine {
   from {
     background-position: 0px;
@@ -125,106 +50,62 @@ body .loadingDiv p {
     background-position: 600px;
   }
 }
-/* line 59, ../sass/model/_indexStyle.scss */
-body .loadingDiv img {
-  bottom: 10%;
-  left: 51%;
-  -moz-transform: translate(-50%, 1em);
-  -ms-transform: translate(-50%, 1em);
-  -webkit-transform: translate(-50%, 1em);
-  transform: translate(-50%, 1em);
+
+.goldContent {
+  width: 1920px;
+  height: 1080px;
+  overflow: hidden;
   position: absolute;
-  width: 300px;
+  top: 0;
+  background: url("../images/tx.jpg")
 }
-/* line 68, ../sass/model/_indexStyle.scss */
-body .goldContent {
-  margin: 0 auto;
-  width: 100%;
-  height: auto;
-}
-/* line 73, ../sass/model/_indexStyle.scss */
-body .goldContent .headPage {
-  position: relative;
-  width: 100%;
-  height: auto;
-}
-/* line 78, ../sass/model/_indexStyle.scss */
-body .goldContent .headPage .headPage_Img {
-  width: 100%;
-  height: auto;
-  display: block;
-}
-/* line 85, ../sass/model/_indexStyle.scss */
-body .goldContent .goldEggsDiv {
-  width: 100%;
-  height: auto;
+.goldContent .goldEggsDiv {
+  width: 1920px;
+  height: 1080px;
   position: relative;
 }
-/* line 90, ../sass/model/_indexStyle.scss */
-body .goldContent .goldEggsDiv .tishiChouJiang {
-  position: absolute;
-  top: 25%;
-  font-size: 10px;
-  width: 100%;
-  text-align: center;
-  color: #FDFC80;
-  font-family: "Microsoft YaHei";
-}
-/* line 99, ../sass/model/_indexStyle.scss */
-body .goldContent .goldEggsDiv .tishiChouJiang span {
-  padding-left: 3px;
-  text-decoration: underline;
-  cursor: pointer;
-}
-/* line 106, ../sass/model/_indexStyle.scss */
-body .goldContent .goldEggsDiv .centerPage_Img {
-  width: 100%;
-  height: auto;
-  display: block;
-}
-/* line 112, ../sass/model/_indexStyle.scss */
-body .goldContent .goldEggsDiv .list_EggsDiv {
+.goldContent .goldEggsDiv .list_EggsDiv {
   position: absolute;
   overflow: hidden;
-  top: 42%;
-  left: 27%;
-  width: 49%;
+  top: 462px;
+  left: 473px;
+    width: 1086px;
   height: 40%;
   text-align: center;
 }
-/* line 121, ../sass/model/_indexStyle.scss */
-body .goldContent .goldEggsDiv .list_EggsDiv div ul {
+.goldContent .goldEggsDiv .list_EggsDiv div ul {
   position: absolute;
   width: 100%;
   float: left;
 }
-/* line 126, ../sass/model/_indexStyle.scss */
-body .goldContent .goldEggsDiv .list_EggsDiv div ul.jinDanUl1 {
+.goldContent .goldEggsDiv .list_EggsDiv div ul.jinDanUl1 {
   left: 100%;
 }
-/* line 130, ../sass/model/_indexStyle.scss */
-body .goldContent .goldEggsDiv .list_EggsDiv div ul li {
+.goldContent .goldEggsDiv .list_EggsDiv div ul li {
   -webkit-tap-highlight-color: rgba(255, 0, 0, 0);
   float: left;
   position: relative;
-  width: 33.3%;
-  height: 100%;
+  width: 345px;
+  height: 274px;
   cursor: pointer;
 }
-/* line 138, ../sass/model/_indexStyle.scss */
-body .goldContent .goldEggsDiv .list_EggsDiv div ul li img {
-width: 170px;
- /* height: 100%;*/
+.list_EggsDiv div ul li img {
+  width: 345px;
+  height: 274px;
  vertical-align: middle;
 }
-body .goldContent .goldEggsDiv .list_EggsDiv button{
+.startBtn{
+  width: 345px;
+  height: 274px;
+}
+.list_EggsDiv button{
   margin-top: 10px;
   outline: 0
 }
 .kuang{position: absolute; top: 0; left: 16px; display: none}
 .kuang img{height: 220px !important; width: 180px}
 /* line 149, ../sass/model/_indexStyle.scss */
-body .goldContent .list_Content {
+.goldContent .list_Content {
   width: 100%;
   height: auto;
   background: #CC1A1A;
@@ -242,209 +123,10 @@ body .goldContent .list_Content .titleDiv {
   height: 40px;
   overflow: hidden;
 }
-
-/* line 198, ../sass/model/_indexStyle.scss */
-body .goldContent .list_Content .titleDiv .line_1px {
-  display: block;
-  position: absolute;
-  height: 1px;
-  width: 94%;
-  background: #F83131;
-  z-index: 1;
-  top: 0;
-  margin: 0 auto;
-  left: 50%;
-  margin-top: 20px;
-  -moz-transform: translateX(-50%);
-  -ms-transform: translateX(-50%);
-  -webkit-transform: translateX(-50%);
-  transform: translateX(-50%);
-}
-/* line 213, ../sass/model/_indexStyle.scss */
-body .goldContent .list_Content.paiMingAllDiv {
-  position: relative;
-}
-/* line 216, ../sass/model/_indexStyle.scss */
-body .goldContent .list_Content.paiMingAllDiv .contentDiv {
-  width: 100%;
-  height: auto;
-}
-/* line 220, ../sass/model/_indexStyle.scss */
-body .goldContent .list_Content.paiMingAllDiv .contentDiv .insert_Span {
-  width: 90%;
-  height: 6px;
-  background: #6F0D05;
-  -moz-box-shadow: 0 0 0 8px #9D130F;
-  -webkit-box-shadow: 0 0 0 8px #9D130F;
-  box-shadow: 0 0 0 8px #9D130F;
-  margin: 0 auto;
-  margin-top: 12px;
-}
-/* line 230, ../sass/model/_indexStyle.scss */
-body .goldContent .list_Content.paiMingAllDiv .contentDiv .list_PaiMing {
-  width: 82%;
-  margin: 0 auto;
-  /* background: -webkit-linear-gradient($listcontent_title_color_2 1%,$listcontent_title_color_1 50%); */
-  background: linear-gradient(to bottom, #d19d69 1%, #fff9d9 4%);
-  padding: 6% 4% 2% 4%;
-}
-/* line 237, ../sass/model/_indexStyle.scss */
-body .goldContent .list_Content.paiMingAllDiv .contentDiv .list_PaiMing .list_Div {
-  position: relative;
-}
-/* line 240, ../sass/model/_indexStyle.scss */
-body .goldContent .list_Content.paiMingAllDiv .contentDiv .list_PaiMing .list_Div .list_Title {
-  width: 100%;
-  height: auto;
-  padding-bottom: 12px;
-  font-size: 18px;
-  font-family: "Microsoft YaHei";
-  overflow: hidden;
-  white-space: nowrap;
-  text-overflow: ellipsis;
-}
-/* line 250, ../sass/model/_indexStyle.scss */
-body .goldContent .list_Content.paiMingAllDiv .contentDiv .list_PaiMing .list_Div .list_Title span {
-  display: inline-block;
-  vertical-align: middle;
-  *vertical-align: auto;
-  *zoom: 1;
-  *display: inline;
-  font-size: 16px;
-  overflow: hidden;
-  white-space: nowrap;
-  text-overflow: ellipsis;
-  color: #170C0B;
-  font-family: "Microsoft YaHei";
-  text-align: center;
-}
-/* line 260, ../sass/model/_indexStyle.scss */
-body .goldContent .list_Content.paiMingAllDiv .contentDiv .list_PaiMing .list_Div .list_Title span.list_Time {
-  width: 23%;
-  text-align: left;
-}
-/* line 265, ../sass/model/_indexStyle.scss */
-body .goldContent .list_Content.paiMingAllDiv .contentDiv .list_PaiMing .list_Div .list_Title span.list_Name {
-  width: 33%;
-}
-/* line 269, ../sass/model/_indexStyle.scss */
-body .goldContent .list_Content.paiMingAllDiv .contentDiv .list_PaiMing .list_Div .list_Title span.list_Things {
-  width: 40%;
-}
-/* line 275, ../sass/model/_indexStyle.scss */
-body .goldContent .list_Content.paiMingAllDiv .contentDiv .list_PaiMing .list_Div .bg_Dashed {
-  width: 100%;
-  height: 4px;
-  background-image: url("../images/line-bg.jpg");
-  margin: 0 auto;
-  margin-bottom: 10px;
-  -moz-transform: scaleY(0.6);
-  -ms-transform: scaleY(0.6);
-  -webkit-transform: scaleY(0.6);
-  transform: scaleY(0.6);
-}
-/* line 284, ../sass/model/_indexStyle.scss */
-body .goldContent .list_Content.paiMingAllDiv .contentDiv .list_PaiMing .list_Div .all_List_Div {
-  height: 190px;
-  overflow: hidden;
-  position: relative;
-}
-/* line 289, ../sass/model/_indexStyle.scss */
-body .goldContent .list_Content.paiMingAllDiv .contentDiv .list_PaiMing .list_Div .all_List_Div ul {
-  width: 100%;
-  height: auto;
-}
-/* line 293, ../sass/model/_indexStyle.scss */
-body .goldContent .list_Content.paiMingAllDiv .contentDiv .list_PaiMing .list_Div .all_List_Div ul li {
-  width: 100%;
-  height: auto;
-  padding-bottom: 5px;
-  font-size: 14px;
-  font-family: "Microsoft YaHei";
-  overflow: hidden;
-  white-space: nowrap;
-  text-overflow: ellipsis;
-}
-/* line 303, ../sass/model/_indexStyle.scss */
-body .goldContent .list_Content.paiMingAllDiv .contentDiv .list_PaiMing .list_Div .all_List_Div ul li span {
-  display: inline-block;
-  vertical-align: middle;
-  *vertical-align: auto;
-  *zoom: 1;
-  *display: inline;
-  font-size: 14px;
-  overflow: hidden;
-  white-space: nowrap;
-  text-overflow: ellipsis;
-  color: #170C0B;
-  font-family: "Microsoft YaHei";
-  text-align: left;
-  color: #6A2422;
-}
-/* line 314, ../sass/model/_indexStyle.scss */
-body .goldContent .list_Content.paiMingAllDiv .contentDiv .list_PaiMing .list_Div .all_List_Div ul li span.span_dateTime {
-  width: 23%;
-}
-/* line 318, ../sass/model/_indexStyle.scss */
-body .goldContent .list_Content.paiMingAllDiv .contentDiv .list_PaiMing .list_Div .all_List_Div ul li span.span_userNme {
-  width: 33%;
-  text-align: center;
-}
-/* line 323, ../sass/model/_indexStyle.scss */
-body .goldContent .list_Content.paiMingAllDiv .contentDiv .list_PaiMing .list_Div .all_List_Div ul li span.span_userWingName {
-  width: 40%;
-  text-align: center;
-  color: #CC1A1A;
-}
-/* line 337, ../sass/model/_indexStyle.scss */
 body .goldContent .list_Content.rulesActivity {
   position: relative;
 }
-/* line 340, ../sass/model/_indexStyle.scss */
-body .goldContent .list_Content.rulesActivity .list_Rules {
-  width: 82%;
-  padding: 10% 4%;
-  margin: 0 auto;
-  background: #FFF9D9;
-  position: relative;
-  overflow: hidden;
-}
-/* line 349, ../sass/model/_indexStyle.scss */
-body .goldContent .list_Content.rulesActivity .list_Rules i {
-  position: absolute;
-}
-/* line 352, ../sass/model/_indexStyle.scss */
 
-/* line 376, ../sass/model/_indexStyle.scss */
-body .goldContent .list_Content.rulesActivity .list_Rules ul {
-  position: relative;
-  width: 100%;
-  height: auto;
-}
-/* line 381, ../sass/model/_indexStyle.scss */
-body .goldContent .list_Content.rulesActivity .list_Rules ul li {
-  font-family: "Microsoft YaHei";
-  font-size: 14px;
-  line-height: 1.6;
-  padding-top: 10px;
-}
-/* line 387, ../sass/model/_indexStyle.scss */
-body .goldContent .list_Content.rulesActivity .list_Rules ul li .color_red {
-  color: red;
-}
-/* line 396, ../sass/model/_indexStyle.scss */
-body .goldContent .footerImg {
-  margin-top: -30px;
-  z-index: 3333;
-  position: relative;
-  width: 100%;
-  height: auto;
-}
-/* line 403, ../sass/model/_indexStyle.scss */
-body .goldContent .footerImg img {
-  width: 100%;
-  height: auto;
-}
 
 /* line 4, ../sass/model/_alert.scss */
 .bg-mask {
@@ -459,9 +141,6 @@ body .goldContent .footerImg img {
   z-index: 99;
 }
 
-/* line 12, ../sass/model/_alert.scss */
-
-/* line 24, ../sass/model/_alert.scss */
 .chouJiang .imgDan {
   position: absolute;
   top: 54%;
@@ -699,75 +378,6 @@ body .goldContent .footerImg img {
   color:#5a1e6d;
   padding:0 5px;
 }
-#phoneInput{
-    z-index: 1234;
-    width: 392px;
-    height: 68px;
-    border: 0px;
-    background: white;
-    border-radius: 25px;
-    padding-left: 20px;
-    color: #333333;
-    font-size: 40px;
-    letter-spacing: 5px;
-    outline: 0
-
-}
-#changePhone {
-
-}
-
-#box-input-value {
-    background: white;
-    border: 1px solid #f1c370;
-    border-radius: 20px;
-    margin: 9px 6.5px;
-    height: 55px;
-    line-height: 55px;
-    width: 412px;
-    text-align: center;
-    font-size: 40px;
-    position: absolute;
-    top:64px;
-    left: 82px;
-}
-#errorInfo {
-    position: absolute;
-    top: 112px;
-    width: 160px;
-    height: 68px;
-    line-height: 68px;
-    right: 83px;
-    font-size: 24px;
-    color: white;
-    display: none;
-}
-
-.box-key {
-    width: 453px;
-    position: absolute;
-    top: 150px;
-    left: 70px;
-}
-.numbtn {
-    width: 128px;
-    height: 65px;
-    line-height: 65px;
-    display: inline-block;
-    text-align: center;
-    background: url(../images/aaa.png);
-    background-repeat: no-repeat;
-    background-size: 100%;
-    margin: 1px 10px;
-    font-size: 24px;
-}
-
-#changePhone .btnFocus,.get_btn .btnFocus{
-    background-image: url(../images/a123.png);
-    background-repeat: no-repeat;
-    background-size: 100%;
-}
-
 
 #jinDanUl1 .btnFocus{
     background-image: url(../images/cs.png);
@@ -792,7 +402,6 @@ body .goldContent .footerImg img {
     display: inline-block;
 }
 
-.startBtn{height: 224px; width: 190px; line-height: 224px}
 
 
 .testspan1,.testspan2,.testspan3{
@@ -848,7 +457,7 @@ body .goldContent .footerImg img {
     float: left;
     margin-bottom: 20px;
 }
-body{background: #432c72;}
+
  .clearfix{ overflow:hidden; clear:both; width:0;  }
 #prize{color:#fff;}
 #prize .title{ font-size: 36px; font-weight: bold; height:80px; line-height: 80px; padding-left: 30px; letter-spacing: 2px; background: url(../images/line.png) left bottom no-repeat;}
@@ -914,9 +523,14 @@ body{background: #432c72;}
 
 #qrcode{display: inline-block; margin: 0 auto}
 
-#rule{position: absolute;bottom: 200px; width: 200px; right: 50px; color:#fff;}
-#chanceCount{color:#ff7030; padding:0 3px;}
-.rule-text{line-height:26px;}
+#rule{    position: absolute;
+  bottom: 291px;
+  width: 289px;
+  right: 60px;
+  color: #8b5549;
+}
+#chanceCount{color:#ff2558; padding:0 3px;margin-left: 132px;  font-size: 30px;}
+.rule-text{line-height:26px;    margin-top: 66px; font-size: 26px}
 .rule-text span{color:#e4d44b;}
 /*#demo{position: absolute; bottom: 38px; width: 760px;  left: 330px}*/
 #demo {
