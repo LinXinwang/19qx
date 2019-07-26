@@ -21,7 +21,7 @@
 	</head>
 
 	<body>
-		<div id="deviceready" class="blink">
+		<div id="deviceready" class="blink" style="display: none;">
 			<input id="lotteryAwardMemberId" type="hidden" />
 			<span style="display:none" id="startTime"></span>
 			<span style="display:none" id="endTime"></span>
@@ -119,6 +119,7 @@
 					<script>
 						var speed = 30
 						demo2.innerHTML = demo1.innerHTML
+
 						function Marquee() {
 							if(demo2.offsetWidth - demo.scrollLeft <= 0)
 								demo.scrollLeft -= demo1.offsetWidth
@@ -144,167 +145,180 @@
 				</div>
 			</div>
 
-			<div id="prize" style="display:none">
-				<p class="title">我的奖品</p>
-				<div class="prize_list" id="prize_list" style="display:none">
-					<ul id="prize_box" class="clearfix">
-
-						<!-- <div class="box_style"><li class="prize_img" style="width:260px"><img src="images/11.png" width="260"></li><li class="get_btn"><p class="prize_name">京东卡</p><p class="prize_time">卡密：1</p><p class="prize_time"></p><span class="testspan2"><img width="150" src="images/btn11_544b470.png"></span></li></div>
-
-<div class="box_style"><li class="prize_img" style="width:260px"><img src="images/11.png" width="260"></li><li class="get_btn"><p class="prize_name">' + data.myAwardsBean[i].awardName + '</p><p class="prize_time"></p><span class="testspan2"><img width="150" src="images/btn11_544b470.png"></span></li></div>
-
-<div class="box_style"><li class="prize_img" style="width:260px"><img src="images/11.png" width="260"></li><li class="get_btn"><p class="prize_name">' + data.myAwardsBean[i].awardName + '</p><p class="prize_time"></p><span class="testspan2"><img width="150" src="images/btn11_544b470.png"></span></li></div> -->
-
-					</ul>
-
-					<div class="coocaabtn" id="back" style="text-align:center; margin-top:50px"><img src="images/beixuan1.png"></div>
-				</div>
-				<div id="prize_null" style="display:none">
-					<p class="font26">空空如也</p>
-					<p class="font20" style="margin-top:10px">立即购买会员，可获[免单]等大奖，100%中奖哟！</p>
-					<p class="font20" style="margin-top:10px">本活动仅限购买影视VIP季卡及年卡的用户参与</p>
-					<div class="btn_Get" style="margin-top:50px">
-						<div class="coocaabtn submit btnFocus" id="buy_vip"><img src="images/btn2.png"></div>
-						<div class="coocaabtn submit" id="i_konw"><img src="images/btn1.png"></div>
+		</div>
+		<div id="prize">
+			<div class="prize_list" id="prize_list"><!--style="display:none"-->
+				<div class="awardBoxs">
+					<div class="awardDivs">
+						<img class="imgPart" src="" alt=""/>
+						<div class="infoPart">
+							
+						</div>
+						<div class="btnPart coocaabtn2">
+							<img class="btnImgBlur" src="" alt=""/>
+							<img class="btnImgFocus" src="images/award/focus.png" alt=""/>
+						</div>
 					</div>
+					<div class="line"></div>
 				</div>
-			</div>
-
-			<div class="jiangPinResult" id="jiangPinResult" style="display:none; padding-top:40px">
-				<p class="font26">真羡慕你，中了<span id="my_getprize" style="color:#ffff33"></span></p>
-				<span id="awardTypeId" style="display:none"></span>
-				<span id="lotteryAwardMemberId" style="display:none"></span>
-				<span id="awardExchangeFlag" style="display:none"></span>
-				<span id="cardInfo" style="display:none"></span>
-				<span id="awardId" style="display:none"></span>
-				<span id="awardPictureUrl" style="display:none"></span>
-				<img class="imgJiangPin" id="open_box" src="" alt="奖品" title="奖品">
-				<div class="btn_Get" style="margin-top:215px">
-					<div class="coocaabtn submit" id="sure" leftTarget="#sure" rightTarget="#sure" upTarget="#sure" downTarget="#sure"><img src="images/btn3.png"></div>
-				</div>
-			</div>
-
-			<div class="chouJiang jiangPinResult" id="loading" style="display:none">
-				<p class="chouJiangTishi">请稍等...</p>
-				<img class="caiDai" src="images/caidai.png" alt="彩带">
-				<img class="imgDan" src="images/egg1.png" alt="砸蛋" title="砸蛋">
-				<img class="imgChuiZi" src="images/chuizi.png" alt="锤子">
-				<span class="coocaabtn" id="loading"></span>
-			</div>
-
-			<div class="jiangPinResult" id="popUp" style="display:none">
-				<p id="text1" class="font26" style="margin-top:40px"></p>
-				<p id="text2" class="font24"></p>
-				<p id="text3" class="font24"></p>
-				<div class="btn_Get" id="pupUp_btn">
-					<div class="coocaabtn submit" id="submit" leftTarget="#submit" upTarget="#submit" downTarget="#submit"><img id="submitImg" src="images/btn1.png"></div>
-					<div class="coocaabtn submit" id="bevip" rightTarget="#bevip" upTarget="#bevip" downTarget="#bevip"><img src="images/btn2.png"></div>
-					<div class="coocaabtn submit" id="beuser" leftTarget="#beuser" rightTarget="#beuser" upTarget="#beuser" downTarget="#beuser" style="display:none"><img src="images/login.png"></div>
-				</div>
-			</div>
-
-			<div class="jiangPinResult" id="confirmPhone" style="display:none">
-				<p id="text1" class="font26" style="margin-top:40px;">确认您领取免单资格的手机号：</p>
-				<p id="yourPhone" class="font26" style="color:#fffe00; font-size:36px"></p>
-				<div class="btn_Get">
-					<div class="coocaabtn submit" id="confirm" leftTarget="#confirm" upTarget="#confirm" downTarget="#confirm"><img src="images/btn6.png"></div>
-					<div class="coocaabtn submit" id="changeBtn" rightTarget="#changeBtn" upTarget="#changeBtn" downTarget="#changeBtn"><img src="images/btn5.png"></div>
-				</div>
-			</div>
-			<div class="jiangPinResult" id="confirmInfo" style="display:none;">
-				<div>
-					<ul id="type207" style="display:none">
-						<p id="info1" class="font26" style="margin-top:40px">手机号提交成功，再次恭喜您获得<span style="color:#e3d83d" class="">免单资格</span>！</p>
-						<p id="info2" class="font20">我们稍晚与您联系确认订单信息和免单资格</p>
-						<p id="info3" class="font20">如有疑问，请关注微信公众号[酷开会员]-进行查询</p>
-					</ul>
-					<ul id="type210" style="display:none">
-						<p class="font26" style="margin-top:40px">恭喜您成功领取[<span style="color:#e3d83d" class="matter"></span>]
-							<span style="display:block">卡密：<span id="car_password"></span></span>
-						</p>
-						<p class="font20">
-							请到京东网站或京东APP使用
-							<span style="display:block">并及时拍照保存你的京东卡密信息哦~</span>
-							<span style="display:block">如有疑问，请关注微信公众号[酷开会员]-进行查询</span>
-						</p>
-					</ul>
-					<ul id="type203" style="display:none">
-						<p class="font26" style="margin-top:40px">恭喜您成功领取<span class="matter" style="color:#e3d83d"></span></p>
-						<p class="font20">
-							购物优惠券已经自动发放到您的登录账户，
-							<span style="display:block">您可在[购物商城]中使用该优惠券！</span>
-							<span style="display:block">如有疑问，请关注微信公众号[酷开会员]-进行查询</span>
-						</p>
-					</ul>
-					<ul id="type208" style="display:none">
-						<p class="font26" style="margin-top:40px">恭喜您成功领取<span style="color:#e3d83d" class="matter"></span></p>
-						<p class="font20">
-							7天卡已经自动充值到您的登录账户。
-							<span style="display:block">如有疑问，请关注微信公众号[酷开会员]-进行查询</span>
-						</p>
-					</ul>
-
-					<ul id="type205" style="display:none; height:100%; overflow:hidden">
-						<div style="width:220px; float:left; text-align:center; margin-left:20px"><img id="prize-img" style="width:200px" src="images/caidai.png" /></div>
-						<div style="width:360px; float:left">
-							<p class="font26" style="text-align:left">恭喜您获得<span style="color:#e3d83d" class="matter"></span></p>
-							<p class="font20" style="text-align:left">请用微信扫码领取奖品！</p>
+				<div class="awardBoxs coocaabtn2">
+					<div class="awardDivs">
+						<img class="imgPart" src="" alt=""/>
+						<div class="infoPart">
+							
 						</div>
-					</ul>
-
-					<ul id="type209" style="height:50%; overflow:hidden; padding:0 10px;  box-sizing: border-box; display:none">
-						<div style="width:200px; height:200px; float:left; text-align:center;background:#fff; border:solid 5px #fff; margin-left:20px"><span id="qrcode"></span></div>
-						<div style="width:340px; float:left">
-							<p class="font26" style="text-align:left">恭喜你获得<span class="matter" style="color:#e3d83d;"></span></p>
-							<p class="font20" style="text-align:left">
-								<span style="display:block">请扫码填写奖品的邮寄地址及收货人信息领取奖品</span>
-								<span style="display:block">如有疑问，请关注微信公众号[酷开会员]-进行查询</span>
-							</p>
+						<div class="btnPart">
+							<img class="btnImgBlur" src="" alt=""/>
+							<img class="btnImgFocus" src="images/award/focus.png" alt=""/>
 						</div>
-					</ul>
-				</div>
-				<div class="btn_Get">
-					<div style="display:none" class="coocaabtn submit" id="shop" leftTarget="#shop" rightTarget="#subInfo" upTarget="#shop" downTarget="#shop"><img src="images/gx.png"></div>
-					<div class="coocaabtn submit" id="subInfo" leftTarget="#shop" rightTarget="#subInfo" upTarget="#subInfo" downTarget="#subInfo"><img id="changeImg" src="images/btn4.png"></div>
+					</div>
+					<div class="line"></div>
 				</div>
 			</div>
-
-			<div class="jiangPinResult" id="rule_box" style="display:none; padding-top:30px">
-				<p class="" style="font-size:22px; text-align:center">活动规则</p>
-				<p class="font26">1、活动期间，新下单开通包季会员可得1次拆礼物的机会，开通影视包年会员可得2次机会。</p>
-				<p class="font26">2、免单仅限本次中奖前的最近一笔订单。获得免单的用户需提供凭手机号和交易单号，待工作人员确认后直接返还现金。</p>
-				<p class="font26">3、已领取奖品的用户若发生会员订单退款，奖品需一并退回。</p>
-				<p class="font26">4、本活动解释权归酷开公司所有！</p>
-				<div class="btn_Get" style="bottom:30px">
-					<div class="coocaabtn submit" id="vip_btn" leftTarget="#vip_btn" upTarget="#vip_btn" downTarget="#vip_btn"><img src="images/btn2.png"></div>
-					<div class="coocaabtn submit" id="rule_btn" leftTarget="#vip_btn" rightTarget="#rule_btn" upTarget="#rule_btn" downTarget="#rule_btn"><img src="images/btn1.png"></div>
+			<div id="prize_null" style="display:none">
+				<p class="font26">空空如也</p>
+				<p class="font20" style="margin-top:10px">立即购买会员，可获[免单]等大奖，100%中奖哟！</p>
+				<p class="font20" style="margin-top:10px">本活动仅限购买影视VIP季卡及年卡的用户参与</p>
+				<div class="btn_Get" style="margin-top:50px">
+					<div class="coocaabtn submit btnFocus" id="buy_vip"><img src="images/btn2.png"></div>
+					<div class="coocaabtn submit" id="i_konw"><img src="images/btn1.png"></div>
 				</div>
 			</div>
-
-			<div id="changePhone" class="jiangPinResult" style="display:none; padding-top:8px">
-				<p class="font26">请输入领取免单资格的手机号</p>
-				<input type="hidden" id="mobile" maxlength="11">
-				<div class="box-input-value" id="box-input-value"></div>
-				<div id="errorInfo">输入信息有误</div>
-				<div class="box-key">
-					<div class="coocaabtn numbtn" id="numbtn1">1</div>
-					<div class="coocaabtn numbtn">2</div>
-					<div class="coocaabtn numbtn">3</div>
-					<div class="coocaabtn numbtn">4</div>
-					<div class="coocaabtn numbtn">5</div>
-					<div class="coocaabtn numbtn">6</div>
-					<div class="coocaabtn numbtn">7</div>
-					<div class="coocaabtn numbtn">8</div>
-					<div class="coocaabtn numbtn">9</div>
-					<div class="coocaabtn numbtn del">删除</div>
-					<div class="coocaabtn numbtn">0</div>
-					<div class="coocaabtn numbtn com event_button" id="sub_mobile" bt-name="next_button">确定</div>
-				</div>
-			</div>
-
 		</div>
 
-		<script type="text/javascript" src="cordova.js"></script>
+		<div class="jiangPinResult" id="jiangPinResult" style="display:none; padding-top:40px">
+			<p class="font26">真羡慕你，中了<span id="my_getprize" style="color:#ffff33"></span></p>
+			<span id="awardTypeId" style="display:none"></span>
+			<span id="lotteryAwardMemberId" style="display:none"></span>
+			<span id="awardExchangeFlag" style="display:none"></span>
+			<span id="cardInfo" style="display:none"></span>
+			<span id="awardId" style="display:none"></span>
+			<span id="awardPictureUrl" style="display:none"></span>
+			<img class="imgJiangPin" id="open_box" src="" alt="奖品" title="奖品">
+			<div class="btn_Get" style="margin-top:215px">
+				<div class="coocaabtn submit" id="sure" leftTarget="#sure" rightTarget="#sure" upTarget="#sure" downTarget="#sure"><img src="images/btn3.png"></div>
+			</div>
+		</div>
+
+		<div class="chouJiang jiangPinResult" id="loading" style="display:none">
+			<p class="chouJiangTishi">请稍等...</p>
+			<img class="caiDai" src="images/caidai.png" alt="彩带">
+			<img class="imgDan" src="images/egg1.png" alt="砸蛋" title="砸蛋">
+			<img class="imgChuiZi" src="images/chuizi.png" alt="锤子">
+			<span class="coocaabtn" id="loading"></span>
+		</div>
+
+		<div class="jiangPinResult" id="popUp" style="display:none">
+			<p id="text1" class="font26" style="margin-top:40px"></p>
+			<p id="text2" class="font24"></p>
+			<p id="text3" class="font24"></p>
+			<div class="btn_Get" id="pupUp_btn">
+				<div class="coocaabtn submit" id="submit" leftTarget="#submit" upTarget="#submit" downTarget="#submit"><img id="submitImg" src="images/btn1.png"></div>
+				<div class="coocaabtn submit" id="bevip" rightTarget="#bevip" upTarget="#bevip" downTarget="#bevip"><img src="images/btn2.png"></div>
+				<div class="coocaabtn submit" id="beuser" leftTarget="#beuser" rightTarget="#beuser" upTarget="#beuser" downTarget="#beuser" style="display:none"><img src="images/login.png"></div>
+			</div>
+		</div>
+
+		<div class="jiangPinResult" id="confirmPhone" style="display:none">
+			<p id="text1" class="font26" style="margin-top:40px;">确认您领取免单资格的手机号：</p>
+			<p id="yourPhone" class="font26" style="color:#fffe00; font-size:36px"></p>
+			<div class="btn_Get">
+				<div class="coocaabtn submit" id="confirm" leftTarget="#confirm" upTarget="#confirm" downTarget="#confirm"><img src="images/btn6.png"></div>
+				<div class="coocaabtn submit" id="changeBtn" rightTarget="#changeBtn" upTarget="#changeBtn" downTarget="#changeBtn"><img src="images/btn5.png"></div>
+			</div>
+		</div>
+		<div class="jiangPinResult" id="confirmInfo" style="display:none;">
+			<div>
+				<ul id="type207" style="display:none">
+					<p id="info1" class="font26" style="margin-top:40px">手机号提交成功，再次恭喜您获得<span style="color:#e3d83d" class="">免单资格</span>！</p>
+					<p id="info2" class="font20">我们稍晚与您联系确认订单信息和免单资格</p>
+					<p id="info3" class="font20">如有疑问，请关注微信公众号[酷开会员]-进行查询</p>
+				</ul>
+				<ul id="type210" style="display:none">
+					<p class="font26" style="margin-top:40px">恭喜您成功领取[<span style="color:#e3d83d" class="matter"></span>]
+						<span style="display:block">卡密：<span id="car_password"></span></span>
+					</p>
+					<p class="font20">
+						请到京东网站或京东APP使用
+						<span style="display:block">并及时拍照保存你的京东卡密信息哦~</span>
+						<span style="display:block">如有疑问，请关注微信公众号[酷开会员]-进行查询</span>
+					</p>
+				</ul>
+				<ul id="type203" style="display:none">
+					<p class="font26" style="margin-top:40px">恭喜您成功领取<span class="matter" style="color:#e3d83d"></span></p>
+					<p class="font20">
+						购物优惠券已经自动发放到您的登录账户，
+						<span style="display:block">您可在[购物商城]中使用该优惠券！</span>
+						<span style="display:block">如有疑问，请关注微信公众号[酷开会员]-进行查询</span>
+					</p>
+				</ul>
+				<ul id="type208" style="display:none">
+					<p class="font26" style="margin-top:40px">恭喜您成功领取<span style="color:#e3d83d" class="matter"></span></p>
+					<p class="font20">
+						7天卡已经自动充值到您的登录账户。
+						<span style="display:block">如有疑问，请关注微信公众号[酷开会员]-进行查询</span>
+					</p>
+				</ul>
+
+				<ul id="type205" style="display:none; height:100%; overflow:hidden">
+					<div style="width:220px; float:left; text-align:center; margin-left:20px"><img id="prize-img" style="width:200px" src="images/caidai.png" /></div>
+					<div style="width:360px; float:left">
+						<p class="font26" style="text-align:left">恭喜您获得<span style="color:#e3d83d" class="matter"></span></p>
+						<p class="font20" style="text-align:left">请用微信扫码领取奖品！</p>
+					</div>
+				</ul>
+
+				<ul id="type209" style="height:50%; overflow:hidden; padding:0 10px;  box-sizing: border-box; display:none">
+					<div style="width:200px; height:200px; float:left; text-align:center;background:#fff; border:solid 5px #fff; margin-left:20px"><span id="qrcode"></span></div>
+					<div style="width:340px; float:left">
+						<p class="font26" style="text-align:left">恭喜你获得<span class="matter" style="color:#e3d83d;"></span></p>
+						<p class="font20" style="text-align:left">
+							<span style="display:block">请扫码填写奖品的邮寄地址及收货人信息领取奖品</span>
+							<span style="display:block">如有疑问，请关注微信公众号[酷开会员]-进行查询</span>
+						</p>
+					</div>
+				</ul>
+			</div>
+			<div class="btn_Get">
+				<div style="display:none" class="coocaabtn submit" id="shop" leftTarget="#shop" rightTarget="#subInfo" upTarget="#shop" downTarget="#shop"><img src="images/gx.png"></div>
+				<div class="coocaabtn submit" id="subInfo" leftTarget="#shop" rightTarget="#subInfo" upTarget="#subInfo" downTarget="#subInfo"><img id="changeImg" src="images/btn4.png"></div>
+			</div>
+		</div>
+
+		<div class="jiangPinResult" id="rule_box" style="display:none; padding-top:30px">
+			<p class="" style="font-size:22px; text-align:center">活动规则</p>
+			<p class="font26">1、活动期间，新下单开通包季会员可得1次拆礼物的机会，开通影视包年会员可得2次机会。</p>
+			<p class="font26">2、免单仅限本次中奖前的最近一笔订单。获得免单的用户需提供凭手机号和交易单号，待工作人员确认后直接返还现金。</p>
+			<p class="font26">3、已领取奖品的用户若发生会员订单退款，奖品需一并退回。</p>
+			<p class="font26">4、本活动解释权归酷开公司所有！</p>
+			<div class="btn_Get" style="bottom:30px">
+				<div class="coocaabtn submit" id="vip_btn" leftTarget="#vip_btn" upTarget="#vip_btn" downTarget="#vip_btn"><img src="images/btn2.png"></div>
+				<div class="coocaabtn submit" id="rule_btn" leftTarget="#vip_btn" rightTarget="#rule_btn" upTarget="#rule_btn" downTarget="#rule_btn"><img src="images/btn1.png"></div>
+			</div>
+		</div>
+
+		<div id="changePhone" class="jiangPinResult" style="display:none; padding-top:8px">
+			<p class="font26">请输入领取免单资格的手机号</p>
+			<input type="hidden" id="mobile" maxlength="11">
+			<div class="box-input-value" id="box-input-value"></div>
+			<div id="errorInfo">输入信息有误</div>
+			<div class="box-key">
+				<div class="coocaabtn numbtn" id="numbtn1">1</div>
+				<div class="coocaabtn numbtn">2</div>
+				<div class="coocaabtn numbtn">3</div>
+				<div class="coocaabtn numbtn">4</div>
+				<div class="coocaabtn numbtn">5</div>
+				<div class="coocaabtn numbtn">6</div>
+				<div class="coocaabtn numbtn">7</div>
+				<div class="coocaabtn numbtn">8</div>
+				<div class="coocaabtn numbtn">9</div>
+				<div class="coocaabtn numbtn del">删除</div>
+				<div class="coocaabtn numbtn">0</div>
+				<div class="coocaabtn numbtn com event_button" id="sub_mobile" bt-name="next_button">确定</div>
+			</div>
+		</div>
+
+		<!--<script type="text/javascript" src="cordova.js"></script>-->
 		<script type="text/javascript" src="js/index.js"></script>
 		<script type="text/javascript" src="js/jquery.js"></script>
 		<script type="text/javascript" src="js/qrcode.js"></script>
