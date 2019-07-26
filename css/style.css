@@ -259,9 +259,9 @@ body .goldContent .list_Content.rulesActivity {
 	right: 50%;
 	top: 50%;
 	background-image: url("../images/window-bg.png");
-	width: 600px;
-	height: 428px;
-	margin: -214px -300px 0 0;
+	width: 731px;
+	height: 519px;
+	margin: -259px -365px 0 0;
 	padding-top: 30px;
 	box-sizing: border-box;
 	z-index: 9999
@@ -329,14 +329,14 @@ body .goldContent .list_Content.rulesActivity {
 	top: 10px;
 	cursor: pointer;
 }
-#my_prize,#user_login{
-  width: 118px;
-  height:60px;
-  line-height: 60px
-}
+
 /*#i_konw,#back{width:196px; height: 90px; margin: 0 auto; line-height: 90px}*/
 #back{width:196px; height: 90px; margin: 0 auto; line-height: 90px}
 #header img,#i_konw img,#back img{vertical-align: middle;}
+#header img{
+  width: 189px;
+  height: 86px;
+}
 #chance{position: absolute;
         top:95px;
         left:970px;
@@ -361,19 +361,6 @@ body .goldContent .list_Content.rulesActivity {
 }
 
 
-.btn_Get .btnFocus{
-    background-image: url(../images/logo.png);
-    background-repeat: no-repeat;
-    background-size: 100%;
-
-}
-.btn_Get .submit{
-    width: 245px;
-    height: 116px;
-    line-height: 116px;
-    display: inline-block;
-}
-
 
 
 .testspan1,.testspan2,.testspan3{
@@ -396,7 +383,7 @@ body .goldContent .list_Content.rulesActivity {
 	cursor: pointer;
 }
 .font26 {
-	font-size: 26px;
+	font-size: 30px;
 }
 .font24 {
 	font-size: 24px;
@@ -406,14 +393,12 @@ body .goldContent .list_Content.rulesActivity {
 }
 #header {
 	position: absolute;
-	top: -3px;
 	right: 0px;
-	color: #ffd753;
-	font-size: 22px;
+	color: #8b5549;
+	font-size: 26px;
 	letter-spacing: 2px;
 	font-weight: bold;
-	height: 66px;
-	line-height: 66px;
+
 }
 #header span {
 	display: inline-block;
@@ -432,9 +417,9 @@ body .goldContent .list_Content.rulesActivity {
 }
 #my_prize,
 #user_login {
-	width: 118px;
-	height: 60px;
-	line-height: 60px
+	width: 189px;
+	height: 86px;
+	line-height: 80px
 }
 #back {
 	width: 196px;
@@ -571,22 +556,22 @@ body .goldContent .list_Content.rulesActivity {
 
 #awardList{
     position: absolute;
-    left: 30px;
-    top: 320px;
-    width: 270px;
-    height: 220px;
-    font-size: 24px;
+    left: 53px;
+    top: 438px;
+    width: 358px;
+    height: 340px;
+    font-size: 30px;
     word-spacing: 30px;
     overflow: hidden;   
-    color: white;
+    color: #8b5549;
 /*    background-color: rgba(255, 255, 255, 0.5);*/
     z-index: 9;
 }
 #awardListTwo{
   position: absolute;
     top: 0px;
-    width: 270px;
-    height: 220px;
+    width: 358px;
+    height: 340px;
     overflow: hidden;
 }
 .box_style {
@@ -735,9 +720,12 @@ body .goldContent .list_Content.rulesActivity {
 .rule-text .btnFocus {
 	color: #00fcff;
 }
-#rule_box .font26 {
-	font-size: 18px;
-	line-height: 23px;
-	text-align: left !important;
-	padding: 0px 20px;
+#rule_box {
+  width: 1920x;
+  height: 1080px;
+}
+
+.type-img{
+  width: 200px;
+  height: 200px;
 }
