@@ -33,6 +33,7 @@ var changeLoginFlag = false;
 
 var needSentUserLog = false; //判断是否点了登录
 var needSentUserLog2 = false; //判断是否登录成功
+var actionId = getUrlParam("id");
 
 //var adressIp = "https://restful.skysrt.com";
 //var enurl = "https://webapp.skysrt.com/activity618/Address/index.html?";
@@ -86,7 +87,7 @@ coocaaApp.bindEvents("resume", function() {
 		"page_type": "",
 		"activity_name": activity_name,
 		"activity_type": activity_type,
-		"activity_id": actionId,
+		"activity_id": getUrlParam("id"),
 		"open_id": data_openId
 	}
 	console.log(needSentUserLog + "登录监听=====" + needSentUserLog2);
@@ -344,7 +345,7 @@ function handleBackButtonFunc() {
 function buttonInitBefore() {
 	//点击金蛋
 	$(".startBtn").bind('itemClick', function(event) {
-		console.log("-------------------------------是否登录" + loginstatus)
+		console.log("-------------------------------是否登录" + _loginstatus)
 		if(_loginstatus == "false") {
 			popUp("noLogin");
 		} else {
@@ -439,10 +440,11 @@ function buttonInitBefore() {
 function chanceCount() {
 	if(overNum > 0){
 		$.ajax({
-			type: "get",
+			type: "POST",
 			async: true,
 			url: adressIp+"/light/v2/web/start",
 			data:{
+				id:actionId,
 				cUDID:_emmcCID,
 				MAC:_mac,
 				cModel:_model,
@@ -451,7 +453,6 @@ function chanceCount() {
 			},
 			success: function(data) {
 				console.log("抽奖结果" + JSON.stringify(data.data));
-				//	popUp("notWinning");//没抽中
 				if(data.code == 50100) {
 					var awardName = data.data.awardName;
 					var awardTypeId = data.data.awardTypeId;
@@ -473,13 +474,11 @@ function chanceCount() {
 }
 
 function lastWindow(awardId, awardTypeId, lotteryAwardMemberId, awardExchangeFlag, awardPictureUrl, awardName) {
-	document.getElementById('confirmPhone').style.display = "none";
-	$(".matter").html(awardName);
-	$(".type-img").attr("src", awardPictureUrl);
-	console.log("获奖类型:" + confirmPhone + "奖品名称:" + awardName);
-	closeWindow();
 	openBg();
 	document.getElementById('confirmInfo').style.display = "block";
+	$(".matter").html(awardName);
+	$(".type-img").attr("src", awardPictureUrl);
+	console.log("获奖类型:" + awardTypeId + "奖品名称:" + awardName);
 	if(awardTypeId == 19 || awardTypeId == 5) { //金币 || 商城优惠券
 		getGold(awardId, awardTypeId, lotteryAwardMemberId, awardExchangeFlag, awardPictureUrl, awardName);
 	} else if(awardTypeId == 4) { //第三方优惠券
@@ -510,12 +509,13 @@ function getGold(awardId, awardTypeId, lotteryAwardMemberId, awardExchangeFlag, 
 			"awardId": awardId,
 			"rememberId": lotteryAwardMemberId,
 			"awardTypeId": awardTypeId,
-			"cUDID": emmcid,
-			"MAC": userMac,
-			"cModel": userModel,
-			"cChip": userChip,
+			"cUDID": _emmcCID,
+			"MAC": _mac,
+			"cModel": _model,
+			"cChip": _chip,
 			"cOpenId": _openId,
-			"userKeyId": userKeyId
+			"userKeyId": userKeyId,
+			"source":_qsource
 		},
 		success: function(data) {
 			console.log("--------确认成功：" + JSON.stringify(data.data));
@@ -647,6 +647,15 @@ function dealAfterGetAward(obj) {
 	}
 	ccmap.init(".coocaa_btn2", "#"+_curFocusId, "btn-focus");
 
+}
+
+
+//打开弹窗阴影
+function openBg() {
+	document.getElementById('bgMask').style.display = "block";
+}
+function closeWindow(){
+	document.getElementById('bgMask').style.display = "none";
 }
 
 //保留小数
@@ -870,6 +879,9 @@ function listenUserChange() {
 }
 
 function getDeviceInfo() {
+	getNameList("awardul");
+	startmarquee(400, 30, 0, 1,"awardListTwo"); //滚动获奖名单 
+
 	coocaaosapi.getDeviceInfo(function(message) {
 		_mac = message.mac;
 		if(message.activeid == "" || message.activeid == undefined || message.activeid== null){
@@ -963,6 +975,126 @@ function startLogin(needQQ, area) {
 		}
 	}
 }
+
+//获奖名单
+function getNameList(id) {
+	document.getElementById(id).innerHTML = "";
+	$.ajax({
+		type: "GET",
+		async: true,
+		url: adressIp + "/light/v2/web/tv-new",
+		data: {
+		  activeId:actionId
+		},
+		success: function(data) {
+		  // console.log("获奖名单"+JSON.stringify(data));
+			var _UserNickName = new Array();
+			var _phone = new Array();
+			var _awardName = new Array();
+			if(data.data){
+			  for (var i = 0; i < data.data.fakeNews.length; i++) {
+				  if (!data.data.fakeNews[i].awardName) {
+					  _UserNickName[i] = "匿名用户";
+				  } else {
+					  _UserNickName[i] = data.data[i].nickName;
+				  }
+				  _awardName[i] = data.data.fakeNews[i].awardName;
+			  }
+			  for (var i = 0; i < data.data.fakeNews.length; i++) {
+	
+				  var list = '<li>' + '<span class="testspan1">' + _UserNickName[i] + '</span><span class="testspan3" style="text-align:left">' + _awardName[i] + '</span></li>';
+				  $("#"+id).append(list);
+				}
+			}
+  
+		},
+		error: function() {
+			console.log("error");
+		}
+	});
+  }
+
+
+//获奖名单滚动效果
+function startmarquee(lh, speed, delay, index,id) {
+    console.log("开始滚动！！！！！！！！！！！！！");
+    var t;
+    var p = false;
+    var o = document.getElementById(id);
+    o.innerHTML += o.innerHTML;
+    o.onmouseover = function() { p = true }
+    o.onmouseout = function() { p = false }
+    o.scrollTop = 0;
+    function start() {
+        t = setInterval(scrolling, speed);
+        if (!p) { o.scrollTop += 1; }
+    }
+    function scrolling() {
+        if (o.scrollTop % lh != 0) {
+            o.scrollTop += 1;
+            if (o.scrollTop >= o.scrollHeight / 2) o.scrollTop = 0;
+        } else {
+            clearInterval(t);
+            setTimeout(start, delay);
+        }
+    }
+    setTimeout(start, delay);
+}
+
+
+//提示弹窗
+function popUp(type){
+	var str = '';
+	openBg();
+	document.getElementById('popUp').style.display = "block";
+	if(type == "noLogin"){//未登录
+	  $("#text1").html("做个有名有姓的人~");
+	  $("#text2").html("请登录后再参加活动");
+	  $("#text3").html("");
+	  $("#beuser").show();
+	  $("#bevip").hide();
+	  $("#submit").hide();
+	  ccmap.init(".coocaabtn", "#beuser", "btnFocus");
+	}else if(type == "notStar"){//未开始
+	  var aTime = $("#startTime").html();
+	  console.log("开始时间为："+aTime);
+	  var ohtml = '活动将于<span style="color:#ffff33" id="activeTime">'+aTime+'</span>开始';
+	  $("#text1").append(ohtml);
+	  $("#text2").html("请定好闹钟不要错过哟~");
+	  $("#text3").html("");
+	  $("#beuser").hide();
+	  $("#bevip").hide();
+	  $("#submit").show();
+	  $("#submit").attr({ rightTarget: "#submit"});
+	  ccmap.init(".coocaabtn", "#submit", "btnFocus");
+	}else if(type == "useUp"){//抽奖次数用完
+	  $("#text1").html("暂无抽奖机会");
+	  $("#text2").html("立即购买连续包月、季卡、年卡会员");
+	  $("#text3").html("可获[免单]等大奖,100%中奖哟~");
+	  $("#bevip").show();
+	  $("#submit").show();
+	  $("#beuser").hide();
+	  ccmap.init(".coocaabtn", "#bevip", "btnFocus");
+	}else if(type == "over"){//奖品已领完或已结束
+	  $("#text1").html("好遗憾，活动已结束");
+	  $("#text2").html("（已参与用户可在[我的奖品]中查看中奖信息）");
+	  $("#text3").html("");
+	  $("#bevip").hide();
+	  $("#beuser").hide();
+	  $("#submit").show();
+	  $("#submit").attr({ rightTarget: "#submit"});
+	  ccmap.init(".coocaabtn", "#submit", "btnFocus");
+	}else if(type == "getfocus"){
+	  $("#text1").html("啊哦，未能成功领取！");
+	  $("#text2").html("");
+	  $("#text3").html("如有疑问，请关注微信公众号[酷开会员]-在线客服进行查询");
+	  $("#bevip").hide();
+	  $("#beuser").hide();
+	  $("#submit").show();
+	  $("#submit").attr({ rightTarget: "#submit"});
+	  ccmap.init(".coocaabtn", "#submit", "btnFocus");
+	}   
+  }
 
 function webDataLog(logname, dateObj) {
 	var _dataString = JSON.stringify(dateObj);
