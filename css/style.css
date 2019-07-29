@@ -600,7 +600,7 @@ body .goldContent .list_Content.rulesActivity {
 	height: 930px;
 	width: 1620px;
 	overflow: hidden;
-	/*display: none;*/
+	display: none;
 }
 .awardBoxs{
 	position: relative;
