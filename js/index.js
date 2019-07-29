@@ -291,20 +291,20 @@ function hasLogin(needQQ,area) {
 	}, function(error) {
 		console.log(error);
 	});
-  }
+}
 
 function initChance(){
-	console.log("初始化接口cUDID---"+emmcid+"--MAC--"+userMac+"--cModel---"+userModel+"---cChip--"+userChip+"--cOpenId--"+_openId);
+	console.log("初始化接口cUDID---"+_emmcCID+"--MAC--"+_mac+"--cModel---"+_model+"---cChip--"+_chip+"--cOpenId--"+_openId);
     $.ajax({
         async:true,
         url: adressIp+"/light/v2/web/init",
 		type: "POST",
 		data:{
 			Id:getUrlParam("id"),
-			cUDID:emmcid,
-			MAC:userMac,
-			cModel:userModel,
-			cChip:userChip,
+			cUDID:_emmcCID,
+			MAC:_mac,
+			cModel:_model,
+			cChip:_chip,
 			cOpenId:_openId,
 		},
         success: function(data) {
@@ -334,42 +334,7 @@ function initChance(){
     });
 } 
 
-function lastWindow(awardId,awardTypeId,lotteryAwardMemberId,awardExchangeFlag,awardPictureUrl,awardName,cardInfo){
-    document.getElementById('confirmPhone').style.display="none";
-//    map = new coocaakeymap($(".coocaabtn"),document.getElementById("subInfo"), "btnFocus", function() {}, function(val) {}, function(obj) {});
-    $(".matter").html("");
-    console.log("获奖类型:"+awardId+"奖品名称:"+awardName);
-    closeWindow();
-    openBg();
-  //  $("#confirmInfo").show();
-    document.getElementById('confirmInfo').style.display="block";
-    if(awardId == 209 || awardId == 220 || awardId == 221 || awardId == 224 || awardId == 225 || awardId == 226 || awardId == 227 || awardId == 228){//实物奖品
-      $("#type209").show();
-      $("#type209").siblings().hide();
-      $('#qrcode').html("");
-      $("#shop").hide();
-      generateQRCode("https://webapp.skysrt.com/zy/game/address/index.html?lotteryAwardMemberId="+lotteryAwardMemberId+"&access_token="+access_token+"&awardName="+awardName);
-    //  qrcode.makeCode("http://beta.webapp.skysrt.com/zy/egg1/eggAdress/index.html?lotteryAwardMemberId="+lotteryAwardMemberId+"&awardExchangeFlag="+awardExchangeFlag+"&access_token="+access_token+"&awardName="+awardName);
-      map = new coocaakeymap($(".coocaabtn"),document.getElementById("subInfo"), "btnFocus", function() {}, function(val) {}, function(obj) {});
-    }else if(awardId == 203){//商城优惠券
-      $("#type203").show();
-      $("#type203").siblings().hide();
-      $("#shop").show();
-      map = new coocaakeymap($(".coocaabtn"),document.getElementById("subInfo"), "btnFocus", function() {}, function(val) {}, function(obj) {});
-    }else if(awardId == 205){//ofo
-      $("#type205").show();
-      $("#type205").siblings().hide();
-      $("#shop").hide();
-      map = new coocaakeymap($(".coocaabtn"),document.getElementById("subInfo"), "btnFocus", function() {}, function(val) {}, function(obj) {});
-    }
 
-    var chanceCount = $("#chanceCount").html();
-    // if(chanceCount != 0){
-    //   $("#changeImg").attr({src: "images/btn4_c8e901b.png"});
-    // }else{
-    //   $("#changeImg").attr({src: "images/btn1_283af48.png"});
-    // }
-    $(".matter").html(awardName);
 
 function handleBackButtonFunc(){
 	navigator.app.exitApp();
@@ -396,8 +361,6 @@ function buttonInitBefore(){
 	
 	//跳转成为会员
 	$("#bevip,#vip_btn,#buy_vip").bind('itemClick', function(event) {
-		console.log("bevipshow");
-		document.getElementById("deviceready").setAttribute("NoStart","true");
 		coocaaosapi.startMovieMemberCenter2("5",function(message) {
 			console.log(message);
 			listen = "1";
@@ -474,18 +437,18 @@ function buttonInitBefore(){
 }
 
 //剩余抽奖次数
-function chanceCount(num) {
+function chanceCount() {
 	if(overNum > 0){
 		$.ajax({
 			type: "get",
 			async: true,
 			url: adressIp+"/light/v2/web/start",
 			data:{
-				"cUDID":emmcid,
-				"MAC":userMac,
-				"cModel":userModel,
-				"cChip":userChip,
-				"cOpenId":_openId,	
+				cUDID:_emmcCID,
+				MAC:_mac,
+				cModel:_model,
+				cChip:_chip,
+				cOpenId:_openId,
 			},
 			success: function(data) {
 			console.log("抽奖结果"+JSON.stringify(data.data));
