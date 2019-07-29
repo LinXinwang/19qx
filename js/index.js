@@ -41,6 +41,9 @@ var gameStatus ="";
 var overNum = "";
 var userKeyId = ""
 
+var needSentUserLog = false;//判断是否点了登录
+var needSentUserLog2 = false;//判断是否登录成功
+
 //var adressIp = "https://restful.skysrt.com";
 //var allowanceUrl = "https://jintie.coocaa.com/api/subsidy/v1/query-userSubsidyInfo-byToken"
 //var allowanceClientId = "YS_RELEASE";
@@ -66,7 +69,21 @@ coocaaApp.bindEvents("menubutton", function() {
 
 coocaaApp.bindEvents("backbuttondown", function() {
     console.log("this backbuttondown>>>>>>>>>new>>>>>>>>>");
-    handleBackButtonFunc();
+	if(document.getElementById('prize').style.display=="block"){
+		document.getElementById('prize').style.display = "none";
+		document.getElementById('index').style.display = "block";
+	}else if(document.getElementById('index').style.display=="block"){
+	  if(document.getElementById('popUp').style.display=="block" || document.getElementById('confirmInfo').style.display=="block"){
+		  closeWindow();
+		  document.getElementById('popUp').style.display="none";
+		  document.getElementById('confirmInfo').style.display="none"
+	  }else{
+		  navigator.app.exitApp();
+	  }
+	}else if(document.getElementById('rule_box').style.display=="block"){
+		document.getElementById('rule_box').style.display="none";
+		document.getElementById('index').style.display = "block";
+	}
     //navigator.app.exitApp();
 });
 
@@ -79,54 +96,51 @@ coocaaApp.bindEvents("homebutton", function() {
 coocaaApp.bindEvents("resume", function() {
 	console.log("on resume");
 	
-	activityStartTime = new Date().getTime();
-	
-	console.log(startLoginFlag);
-	console.log(changeLoginFlag);
-	if(startLoginFlag && changeLoginFlag){
-        console.log("登录成功");
-        startLoginFlag = false;
-        changeLoginFlag = false;
-		if ($("#myAwardPage").css("display") == "block") {
-            console.log(_curHomeBtn);
-            $("#" + _curHomeBtn).trigger("itemClick");
-            if($("#myAwardBox").css("display") == "block"){
-            	sentLog("result_event_new", '{"page_name":"登录弹窗","parent_page":"我的奖品页-有奖品","page_type":"登录成功","activity_type":"2019教育暑期活动","activity_name":"2019教育暑期活动","OPEN_ID":"'+_openId+'"}');
-        		_czc.push(['_trackEvent', '登录弹窗', '我的奖品页-有奖品', '登录成功', '', '']);
-            }else{
-            	sentLog("result_event_new", '{"page_name":"登录弹窗","parent_page":"我的奖品页-无奖品","page_type":"登录成功","activity_type":"2019教育暑期活动","activity_name":"2019教育暑期活动","OPEN_ID":"'+_openId+'"}');
-        		_czc.push(['_trackEvent', '登录弹窗', '我的奖品页-无奖品', '登录成功', '', '']);
+    console.log("======其他页面返回============"+startClock);
+    closeWindow();
+    document.getElementById('get_window').style.display = "none";
+    document.getElementById('popUp').style.display = "none";
+    document.getElementById('receive_window').style.display = "none";
+    document.getElementById("download_win").style.display = "none";
+    document.getElementById("alert_window").style.display = "none";
+    
+    var _dateObj = {
+        "page_name": "登录弹窗",
+        "parent_page":startLoginPage,
+        "page_type":"",
+        "activity_name":activity_name,
+        "activity_type":activity_type,
+        "activity_id":actionId,
+        "open_id":data_openId
+    }
+    console.log(needSentUserLog+"登录监听====="+needSentUserLog2);
+    if(needSentUserLog == true){
+        needSentUserLog = false;
+        if (needSentUserLog2 == true) {
+            needSentUserLog2 = false;
+            _dateObj.page_type = "登录成功";
+            if(document.getElementById("index").style.display == "block") {                     
+                hasLogin(needQQ,0);//0走初始化，1我的奖品
+            }else if(document.getElementById("prize").style.display == "block") {
+                hasLogin(needQQ,1);
             }
+            
         }else{
-        	//TODO:主页面启登录的结果的日志项提交；
-        	sentLog("result_event_new", '{"page_name":"登录弹窗","parent_page":"解救冰冻物体后有奖弹窗","page_type":"登录成功","activity_type":"2019教育暑期活动","activity_name":"2019教育暑期活动","OPEN_ID":"'+_openId+'"}');
-        	_czc.push(['_trackEvent', '登录弹窗', '解救冰冻物体后有奖弹窗', '登录成功', '', '']);
-			
-			pageResume();
-        }
-    }else if (startLoginFlag) {
-        console.log("登录失败");
-        startLoginFlag = false;
-        changeLoginFlag = false;
-        if ($("#myAwardPage").css("display") == "block") {
-            console.log(_curHomeBtn);
-            $("#" + _curHomeBtn).trigger("itemClick");
-            if($("#myAwardBox").css("display") == "block"){
-            	sentLog("result_event_new", '{"page_name":"登录弹窗","parent_page":"我的奖品页-有奖品","page_type":"登录失败","activity_type":"2019教育暑期活动","activity_name":"2019教育暑期活动","OPEN_ID":"'+_openId+'"}');
-        		_czc.push(['_trackEvent', '登录弹窗', '我的奖品页-有奖品', '登录失败', '', '']);
-            }else{
-            	sentLog("result_event_new", '{"page_name":"登录弹窗","parent_page":"我的奖品页-无奖品","page_type":"登录失败","activity_type":"2019教育暑期活动","activity_name":"2019教育暑期活动","OPEN_ID":"'+_openId+'"}');
-        		_czc.push(['_trackEvent', '登录弹窗', '我的奖品页-无奖品', '登录失败', '', '']);
+            needSentUserLog2 = false;
+            _dateObj.page_type = "登录失败";
+            if(document.getElementById("index").style.display == "block") {                     
+                initActive();
+            }else if(document.getElementById("prize").style.display == "block") {
+                getMyAwards(2);//0 需要数据采集 
             }
-        }else{
-        	//TODO:主页面启登录的结果的日志项提交；
-        	sentLog("result_event_new", '{"page_name":"登录弹窗","parent_page":"解救冰冻物体后有奖弹窗","page_type":"登录失败","activity_type":"2019教育暑期活动","activity_name":"2019教育暑期活动","OPEN_ID":"'+_openId+'"}');
-        	_czc.push(['_trackEvent', '登录弹窗', '解救冰冻物体后有奖弹窗', '登录失败', '', '']);
-			
-			pageResume();
         }
+    //    pageShowLog("result_event_new",_dateObj);
     }else{
-    	pageResume();
+        if(document.getElementById("index").style.display == "block") {                     
+            initActive();
+        }else if(document.getElementById("prize").style.display == "block") {
+       //     getMyAwards(2);
+        }
     }
 });
 
@@ -158,7 +172,7 @@ coocaaApp.ready=function() {
 };
 
 coocaaApp.triggleButton=function() {
-	setTimeout(updateMainPageBeforeInit, 1);
+//	setTimeout(updateMainPageBeforeInit, 1);
     _appversion = accountVersion;	
     listenUserChange();
     buttonInitBefore();
@@ -191,9 +205,6 @@ function hasLogin(needQQ,area) {
 				_openId = message.open_id;
 				data_openId = message.open_id;
 				_nickName = message.nick_name;
-				$("#user_login").hide();
-				$("#userName").show();
-				$("#userName").html(_nickName);
 				if(message.avatar == undefined){
 					face = qqinfo[0].face;
 				}else{
@@ -298,17 +309,14 @@ function hasLogin(needQQ,area) {
 								_login_type = 0;
 							}
 						}
-					}
-					
+					}					
 					console.log("_login_type-----------"+_login_type);
 					if(_openId != ""){
 					  console.log("已登录openId============"+_openId);
-					  $(".startLogin").hide();
-					  document.getElementById("startLogin").style.display = "none";
-					  document.getElementById("_startLogin").style.display = "none";
-					  $(".hasLogin").show();
-					  $(".hasLogin img").attr("src",face);
-					  $(".hasLogin span").html(_nickName);
+					  $("#user_login").hide();
+					  $("#userName").show();
+					   $("#userName").html(_nickName);
+					   console.log(_nickName);
 					}
 					initChance();
 				}, function(error) {
@@ -328,20 +336,23 @@ function hasLogin(needQQ,area) {
   }
 
 function initChance(){
+	console.log("初始化接口cUDID---"+emmcid+"--MAC--"+userMac+"--cModel---"+userModel+"---cChip--"+userChip+"--cOpenId--"+_openId);
     $.ajax({
-        async:false,
+        async:true,
         url: adressIp+"/light/v2/web/init",
 		type: "POST",
 		data:{
-			"cUDID":emmcid,
-			"MAC":userMac,
-			"cModel":userModel,
-			"cChip":userChip,
-			"cOpenId":_openId,
+			Id:getUrlParam("id"),
+			cUDID:emmcid,
+			MAC:userMac,
+			cModel:userModel,
+			cChip:userChip,
+			cOpenId:_openId,
 		},
         success: function(data) {
 			console.log("初始化"+JSON.stringify(data));
 			if(data.code == 50100){
+				document.getElementById("index").style.display = "block";
 				userKeyId = data.data.userKeyId;
 				gameStatus = 1;
 				overNum = data.data.overNum;
@@ -358,7 +369,10 @@ function initChance(){
 				console.log("活动必须登陆才能玩");
 			}
 
-        }
+        },
+		error: function(error) {
+			console.log("--------初始化访问失败------" + JSON.stringify(error));
+		}
     });
 } 
 
@@ -434,6 +448,11 @@ function buttonInitBefore(){
 		});
 	});
 
+	$("#beuser,#user_login").bind('itemClick', function(event) {
+		needSentUserLog = true;
+		startLogin(needQQ,0);
+	});
+	
     //最后一部确认信息
     $("#subInfo").bind('itemClick', function(event) {
 		closeWindow();
@@ -446,6 +465,7 @@ function buttonInitBefore(){
 	$("#ruleMore").bind('itemClick', function(event) {
 		_czc.push(['_trackEvent', '双旦', '打开活动规则', '', '']);
 		document.getElementById('rule_box').style.display="block";
+		document.getElementById('index').style.display="none";
 		map = new coocaakeymap($(".coocaabtn"), document.getElementById('rule_box'), "btnFocus", function() {}, function(val) {}, function(obj) {});
 	  });
 
@@ -495,40 +515,39 @@ function buttonInitBefore(){
 
 //剩余抽奖次数
 function chanceCount(num) {
-	var chanceCount = $("#chanceCount").html();//抽奖次数
-			if(overNum > 0){
-				$.ajax({
-					type: "get",
-					async: true,
-					url: adressIp+"/light/v2/web/start",
-					data:{
-						"cUDID":emmcid,
-						"MAC":userMac,
-						"cModel":userModel,
-						"cChip":userChip,
-						"cOpenId":_openId,	
-					},
-					success: function(data) {
-					console.log("抽奖结果"+JSON.stringify(data.data));
-					//	popUp("notWinning");//没抽中
-						if(data.code == 50100){
-							var awardName = data.data.awardName;
-							var awardTypeId = data.data.awardTypeId;
-							var lotteryAwardMemberId = data.data.lotteryAwardMemberId;
-							var awardExchangeFlag = data.data.awardExchangeFlag;
-							var awardId = data.data.awardId;
-							var awardPictureUrl = data.data.awardPictureUrl;
-							$("#chanceCount").html(overNum-1);
-							lastWindow(awardId,awardTypeId,lotteryAwardMemberId,awardExchangeFlag,awardPictureUrl,awardName)
-						}
-					},
-					error: function(){
-						console.log("--------访问失败");
-					}
-				});
-			}else{
-				popUp("useUp");//抽奖次数用完
+	if(overNum > 0){
+		$.ajax({
+			type: "get",
+			async: true,
+			url: adressIp+"/light/v2/web/start",
+			data:{
+				"cUDID":emmcid,
+				"MAC":userMac,
+				"cModel":userModel,
+				"cChip":userChip,
+				"cOpenId":_openId,	
+			},
+			success: function(data) {
+			console.log("抽奖结果"+JSON.stringify(data.data));
+			//	popUp("notWinning");//没抽中
+				if(data.code == 50100){
+					var awardName = data.data.awardName;
+					var awardTypeId = data.data.awardTypeId;
+					var lotteryAwardMemberId = data.data.lotteryAwardMemberId;
+					var awardExchangeFlag = data.data.awardExchangeFlag;
+					var awardId = data.data.awardId;
+					var awardPictureUrl = data.data.awardPictureUrl;
+					$("#chanceCount").html(overNum-1);
+					lastWindow(awardId,awardTypeId,lotteryAwardMemberId,awardExchangeFlag,awardPictureUrl,awardName)
+				}
+			},
+			error: function(){
+				console.log("--------访问失败");
 			}
+		});
+	}else{
+		popUp("useUp");//抽奖次数用完
+	}
   }
   
 
@@ -813,10 +832,68 @@ function getUrlParam(name) {
 	return null; //返回参数值
 }
 
-
+//监听账户变化
+function listenUserChange() {  
+	coocaaosapi.addUserChanggedListener(function(message) {
+		needSentUserLog2 = true;
+	});
+	console.log("账户状态变化"+needSentUserLog2);
+  }
+  
 function getDeviceInfo(){
-
+	hasLogin(needQQ,0);
 }
+
+
+//启登录
+function startLogin(needQQ,area) {
+	//   leavetime = new Date().getTime();
+	//   pageShowLog("okr_web_clicked_result", '{"activity_duration":"'+(leavetime-entertime)+'","activity_name":'+activity_name+'}');
+	  if(needQQ) {
+		  if(accountVersion > 4030000) {
+			  if(_tencentWay == "qq") {
+				  coocaaosapi.startWeixinOrQQ2("LOGIN_QQ", function(message) {
+					  console.log(message);
+				  }, function(error) {
+					  console.log(error);
+				  });
+			  } else if(_tencentWay == "weixin") {
+				  coocaaosapi.startWeixinOrQQ2("LOGIN_WEIXIN", function(message) {
+					  console.log(message);
+				  }, function(error) {
+					  console.log(error);
+				  });
+			  } else if(_tencentWay == "both") {
+				  coocaaosapi.startWeixinOrQQ2("TENCENT", function(message) {
+					  console.log(message);
+				  }, function(error) {
+					  console.log(error);
+				  });
+			  }
+		  } else {
+			  coocaaosapi.startThirdQQAccount(function(message) {
+				  console.log(message);
+			  }, function(error) {
+				  console.log(error);
+			  });
+		  }
+	  } else {
+		  if(_version.replace(/\./g, "") < 550000000 && accountVersion > 4030000) {
+			  coocaaosapi.startUserSettingAndFinish2(function(message) {
+				  console.log(message);
+			  }, function(error) {
+				  console.log(error);
+			  });
+		  } else {
+			  coocaaosapi.startUserSettingAndFinish(function(message) {
+				  console.log(message);
+			  }, function(error) {
+				  console.log(error);
+			  });
+		  }
+	  }
+	}
+	
 
 function webDataLog(logname, dateObj) {
 	var _dataString = JSON.stringify(dateObj);
