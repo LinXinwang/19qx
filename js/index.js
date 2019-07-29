@@ -49,17 +49,22 @@ coocaaApp.bindEvents("backbuttondown", function() {
 	if(document.getElementById('prize').style.display == "block") {
 		document.getElementById('prize').style.display = "none";
 		document.getElementById('index').style.display = "block";
+		ccmap.init(".coocaabtn", "#egg0", "btnFocus");
 	} else if(document.getElementById('index').style.display == "block") {
 		if(document.getElementById('popUp').style.display == "block" || document.getElementById('confirmInfo').style.display == "block") {
 			closeWindow();
 			document.getElementById('popUp').style.display = "none";
-			document.getElementById('confirmInfo').style.display = "none"
+			document.getElementById('confirmInfo').style.display = "none";
+			ccmap.init(".coocaabtn", "#egg0", "btnFocus");
 		} else {
 			navigator.app.exitApp();
 		}
 	} else if(document.getElementById('rule_box').style.display == "block") {
 		document.getElementById('rule_box').style.display = "none";
 		document.getElementById('index').style.display = "block";
+		ccmap.init(".coocaabtn", "#egg0", "btnFocus");
+	}else{
+		navigator.app.exitApp();
 	}
 	//navigator.app.exitApp();
 });
@@ -383,6 +388,13 @@ function buttonInitBefore() {
 		$("#confirmInfo").hide();
 		initChance();
 	});
+
+	$("#submit").bind('itemClick', function(event) {
+		closeWindow();
+		document.getElementById("popUp").style.display = "none";
+	});
+	
+
 	$("#ruleMore").bind('itemClick', function(event) {
 		_czc.push(['_trackEvent', '双旦', '打开活动规则', '', '']);
 		document.getElementById('rule_box').style.display = "block";
@@ -451,16 +463,18 @@ function chanceCount() {
 				cOpenId:_openId,
 			},
 			success: function(data) {
-				console.log("抽奖结果" + JSON.stringify(data.data));
+				console.log("抽奖结果" + JSON.stringify(data));
 				if(data.code == 50100) {
 					var awardName = data.data.awardName;
 					var awardTypeId = data.data.awardTypeId;
 					var lotteryAwardMemberId = data.data.lotteryAwardMemberId;
 					var awardExchangeFlag = data.data.awardExchangeFlag;
 					var awardId = data.data.awardId;
-					var awardPictureUrl = data.data.awardPictureUrl;
+					var awardPictureUrl = data.data.awardUrl;
 					$("#chanceCount").html(overNum - 1);
 					lastWindow(awardId, awardTypeId, lotteryAwardMemberId, awardExchangeFlag, awardPictureUrl, awardName)
+				}else if(data.code == 50023){
+					popUp("over"); //抽奖次数用完
 				}
 			},
 			error: function() {
@@ -491,7 +505,7 @@ function lastWindow(awardId, awardTypeId, lotteryAwardMemberId, awardExchangeFla
 		$('#qrcode').html("");
 		$("#shop").hide();
 		// generateQRCode("https://webapp.skysrt.com/zy/game/address/index.html?lotteryAwardMemberId="+lotteryAwardMemberId+"&access_token="+access_token+"&awardName="+awardName);
-		qrcode.makeCode("http://beta.webapp.skysrt.com/zy/egg1/eggAdress/index.html?lotteryAwardMemberId=" + lotteryAwardMemberId + "&awardExchangeFlag=" + awardExchangeFlag + "&access_token=" + access_token + "&awardName=" + awardName);
+		generateQRCode("http://beta.webapp.skysrt.com/zy/address/index.html?activeId=" + actionId + "&rememberId=" + lotteryAwardMemberId + "&userKeyId=" + userKeyId);
 		ccmap.init(".coocaabtn", "#subInfo", "btnFocus");
 	}
 }
@@ -983,7 +997,7 @@ function getNameList(id) {
 		async: true,
 		url: adressIp + "/light/v2/web/tv-new",
 		data: {
-		  activeId:actionId
+			id:actionId
 		},
 		success: function(data) {
 		   console.log("获奖名单"+JSON.stringify(data));
@@ -1094,6 +1108,42 @@ function popUp(type){
 	  ccmap.init(".coocaabtn", "#submit", "btnFocus");
 	}   
   }
+
+
+  function utf16to8(str) {
+    var out, i, len, c;
+    out = "";
+    len = str.length;
+    for (i = 0; i < len; i++) {
+        c = str.charCodeAt(i);
+        if ((c >= 0x0001) && (c <= 0x007F)) {
+            out += str.charAt(i);
+        } else if (c > 0x07FF) {
+            out += String.fromCharCode(0xE0 | ((c >> 12) & 0x0F));
+            out += String.fromCharCode(0x80 | ((c >> 6) & 0x3F));
+            out += String.fromCharCode(0x80 | ((c >> 0) & 0x3F));
+        } else {
+            out += String.fromCharCode(0xC0 | ((c >> 6) & 0x1F));
+            out += String.fromCharCode(0x80 | ((c >> 0) & 0x3F));
+        }
+    }
+    return out;
+}
+//二维码生成
+function generateQRCode(url) {
+    console.log("create img--------------" + url);
+    $("#qrcode").qrcode({
+        render: "canvas", // 渲染方式有table方式（IE兼容）和canvas方式
+        width: 190, //宽度 
+        height: 190, //高度 
+        text: utf16to8(url), //内容 
+        typeNumber: -1, //计算模式
+        correctLevel: 2, //二维码纠错级别
+        background: "#ffffff", //背景颜色
+        foreground: "#000000" //二维码颜色
+    });
+    console.log("end img--------------");
+}
 
 function webDataLog(logname, dateObj) {
 	var _dataString = JSON.stringify(dateObj);

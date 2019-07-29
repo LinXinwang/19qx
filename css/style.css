@@ -825,8 +825,11 @@ body .goldContent .list_Content.rulesActivity {
 	color: #00fcff;
 }
 #rule_box {
-  width: 1920x;
+  width: 1920px;
   height: 1080px;
+ position: fixed;
+  z-index: 9999;
+
 }
 
 .type-img{

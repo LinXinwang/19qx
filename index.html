@@ -68,14 +68,14 @@
 					<div id="header">
 						<ul class="header_user">
 							<span id="userName" style="display:none"></span>
-							<span class="coocaabtn" id="user_login" style="display: none"><img src="images/btn8.png"></span>
+							<span class="coocaabtn" id="user_login" downTarget="#egg0" style="display: none"><img src="images/btn8.png"></span>
 						</ul>
-						<ul class="header_prize"><span class="coocaabtn" id="my_prize"><img src="images/btn7.png"></span></ul>
+						<ul class="header_prize"><span class="coocaabtn" id="my_prize" downTarget="#my_prize"><img src="images/btn7.png"></span></ul>
 					</div>
 					<div id="rule">
 						<p style="height:40px; line-height:40px"><span id="chanceCount">0</span></p>
 						<p class="rule-text">活动期间，购买影视包季会员可得1次拆礼物的机会，购买包年会员可得2次机会。
-							<a class="coocaabtn" id="ruleMore">更多>></a>
+							<a class="coocaabtn" id="ruleMore" rightTarget="#my_prize">更多>></a>
 						</p>
 					</div>
 					<div id="awardList">
@@ -207,9 +207,11 @@
 		</div>
 
 		<div class="jiangPinResult" id="popUp" style="display:none">
-			<p id="text1" class="font26" style="margin-top:40px"></p>
-			<p id="text2" class="font24"></p>
-			<p id="text3" class="font24"></p>
+			<div style="height: 200px">
+				<p id="text1" class="font26" style="margin-top:40px"></p>
+				<p id="text2" class="font24"></p>
+				<p id="text3" class="font24"></p>
+			</div>
 			<div class="btn_Get" id="pupUp_btn">
 				<div class="coocaabtn submit" id="submit" leftTarget="#submit" upTarget="#submit" downTarget="#submit"><img id="submitImg" src="images/btn1.png"></div>
 				<div class="coocaabtn submit" id="bevip" rightTarget="#bevip" upTarget="#bevip" downTarget="#bevip"><img src="images/btn2.png"></div>
@@ -250,8 +252,8 @@
 			</div>
 		</div>
 
-		<div class="jiangPinResult coocaabtn" id="rule_box" style="display:none;">
-				<img class="type-img" src="images/rule.jpg" />
+		<div class="coocaabtn" id="rule_box" style="display:none;">
+				<img src="images/rule.jpg" />
 		</div>
 
 		<script type="text/javascript" src="js/jquery-1.8.3.min.js"></script>
