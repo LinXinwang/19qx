@@ -73,13 +73,13 @@ ul li{list-style: none}
 }
 .egg1 {
   position: absolute;
-  top: 462px;
-  left: 803px;
+  top: 453px;
+  left: 789px;
 }
 .egg2 {
   position: absolute;
-  top: 462px;
-  left: 1124px;
+  top: 453px;
+  left: 1111px;
 }
 
 .goldContent .goldEggsDiv .list_EggsDiv div ul.jinDanUl1 {
@@ -369,9 +369,11 @@ body .goldContent .list_Content.rulesActivity {
     overflow: hidden;
     white-space: nowrap;
     text-overflow: ellipsis;
-    font-size: 16px;
+    font-size: 30px;
 }
-
+.testspan3{
+	width: 65%
+}
 .jiangPinResult .colseJiangPin {
 	width: 28px;
 	position: absolute;
@@ -400,7 +402,7 @@ body .goldContent .list_Content.rulesActivity {
 #header span {
 	display: inline-block;
 	margin: 0 10px;
-	text-align: center;
+	text-align: right;
 }
 #header ul {
 	display: inline-block;
@@ -529,18 +531,7 @@ body .goldContent .list_Content.rulesActivity {
 	width: 362px;
 
 }
-.testspan1,
-.testspan3 {
-	margin-right: 1%;
-	display: inline-block;
-	width: 30%;
-	height: 55px;
-	line-height: 55px;
-	overflow: hidden;
-	white-space: nowrap;
-	text-overflow: ellipsis;
-	font-size: 16px;
-}
+
 #awardul{
   position: relative;
     width: 100%;
@@ -554,7 +545,7 @@ body .goldContent .list_Content.rulesActivity {
 #awardList{
     position: absolute;
     left: 53px;
-    top: 438px;
+    top: 442px;
     width: 358px;
     height: 340px;
     font-size: 36px;
@@ -779,7 +770,15 @@ body .goldContent .list_Content.rulesActivity {
   right: 60px;
   color: #8b5549;
 }
-#chanceCount{color:#ff2558; padding:0 3px;margin-left: 132px;  font-size: 30px;}
+#chanceCount{
+	 color: #ff2558;
+    padding: 0 3px;
+    margin-left: 124px;
+    font-size: 30px;
+    width: 30px;
+    display: inline-block;
+	text-align: center;
+}
 .rule-text{line-height:26px;    margin-top: 66px; font-size: 26px}
 .rule-text span{color:#e4d44b;}
 /*#demo{position: absolute; bottom: 38px; width: 760px;  left: 330px}*/
@@ -833,4 +832,13 @@ body .goldContent .list_Content.rulesActivity {
 .type-img{
   width: 200px;
   height: 200px;
+}
+
+#userName{
+	height: 86px;
+	line-height: 76px;
+	width: 200px;
+	overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
 }

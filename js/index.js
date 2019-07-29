@@ -313,7 +313,7 @@ function initChance(){
 				overNum = data.data.overNum;
 				$("#chanceCount").html(data.data.overNum);
 				console.log("------------------初始化次数:" + data.data.overNum);
-				ccmap.init(".coocaabtn", null, "btnFocus");
+				ccmap.init(".coocaabtn", "#egg0", "btnFocus");
 			} else if(data.code == 50002) {
 				console.log("活动未开始");
 				gameStatus = 0;
@@ -382,7 +382,6 @@ function buttonInitBefore() {
 		closeWindow();
 		$("#confirmInfo").hide();
 		initChance();
-		ccmap.init(".coocaabtn", null, "btnFocus");
 	});
 	$("#ruleMore").bind('itemClick', function(event) {
 		_czc.push(['_trackEvent', '双旦', '打开活动规则', '', '']);
@@ -987,7 +986,7 @@ function getNameList(id) {
 		  activeId:actionId
 		},
 		success: function(data) {
-		  // console.log("获奖名单"+JSON.stringify(data));
+		   console.log("获奖名单"+JSON.stringify(data));
 			var _UserNickName = new Array();
 			var _phone = new Array();
 			var _awardName = new Array();

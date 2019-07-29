@@ -42,13 +42,13 @@
 
 		<div id="deviceready" class="blink">
 			<div class="bg-mask" title="弹窗阴影" id="bgMask" style="display:none"> </div>    
-			<div class="goldContent" id="index" style="display:none">
+			<div class="goldContent" id="index" style="display:block">
 				<div class="goldEggsDiv">
 					<div class="list_EggsDiv" id="carousel">
 						<div>
 							<ul class="jinDanUl" id="jinDanUl1">
 								<li id="start" class="egg0">
-									<div class="coocaabtn startBtn btnFocus" data="1">
+									<div class="coocaabtn startBtn" id="egg0" data="1">
 										<img src="images/egg0.png">
 									</div>
 								</li>
@@ -68,7 +68,7 @@
 					<div id="header">
 						<ul class="header_user">
 							<span id="userName" style="display:none"></span>
-							<span class="coocaabtn" id="user_login"><img src="images/btn8.png"></span>
+							<span class="coocaabtn" id="user_login" style="display: none"><img src="images/btn8.png"></span>
 						</ul>
 						<ul class="header_prize"><span class="coocaabtn" id="my_prize"><img src="images/btn7.png"></span></ul>
 					</div>
@@ -246,7 +246,7 @@
 			<div class="btn_Get">
 				<div style="display:none" class="coocaabtn submit" id="go_experience" leftTarget="#go_experience" rightTarget="#subInfo" upTarget="#go_experience" downTarget="#go_experience"><img src="images/duihuan.png"></div>
 				<div style="display:none" class="coocaabtn submit" id="shop" leftTarget="#shop" rightTarget="#subInfo" upTarget="#shop" downTarget="#shop"><img src="images/gx.png"></div>
-				<div class="coocaabtn submit btnFocus" id="subInfo" rightTarget="#subInfo" upTarget="#subInfo" downTarget="#subInfo"><img id="changeImg" src="images/btn4.png"></div>
+				<div class="coocaabtn submit" id="subInfo" rightTarget="#subInfo" upTarget="#subInfo" downTarget="#subInfo"><img id="changeImg" src="images/btn4.png"></div>
 			</div>
 		</div>
 
