@@ -87,20 +87,18 @@ coocaaApp.bindEvents("resume", function() {
 	document.getElementById("alert_window").style.display = "none";
 
 	var _dateObj = {
-		"page_name": "登录弹窗",
-		"parent_page": startLoginPage,
-		"page_type": "",
+		"page_name": "活动主页面登录弹窗",
+		"login_result": "",
 		"activity_name": activity_name,
-		"activity_type": activity_type,
 		"activity_id": getUrlParam("id"),
-		"open_id": data_openId
+		"open_id": _openId
 	}
 	console.log(needSentUserLog + "登录监听=====" + needSentUserLog2);
 	if(needSentUserLog == true) {
 		needSentUserLog = false;
 		if(needSentUserLog2 == true) {
 			needSentUserLog2 = false;
-			_dateObj.page_type = "登录成功";
+			_dateObj.login_result = "登录成功";
 			if(document.getElementById("index").style.display == "block") {
 				hasLogin(needQQ, 0); //0走初始化，1我的奖品
 			} else if(document.getElementById("prize").style.display == "block") {
@@ -109,14 +107,14 @@ coocaaApp.bindEvents("resume", function() {
 
 		} else {
 			needSentUserLog2 = false;
-			_dateObj.page_type = "登录失败";
+			_dateObj.login_result = "登录失败";
 			if(document.getElementById("index").style.display == "block") {
 				initActive();
 			} else if(document.getElementById("prize").style.display == "block") {
 				getMyAwards(2); //0 需要数据采集 
 			}
 		}
-		//    pageShowLog("result_event_new",_dateObj);
+		webDataLog("result_event",_dateObj);
 	} else {
 		if(document.getElementById("index").style.display == "block") {
 			initActive();
@@ -142,7 +140,6 @@ coocaaApp.triggleButton = function() {
 };
 //判断是否登录
 function hasLogin(needQQ, area) {
-	//area = 0初始化，1奖品列表
 	coocaaosapi.hasCoocaaUserLogin(function(message) {
 		console.log(area + "======haslogin======== " + message.haslogin);
 		_loginstatus = message.haslogin;
@@ -311,24 +308,39 @@ function initChance(){
 		},
 		success: function(data) {
 			console.log("初始化" + JSON.stringify(data));
+			var _dateObj = {
+				"page_name":"砸金蛋活动主页面",
+				"page_state":"",
+				"activity_name":"七夕活动",
+				"activity_id":actionId,
+				"open_id":_openId
+			}  
+			
 			if(data.code == 50100) {
+				_dateObj.page_state = "进行中";
 				document.getElementById("index").style.display = "block";
 				userKeyId = data.data.userKeyId;
 				gameStatus = 1;
+				gameStatusTxt = "进行中";
 				overNum = data.data.overNum;
 				$("#chanceCount").html(data.data.overNum);
 				console.log("------------------初始化次数:" + data.data.overNum);
 				ccmap.init(".coocaabtn", "#egg0", "btnFocus");
 			} else if(data.code == 50002) {
-				console.log("活动未开始");
+				_dateObj.page_state = "未开始";
 				gameStatus = 0;
+				gameStatusTxt = "未开始";
 			} else if(data.code == 50003) {
-				console.log("活动已结束");
+				_dateObj.page_state = "已结束";
 				gameStatus = 2;
+				gameStatusTxt = "已结束";
 			} else if(data.code == 50049) {
+				_dateObj.page_state = "异常";
 				console.log("活动必须登陆才能玩");
+			}else{
+				_dateObj.page_state = "异常";
 			}
-
+			webDataLog("web_page_show_new",_dateObj);
 		},
 		error: function(error) {
 			console.log("--------初始化访问失败------" + JSON.stringify(error));
@@ -350,9 +362,26 @@ function handleBackButtonFunc() {
 function buttonInitBefore() {
 	//点击金蛋
 	$(".startBtn").bind('itemClick', function(event) {
+		var data = $(this).attr("data")
+		var _dateObj = {
+			"page_name":"砸金蛋活动主页面",
+			"button_name":"礼物盒",
+			"button_postion":data,
+			"page_state":gameStatusTxt,
+			"activity_name":"七夕活动",
+			"activity_id":actionId,
+			"open_id":_openId
+		} 
+		webDataLog("web_page_show_new",_dateObj);
 		console.log("-------------------------------是否登录" + _loginstatus)
 		if(_loginstatus == "false") {
-			popUp("noLogin");
+			startLogin(needQQ, 0);
+	        var _dateObj = {
+	            "page_name":"活动主页面登录弹窗",
+	            "activity_name":"七夕活动",
+	            "activity_id":actionId,
+	        } 
+	        webDataLog("web_page_show_new",_dateObj);
 		} else {
 			if(gameStatus == 0) {
 				popUp("notStar");
@@ -366,30 +395,96 @@ function buttonInitBefore() {
 	});
 
 	//跳转成为会员
-	$("#bevip,#vip_btn,#buy_vip").bind('itemClick', function(event) {
-		coocaaosapi.startMovieMemberCenter2("5",function(message) {
+	$("#bevip").bind('itemClick', function(event) {
+        var _dateObj = {
+            "page_name":"抽奖结果页",
+            "button_name":"立即获得机会",
+            "page_state":"无抽奖机会",
+			"page_type":"activityWindow",
+            "activity_name":"七夕活动",
+            "activity_id":actionId,
+            "open_id":_openId
+        } 
+        webDataLog("web_button_clicked",_dateObj);
+		if(_qsource == "tencent"){
+			var id = "5";
+		}else{
+			var id = "1";
+		}
+		coocaaosapi.startMovieMemberCenter2(id,function(message) {
 			console.log(message);
-			listen = "1";
-			console.log("成为会员：listen" + listen);
 			_czc.push(['_trackEvent', '七夕活动', '跳转会员中心次数', '', '']);
 		}, function(error) {
 			console.log(error);
 		});
 	});
 
+
+	//跳转成为会员
+	$("#buy_vip").bind('itemClick', function(event) {
+		if(_qsource == "tencent"){
+			var id = "5";
+		}else{
+			var id = "1";
+		}
+		coocaaosapi.startMovieMemberCenter2(id,function(message) {
+			console.log(message);
+			_czc.push(['_trackEvent', '七夕活动', '跳转会员中心次数', '', '']);
+		}, function(error) {
+			console.log(error);
+		});
+	});
+
+
 	$("#beuser,#user_login").bind('itemClick', function(event) {
+		var _dateObj = {
+			"page_name":"砸金蛋活动主页面",
+			"button_name":"成为会员",
+			"button_postion":"",
+			"page_state":gameStatusTxt,
+			"activity_name":"七夕活动",
+			"activity_id":actionId,
+			"open_id":_openId
+		} 
+		webDataLog("web_button_clicked",_dateObj);
 		needSentUserLog = true;
 		startLogin(needQQ, 0);
 	});
 
 	//最后一部确认信息
 	$("#subInfo").bind('itemClick', function(event) {
+		var awardType = $(this).attr("data");
+        var _dateObj = {
+            "page_name":"抽奖结果页",
+            "button_name":"再拆一次",
+            "page_state":awardType,
+			"page_type":"activityWindow",
+            "activity_name":"七夕活动",
+            "activity_id":actionId,
+            "open_id":_openId
+        } 
+        webDataLog("web_button_clicked",_dateObj);
+
 		closeWindow();
 		$("#confirmInfo").hide();
 		initChance();
 	});
 
 	$("#submit").bind('itemClick', function(event) {
+		var data = $(this).attr("data");
+		if(data == ""){
+			data == "我明白了"
+		}
+		var _dateObj = {
+			"page_name":"砸金蛋活动主页面",
+			"button_name":data,
+			"button_postion":"",
+			"page_state":gameStatus,
+			"activity_name":"七夕活动",
+			"activity_id":actionId,
+			"open_id":_openId
+		} 
+		webDataLog("web_page_show_new",_dateObj);
 		closeWindow();
 		document.getElementById("popUp").style.display = "none";
 	});
@@ -401,45 +496,43 @@ function buttonInitBefore() {
 		document.getElementById('index').style.display = "none";
 		ccmap.init(".coocaabtn", "#rule_box", "btnFocus");
 	});
-	$("#go_use,#go_experience").bind("itemClick", function() { //立即使用购物优惠券
-		leavetime = new Date().getTime();
-		var dateObj = {
-			"page_name": "中奖弹窗",
-			"button_name": "立即使用",
-			"parent_page": "中奖弹窗",
-			"prize_type": prize_type,
-			"prize_id": awardId,
-			"prize_name": awardName,
-			"activity_name": activity_name,
-			"activity_type": activity_type,
-			"activity_id": actionId,
-			"open_id": data_openId
-		}
-		var _dateObj = {
-				"page_name": "活动主页面",
-				"page_type": "活动主页面",
-				"activity_duration": leavetime - entertime,
-				"activity_name": activity_name,
-				"activity_type": activity_type,
-				"activity_id": actionId,
-				"open_id": data_openId
-			}
-			// pageShowLog("web_button_clicked_new", dateObj);   
-			// pageShowLog("result_event_new", _dateObj);
-		if(awardTypeId == 5) {
-			bywhat = $.trim(bywhat);
-			byvalue = $.trim(byvalue);
-			console.log("bywhat：" + bywhat);
-			console.log("byvalue:" + byvalue);
-			console.log("sources:" + sources)
-			coocaaosapi.startParamAction(bywhat, byvalue, sources, function(message) {}, function(error) {
-				console.log("判断失败" + error);
-			});
-		} else if(haveGoExtend == 0) { //没有配置
-			var coinUrl = 'https://goldshop.coocaa.com/';
-			coocaaosapi.startNewBrowser5(coinUrl, function() {}, function() {});
-		}
+	$("#go_use").bind("itemClick", function() { //立即使用购物优惠券
+        var _dateObj = {
+            "page_name":"抽奖结果页",
+            "button_name":"立即使用",
+            "page_state":"获得优惠券",
+			"page_type":"activityWindow",
+            "activity_name":"七夕活动",
+            "activity_id":actionId,
+            "open_id":_openId
+        }
+		bywhat = $.trim(bywhat);
+		byvalue = $.trim(byvalue);
+		console.log("bywhat：" + bywhat);
+		console.log("byvalue:" + byvalue);
+		console.log("sources:" + sources)
+		coocaaosapi.startParamAction(bywhat, byvalue, sources, function(message) {}, function(error) {
+			console.log("判断失败" + error);
+		});
+
+		 webDataLog("web_button_clicked",_dateObj);
 	});
+
+	$("#go_experience").bind('itemClick', function(event) {
+        var _dateObj = {
+            "page_name":"抽奖结果页",
+            "button_name":"去兑换",
+            "page_state":"获得金币",
+			"page_type":"activityWindow",
+            "activity_name":"七夕活动",
+            "activity_id":actionId,
+            "open_id":_openId
+        }   
+		webDataLog("web_button_clicked",_dateObj);
+		var coinUrl = 'https://goldshop.coocaa.com/';
+		coocaaosapi.startNewBrowser5(coinUrl, function() {}, function() {});
+	});
+
 
 	$("#my_prize").bind('itemClick', function(event) {
 		$("#myawardPage").css("display", "block");
@@ -467,7 +560,7 @@ function chanceCount() {
 				if(data.code == 50100) {
 					var awardName = data.data.awardName;
 					var awardTypeId = data.data.awardTypeId;
-					var lotteryAwardMemberId = data.data.lotteryAwardMemberId;
+					var lotteryAwardMemberId = data.data.lotteryAwardRememberId;
 					var awardExchangeFlag = data.data.awardExchangeFlag;
 					var awardId = data.data.awardId;
 					var awardPictureUrl = data.data.awardUrl;
@@ -487,66 +580,114 @@ function chanceCount() {
 }
 
 function lastWindow(awardId, awardTypeId, lotteryAwardMemberId, awardExchangeFlag, awardPictureUrl, awardName) {
+	var _dateObj = {
+		"page_name":"抽奖结果页",
+		"page_state":"",
+		"page_type":"activityWindow",
+		"activity_name":"七夕活动",
+		"activity_id":actionId,
+		"open_id":_openId
+	} 
 	openBg();
 	document.getElementById('confirmInfo').style.display = "block";
 	$(".matter").html(awardName);
 	$(".type-img").attr("src", awardPictureUrl);
 	console.log("获奖类型:" + awardTypeId + "奖品名称:" + awardName);
 	if(awardTypeId == 19 || awardTypeId == 5) { //金币 || 商城优惠券
+		if(awardTypeId == 19){
+			_dateObj.page_state = "获得金币";
+		}else{
+			_dateObj.page_state = "获得优惠券";
+		}
 		getGold(awardId, awardTypeId, lotteryAwardMemberId, awardExchangeFlag, awardPictureUrl, awardName);
 	} else if(awardTypeId == 4) { //第三方优惠券
+		_dateObj.page_state = "获得第三方优惠券";
 		$("#type4").show();
 		$("#type4").siblings().hide();
 		$("#shop").hide();
+		$("#subInfo").attr("data","获得第三方优惠券");
 		ccmap.init(".coocaabtn", "#subInfo", "btnFocus");
 	} else if(awardTypeId == 2) { //实物奖品
+		_dateObj.page_state = "获得实物奖";
 		$("#type2").show();
 		$("#type2").siblings().hide();
 		$('#qrcode').html("");
 		$("#shop").hide();
+		$("#subInfo").attr("data","获得实物奖");
 		// generateQRCode("https://webapp.skysrt.com/zy/game/address/index.html?lotteryAwardMemberId="+lotteryAwardMemberId+"&access_token="+access_token+"&awardName="+awardName);
 		generateQRCode("http://beta.webapp.skysrt.com/zy/address/index.html?activeId=" + actionId + "&rememberId=" + lotteryAwardMemberId + "&userKeyId=" + userKeyId);
 		ccmap.init(".coocaabtn", "#subInfo", "btnFocus");
 	}
+	webDataLog("web_page_show_new",_dateObj);
 }
 
 //领奖品
 function getGold(awardId, awardTypeId, lotteryAwardMemberId, awardExchangeFlag, awardPictureUrl, awardName) {
-	console.log("奖品类型：" + awardTypeId + "奖品参数ID:" + awardId + "奖品图片：" + awardPictureUrl);
 	$.ajax({
-		async: false,
-		url: adressIp + "/v4/lottery/verify/receive/",
+		async: true,
+		url: adressIp + "/v4/lottery/verify/receive",
 		type: "GET",
+		dataType: 'jsonp',
+		jsonp: 'callback',
 		data: {
-			"activeId": getUrlParam("id"),
-			"awardId": awardId,
-			"rememberId": lotteryAwardMemberId,
-			"awardTypeId": awardTypeId,
-			"cUDID": _emmcCID,
-			"MAC": _mac,
-			"cModel": _model,
-			"cChip": _chip,
-			"cOpenId": _openId,
-			"userKeyId": userKeyId,
-			"source":_qsource
+			activeId: getUrlParam("id"),
+			awardId: awardId,
+			rememberId: lotteryAwardMemberId,
+			awardTypeId: awardTypeId,
+			cUDID: _emmcCID,
+			MAC: _mac,
+			cModel: _model,
+			cChip: _chip,
+			cOpenId: _openId,
+			userKeyId: userKeyId,
+			source:_qsource
 		},
 		success: function(data) {
 			console.log("--------确认成功：" + JSON.stringify(data.data));
 			if(data.code == 50100) {
+				$(".matter").html(awardName);
+				$(".type-img").attr("src", awardPictureUrl);
 				if(data.data.awardTypeId == 5) {
+					var couponDetail = data.data.couponInfo.couponDetail;
+					console.log(couponDetail);
+					if(couponDetail == 1) { //已配置
+						var data_a = data.data.couponInfo.onclickData;
+						var packageName = JSON.parse(data_a).packageName;
+						byvalue = JSON.parse(data_a).byvalue;
+						bywhat = JSON.parse(data_a).bywhat;
+						var obj = JSON.parse(data_a).param;
+						ources = new Array();
+						for(var key in obj) {
+							var px = {};
+							px[key] = obj[key];
+							sources.push(px);
+						}
+						sources = JSON.stringify(sources);
+						console.log("跳转参数："+packageName + "--" + byvalue + "--" + bywhat + "--" + sources);
+					} else {
+						console.log("未配置");
+					}
+
+
 					$("#type5").show();
 					$("#type5").siblings().hide();
 					$("#shop").show();
 					$("#go_experience").hide();
+					$("#subInfo").attr("data","获得优惠券");
 					ccmap.init(".coocaabtn", "#shop", "btnFocus");
+					
 				} else {
 					$("#type19").show();
 					$("#type19").siblings().hide();
 					$("#shop").hide();
 					$("#go_experience").show();
+					$("#subInfo").attr("data","获得金币");
 					ccmap.init(".coocaabtn", "#go_experience", "btnFocus");
 				}
 			}
+		},
+		error: function(error) {
+			console.log("-----------------------error"+JSON.stringify(error));
 		}
 	});
 }
@@ -1060,37 +1201,41 @@ function popUp(type){
 	var str = '';
 	openBg();
 	document.getElementById('popUp').style.display = "block";
-	if(type == "noLogin"){//未登录
-	  $("#text1").html("做个有名有姓的人~");
-	  $("#text2").html("请登录后再参加活动");
-	  $("#text3").html("");
-	  $("#beuser").show();
-	  $("#bevip").hide();
-	  $("#submit").hide();
-	  ccmap.init(".coocaabtn", "#beuser", "btnFocus");
-	}else if(type == "notStar"){//未开始
+	$("#submitImg").attr({src: "images/btn1.png"});
+	$("#submit").attr("data","");
+	if(type == "notStar"){//未开始
 	  var aTime = $("#startTime").html();
 	  console.log("开始时间为："+aTime);
-	  var ohtml = '活动将于<span style="color:#ffff33" id="activeTime">'+aTime+'</span>开始';
+	  var ohtml = '七夕活动将于<span style="color:#ffff33" id="activeTime">'+aTime+'</span>开始';
 	  $("#text1").append(ohtml);
-	  $("#text2").html("请定好闹钟不要错过哟~");
+	  $("#text2").html("定好闹钟不要错过哟~");
 	  $("#text3").html("");
 	  $("#beuser").hide();
 	  $("#bevip").hide();
-	  $("#submit").show();
+	  $("#submit").show().attr("data","不用了");
+	  $("#submitImg").attr({src: "images/noneed.png"});
 	  $("#submit").attr({ rightTarget: "#submit"});
 	  ccmap.init(".coocaabtn", "#submit", "btnFocus");
 	}else if(type == "useUp"){//抽奖次数用完
-	  $("#text1").html("暂无抽奖机会");
-	  $("#text2").html("立即购买连续包月、季卡、年卡会员");
-	  $("#text3").html("可获[免单]等大奖,100%中奖哟~");
+	  $("#text1").html("拆礼物机会用完啦~可TA的礼物还没送，");
+	  $("#text2").html("");
+	  $("#text3").html("想再次获得机会吗？");
 	  $("#bevip").show();
 	  $("#submit").show();
 	  $("#beuser").hide();
 	  ccmap.init(".coocaabtn", "#bevip", "btnFocus");
+		var _dateObj = {
+			"page_name":"抽奖结果页",
+			"page_state":"无抽奖机会",
+			"page_type":"activityWindow",
+			"activity_name":"七夕活动",
+			"activity_id":actionId,
+			"open_id":_openId
+		} 
+		webDataLog("web_page_show_new",_dateObj);
 	}else if(type == "over"){//奖品已领完或已结束
-	  $("#text1").html("好遗憾，活动已结束");
-	  $("#text2").html("（已参与用户可在[我的奖品]中查看中奖信息）");
+	  $("#text1").html("七夕活动已于8月8日结束~");
+	  $("#text2").html("下一个七夕再相会");
 	  $("#text3").html("");
 	  $("#bevip").hide();
 	  $("#beuser").hide();
