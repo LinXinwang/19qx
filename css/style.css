@@ -388,7 +388,6 @@ body .goldContent .list_Content.rulesActivity {
 	font-size: 24px;
 }
 .font20 {
-	font-size: 20px;
 }
 #header {
 	position: absolute;
@@ -664,8 +663,6 @@ body .goldContent .list_Content.rulesActivity {
 	height: 40px;
 	line-height: 40px;
 }
-
-
 .btnPart{
 	position: absolute;
 	top: 95px;
@@ -682,7 +679,7 @@ body .goldContent .list_Content.rulesActivity {
 	overflow: hidden;
 	display: none;
 }
-.btnImgBlur,.btn-focus .btnImgFocus{
+.btnImgBlur,.btnFocus .btnImgFocus{
 	display: block;
 }
 .line{
@@ -700,18 +697,15 @@ body .goldContent .list_Content.rulesActivity {
 	background:linear-gradient(to left,#efefef,#b6b6b6,#efefef);*/
 }
 
-
-
-
-
-
-
-
 #prize_null {
-	text-align: center;
-	font-size: 26px;
-	margin-top: 200px;
-	letter-spacing: 2px;
+	position: absolute;
+    top: 300px;
+    left: 510px;
+    width: 900px;
+    height: 400px;
+    text-align: center;
+    font-size: 38px;
+    font-weight: 900;
 	display: none;
 }
 #jinDanUl1 .btnFocus img {
