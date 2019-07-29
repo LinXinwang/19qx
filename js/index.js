@@ -80,16 +80,12 @@ coocaaApp.bindEvents("resume", function() {
 
 	console.log("======其他页面返回============");
 	closeWindow();
-	document.getElementById('get_window').style.display = "none";
 	document.getElementById('popUp').style.display = "none";
-	document.getElementById('receive_window').style.display = "none";
-	document.getElementById("download_win").style.display = "none";
-	document.getElementById("alert_window").style.display = "none";
-
+	document.getElementById('confirmInfo').style.display = "none";
 	var _dateObj = {
 		"page_name": "活动主页面登录弹窗",
 		"login_result": "",
-		"activity_name": activity_name,
+		"activity_name": "七夕活动",
 		"activity_id": getUrlParam("id"),
 		"open_id": _openId
 	}
@@ -109,7 +105,7 @@ coocaaApp.bindEvents("resume", function() {
 			needSentUserLog2 = false;
 			_dateObj.login_result = "登录失败";
 			if(document.getElementById("index").style.display == "block") {
-				initActive();
+				initChance();
 			} else if(document.getElementById("prize").style.display == "block") {
 				getMyAwards(2); //0 需要数据采集 
 			}
@@ -117,7 +113,7 @@ coocaaApp.bindEvents("resume", function() {
 		webDataLog("result_event",_dateObj);
 	} else {
 		if(document.getElementById("index").style.display == "block") {
-			initActive();
+			initChance();
 		} else if(document.getElementById("prize").style.display == "block") {
 			//     getMyAwards(2);
 		}
@@ -293,6 +289,7 @@ function hasLogin(needQQ, area) {
 }
 
 function initChance(){
+	ccmap.init(".coocaabtn", "#egg0", "btnFocus");
 	console.log("初始化接口cUDID---"+_emmcCID+"--MAC--"+_mac+"--cModel---"+_model+"---cChip--"+_chip+"--cOpenId--"+_openId);
     $.ajax({
         async:true,
@@ -325,7 +322,6 @@ function initChance(){
 				overNum = data.data.overNum;
 				$("#chanceCount").html(data.data.overNum);
 				console.log("------------------初始化次数:" + data.data.overNum);
-				ccmap.init(".coocaabtn", "#egg0", "btnFocus");
 			} else if(data.code == 50002) {
 				_dateObj.page_state = "未开始";
 				gameStatus = 0;
@@ -335,9 +331,11 @@ function initChance(){
 				gameStatus = 2;
 				gameStatusTxt = "已结束";
 			} else if(data.code == 50049) {
+				gameStatusTxt = "未登录";
 				_dateObj.page_state = "异常";
 				console.log("活动必须登陆才能玩");
 			}else{
+				gameStatusTxt = "异常";
 				_dateObj.page_state = "异常";
 			}
 			webDataLog("web_page_show_new",_dateObj);
@@ -375,6 +373,7 @@ function buttonInitBefore() {
 		webDataLog("web_page_show_new",_dateObj);
 		console.log("-------------------------------是否登录" + _loginstatus)
 		if(_loginstatus == "false") {
+			needSentUserLog = true;
 			startLogin(needQQ, 0);
 	        var _dateObj = {
 	            "page_name":"活动主页面登录弹窗",
@@ -467,7 +466,8 @@ function buttonInitBefore() {
 
 		closeWindow();
 		$("#confirmInfo").hide();
-		initChance();
+		ccmap.init(".coocaabtn", "#egg0", "btnFocus");
+	//	initChance();
 	});
 
 	$("#submit").bind('itemClick', function(event) {
@@ -494,7 +494,7 @@ function buttonInitBefore() {
 		document.getElementById('index').style.display = "none";
 		ccmap.init(".coocaabtn", "#rule_box", "btnFocus");
 	});
-	$("#go_use").bind("itemClick", function() { //立即使用购物优惠券
+	$("#shop").bind("itemClick", function() { //立即使用购物优惠券
         var _dateObj = {
             "page_name":"抽奖结果页",
             "button_name":"立即使用",
@@ -574,7 +574,8 @@ function chanceCount() {
 					var awardExchangeFlag = data.data.awardExchangeFlag;
 					var awardId = data.data.awardId;
 					var awardPictureUrl = data.data.awardUrl;
-					$("#chanceCount").html(overNum - 1);
+					overNum = overNum - 1;
+					$("#chanceCount").html(overNum);
 					lastWindow(awardId, awardTypeId, lotteryAwardMemberId, awardExchangeFlag, awardPictureUrl, awardName)
 				}else if(data.code == 50023){
 					popUp("over"); //抽奖次数用完
@@ -666,7 +667,7 @@ function getGold(awardId, awardTypeId, lotteryAwardMemberId, awardExchangeFlag, 
 						byvalue = JSON.parse(data_a).byvalue;
 						bywhat = JSON.parse(data_a).bywhat;
 						var obj = JSON.parse(data_a).param;
-						ources = new Array();
+						sources = new Array();
 						for(var key in obj) {
 							var px = {};
 							px[key] = obj[key];
@@ -694,10 +695,13 @@ function getGold(awardId, awardTypeId, lotteryAwardMemberId, awardExchangeFlag, 
 					$("#subInfo").attr("data","获得金币");
 					ccmap.init(".coocaabtn", "#go_experience", "btnFocus");
 				}
+			}else{
+				popUp("getfocus");
 			}
 		},
 		error: function(error) {
 			console.log("-----------------------error"+JSON.stringify(error));
+			popUp("getfocus");
 		}
 	});
 }
@@ -1167,10 +1171,10 @@ function getNameList(id) {
 			var _awardName = new Array();
 			if(data.data){
 			  for (var i = 0; i < data.data.fakeNews.length; i++) {
-				  if (!data.data.fakeNews[i].awardName) {
+				  if (!data.data.fakeNews[i].nickName) {
 					  _UserNickName[i] = "匿名用户";
 				  } else {
-					  _UserNickName[i] = data.data[i].nickName;
+					  _UserNickName[i] = data.data.fakeNews[i].nickName;
 				  }
 				  _awardName[i] = data.data.fakeNews[i].awardName;
 			  }
