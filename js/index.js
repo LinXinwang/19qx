@@ -576,19 +576,9 @@ function getGold(awardId,awardTypeId,lotteryAwardMemberId,awardExchangeFlag,awar
 					}
 				}
 			}
-		}
-	}
-	buttonInitAfter();
-	console.log(_curFocusId);
-	if (_curFocusId==""||_curFocusId==null) {
-		$(".awardBoxs:eq(0)").trigger("focus");
-	} else{
-    	console.log(_curFocusId);
-		$("#"+_curFocusId).trigger("focus");
-	}
-	//map = new coocaakeymap($(".coocaa_btn2"),document.getElementById(_curFocusId),"btn-focus",function(){},function(val){},function(obj){});
-	ccmap.init(".coocaa_btn2", "#"+_curFocusId, "btn-focus");
+		})
 }
+
 
 
 //我的奖品
