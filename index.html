@@ -12,11 +12,29 @@
 		<link rel="stylesheet" href="css/style.css">
 		<title>拆礼盒</title>
 		<script>
+			var adjust = function() {
+				if(/Android (\d+\.\d+)/.test(navigator.userAgent)) {
+					var version = parseFloat(RegExp.$1);
+					if(version > 2.3) {
+						var phoneScale = parseInt(window.screen.width) / 1920;
+						document.write('<meta name="viewport" content="width=1920, minimum-scale = ' + phoneScale + ', maximum-scale = ' + phoneScale + ', target-densitydpi=device-dpi">');
+					} else {
+						document.write('<meta name="viewport" content="width=1920, target-densitydpi=device-dpi">');
+					}
+				} else {
+					document.write('<meta name="viewport" content="width=1920, user-scalable=no, target-densitydpi=device-dpi">');
+				}
+			}
+			adjust();
+
+
+
 			//声明_czc对象:
 			var _czc = _czc || [];
 			//绑定siteid，请用您的siteid替换下方"XXXXXXXX"部分
 			_czc.push(["_setAccount", "1271484075"]);
 			//_czc.push(["_setAccount", "1261823837"]);
+			
 		</script>
 	</head>
 
