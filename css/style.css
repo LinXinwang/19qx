@@ -905,3 +905,51 @@ body .goldContent .list_Content.rulesActivity {
     white-space: nowrap;
     text-overflow: ellipsis;
 }
+#showBox{
+    position: absolute;
+    top: 440px;
+    width: 362px;
+    height: 288px;
+    z-index: 10;
+	display: none;
+}
+.box1{
+	-webkit-animation:mov 1750ms steps(11,end) 0ms 1 normal forwards;
+	animation:mov 1750ms steps(11,end) 0ms 1 normal forwards;
+}
+@keyframes mov{
+	0%{
+		background-position:0 0px;
+	}
+	100%{
+		background-position:-3982px 0px;
+	}
+}
+@-webkit-keyframes mov {
+	0%{
+		background-position:0 0px;
+	}
+	100%{
+		background-position:-3982px 0px;
+	}
+}
+.box2{
+	-webkit-animation:mov2 1750ms steps(11,end) 0ms 1 normal forwards;
+	animation:mov2 1750ms steps(11,end) 0ms 1 normal forwards;
+}
+@keyframes mov2{
+	0%{
+		background-position:0 0px;
+	}
+	100%{
+		background-position:-3982px 0px;
+	}
+}
+@-webkit-keyframes mov2 {
+	0%{
+		background-position:0 0px;
+	}
+	100%{
+		background-position:-3982px 0px;
+	}
+}

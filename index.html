@@ -46,17 +46,17 @@
 							<ul class="jinDanUl" id="jinDanUl1">
 								<li id="start" class="egg0">
 									<div class="coocaabtn startBtn" id="egg0" data="1">
-										<img src="images/egg0.png">
+										<img class="startImg" src="images/egg0.png">
 									</div>
 								</li>
 								<li class="egg1">
 									<div class="coocaabtn startBtn" data="2">
-										<img src="images/egg1.png">
+										<img class="startImg" src="images/egg1.png">
 									</div>
 								</li>
 								<li class="egg2">
 									<div class="coocaabtn startBtn" data="3">
-										<img src="images/egg2.png">
+										<img class="startImg" src="images/egg2.png">
 									</div>
 								</li>
 							</ul>
@@ -84,8 +84,11 @@
 					</div>
 				</div>
 			</div>
-
 		</div>
+		
+		<div id="showBox" class="box"></div>
+		
+		
 		<div id="prize">
 			<div class="prize_list" id="prize_list">
 				<div class="awardBoxs coocaabtn2">
@@ -265,6 +268,11 @@
 		<script type="text/javascript">
 			var cnzz_protocol = (("https:" == document.location.protocol) ? " https://" : " http://");
 			document.write(unescape("%3Cspan style='display:none;' id='cnzz_stat_icon_1271484075'%3E%3C/span%3E%3Cscript src='" + cnzz_protocol + "s4.cnzz.com/z_stat.php%3Fid%3D1271484075' type='text/javascript'%3E%3C/script%3E"));
+			
+			setTimeout(otherPartInit,100);
+			function otherPartInit(){
+				//$("#showBox").css("background-image", "url(ice.png)");
+			}
 		</script>
 	</body>
 

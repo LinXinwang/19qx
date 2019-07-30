@@ -28,6 +28,7 @@ var _tencentWay = "";
 
 var dataObj = {}; //我的奖励数据
 var _curFocusId = null;
+var ani_status = 1;
 var startLoginFlag = false;
 var changeLoginFlag = false;
 
@@ -397,7 +398,7 @@ function buttonInitBefore() {
 				popUp("over");
 			} else {
 				//活动已开始
-				chanceCount(); //剩余次数
+				chanceCount(data); //剩余次数
 			}
 		}
 	});
@@ -594,8 +595,9 @@ function buttonInitBefore() {
 }
 
 //剩余抽奖次数
-function chanceCount() {
+function chanceCount(num) {
 	if(overNum > 0){
+		
 		$.ajax({
 			type: "POST",
 			async: true,
@@ -611,14 +613,7 @@ function chanceCount() {
 			success: function(data) {
 				console.log("抽奖结果" + JSON.stringify(data));
 				if(data.code == 50100) {
-					var awardName = data.data.awardName;
-					var awardTypeId = data.data.awardTypeId;
-					var lotteryAwardMemberId = data.data.lotteryAwardRememberId;
-					var awardExchangeFlag = data.data.awardExchangeFlag;
-					var awardId = data.data.awardId;
-					var awardPictureUrl = data.data.awardUrl;
-					$("#chanceCount").html(overNum - 1);
-					lastWindow(awardId, awardTypeId, lotteryAwardMemberId, awardExchangeFlag, awardPictureUrl, awardName)
+					showTheGif(data,num);
 				}else if(data.code == 50023){
 					popUp("over"); //抽奖次数用完
 				}
@@ -631,7 +626,46 @@ function chanceCount() {
 		popUp("useUp"); //抽奖次数用完
 	}
 }
+function showTheGif(obj,num){
+	console.log("礼盒拆开的动效");
+	$("#showBox").css("background-image", "url(images/green.png)");
+	$("#showBox").css("display","block");
+	if (num == 1) {
+		$("#showBox").css("left","440px");
+		$(".startImg:eq(0)").css("display","none");
+	}else if(num == 2){
+		$("#showBox").css("left","765px");
+		$(".startImg:eq(1)").css("display","none");
+	}else if(num == 3){
+		$("#showBox").css("left","1085px");
+		$(".startImg:eq(2)").css("display","none");
+	}
+	
+	if(ani_status == 1) {
+		$("#showBox").attr("class","box box1");
+		ani_status = 2;
+	} else {
+		$("#showBox").attr("class","box box2");
+		ani_status = 1;
+	}
+	setTimeout(function(){
+		$("#showBox").css("display","none");
+		$(".startImg").css("display","block");
+		showDrawResult(obj);
+	}, 1750);
+}
 
+function showDrawResult(obj){
+	console.log(obj);
+	var awardName = obj.data.awardName;
+	var awardTypeId = obj.data.awardTypeId;
+	var lotteryAwardMemberId = obj.data.lotteryAwardRememberId;
+	var awardExchangeFlag = obj.data.awardExchangeFlag;
+	var awardId = obj.data.awardId;
+	var awardPictureUrl = obj.data.awardUrl;
+	$("#chanceCount").html(overNum - 1);
+	lastWindow(awardId, awardTypeId, lotteryAwardMemberId, awardExchangeFlag, awardPictureUrl, awardName)
+}
 function lastWindow(awardId, awardTypeId, lotteryAwardMemberId, awardExchangeFlag, awardPictureUrl, awardName) {
 	var _dateObj = {
 		"page_name":"抽奖结果页",
@@ -696,7 +730,7 @@ function getGold(awardId, awardTypeId, lotteryAwardMemberId, awardExchangeFlag, 
 			source:_qsource
 		},
 		success: function(data) {
-			console.log("--------确认成功：" + JSON.stringify(data.data));
+			console.log("--------确认成功：" + JSON.stringify(data));
 			if(data.code == 50100) {
 				$(".matter").html(awardName);
 				$(".type-img").attr("src", awardPictureUrl);
@@ -737,10 +771,14 @@ function getGold(awardId, awardTypeId, lotteryAwardMemberId, awardExchangeFlag, 
 					$("#subInfo").attr("data","获得金币");
 					ccmap.init(".coocaabtn", "#go_experience", "btnFocus");
 				}
+			}else{
+				console.log("-----------");
+				popUp("getfocus");
 			}
 		},
 		error: function(error) {
 			console.log("-----------------------error"+JSON.stringify(error));
+			popUp("getfocus");
 		}
 	});
 }
@@ -1277,9 +1315,11 @@ function startmarquee(lh, speed, delay, index,id) {
 
 //提示弹窗
 function popUp(type){
+	console.log(type);
 	var str = '';
 	openBg();
 	document.getElementById('popUp').style.display = "block";
+	document.getElementById('confirmInfo').style.display = "none";
 	$("#submitImg").attr({src: "images/btn1.png"});
 	$("#submit").attr("data","");
 	if(type == "notStar"){//未开始
@@ -1322,6 +1362,7 @@ function popUp(type){
 	  $("#submit").attr({ rightTarget: "#submit"});
 	  ccmap.init(".coocaabtn", "#submit", "btnFocus");
 	}else if(type == "getfocus"){
+		console.log("---------");
 	  $("#text1").html("啊哦，未能成功领取！");
 	  $("#text2").html("");
 	  $("#text3").html("如有疑问，请关注微信公众号[酷开会员]-在线客服进行查询");
