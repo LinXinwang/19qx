@@ -1267,7 +1267,7 @@ function getNameList(id) {
 				  if (!data.data.fakeNews[i].awardName) {
 					  _UserNickName[i] = "匿名用户";
 				  } else {
-					  _UserNickName[i] = data.data[i].nickName;
+					  _UserNickName[i] = data.data.fakeNews[i].nickName;
 				  }
 				  _awardName[i] = data.data.fakeNews[i].awardName;
 			  }
