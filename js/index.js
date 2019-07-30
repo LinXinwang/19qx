@@ -71,7 +71,7 @@ coocaaApp.bindEvents("backbuttondown", function() {
 	} else if(document.getElementById('rule_box').style.display == "block") {
 		document.getElementById('rule_box').style.display = "none";
 		document.getElementById('index').style.display = "block";
-		ccmap.init(".coocaabtn", "#egg0", "btnFocus");
+		ccmap.init(".coocaabtn", "#ruleMore", "btnFocus");
 	}else{
 		navigator.app.exitApp();
 	}
@@ -329,6 +329,7 @@ function initChance(){
 				gameStatus = 1;
 				gameStatusTxt = "进行中";
 				overNum = data.data.overNum;
+				allNumber = data.data.allNumber;
 				$("#chanceCount").html(data.data.overNum);
 				console.log("------------------初始化次数:" + data.data.overNum);
 			} else if(data.code == 50002) {
@@ -496,6 +497,7 @@ function buttonInitBefore() {
 		webDataLog("web_page_show_new",_dateObj);
 		closeWindow();
 		document.getElementById("popUp").style.display = "none";
+		ccmap.init(".coocaabtn", "#egg0", "btnFocus");
 	});
 	$("#ruleMore").bind('itemClick', function(event) {
 		_czc.push(['_trackEvent', '双旦', '打开活动规则', '', '']);
@@ -596,8 +598,7 @@ function buttonInitBefore() {
 
 //剩余抽奖次数
 function chanceCount(num) {
-	if(overNum > 0){
-		
+	if(overNum > 0){		
 		$.ajax({
 			type: "POST",
 			async: true,
@@ -615,7 +616,7 @@ function chanceCount(num) {
 				if(data.code == 50100) {
 					showTheGif(data,num);
 				}else if(data.code == 50023){
-					popUp("over"); //抽奖次数用完
+					popUp("thanks"); //奖品已被抽完
 				}
 			},
 			error: function() {
@@ -623,7 +624,12 @@ function chanceCount(num) {
 			}
 		});
 	} else {
-		popUp("useUp"); //抽奖次数用完
+		if(allNumber > 0){
+			popUp("useUp"); //无机会
+		}else{
+			popUp("noone"); //无资格
+		}
+		
 	}
 }
 function showTheGif(obj,num){
@@ -701,9 +707,13 @@ function lastWindow(awardId, awardTypeId, lotteryAwardMemberId, awardExchangeFla
 		$('#qrcode').html("");
 		$("#shop").hide();
 		$("#subInfo").attr("data","获得实物奖");
-		// generateQRCode("https://webapp.skysrt.com/zy/game/address/index.html?lotteryAwardMemberId="+lotteryAwardMemberId+"&access_token="+access_token+"&awardName="+awardName);
-		generateQRCode("http://beta.webapp.skysrt.com/zy/address/index.html?activeId=" + actionId + "&rememberId=" + lotteryAwardMemberId + "&userKeyId=" + userKeyId);
+		var enstr = enurl + "activeId=" + actionId + "&rememberId=" + lotteryAwardMemberId + "&userKeyId=" + userKeyId + "&open_id=" + _openId;
+		generateQRCode("#qrcode",enstr,190);
 		ccmap.init(".coocaabtn", "#subInfo", "btnFocus");
+	}else if(awardTypeId == 14) { //谢谢参与奖
+		_dateObj.page_state = "谢谢参与奖";
+		document.getElementById('confirmInfo').style.display = "none";
+		popUp("thanks");
 	}
 	webDataLog("web_page_show_new",_dateObj);
 }
@@ -1330,8 +1340,7 @@ function popUp(type){
 	  console.log("开始时间为："+aTime);
 	  var ohtml = '七夕活动将于<span style="color:#ffff33" id="activeTime">'+aTime+'</span>开始';
 	  $("#text1").append(ohtml);
-	  $("#text2").html("定好闹钟不要错过哟~");
-	  $("#text3").html("");
+	  $("#text3").html("定好闹钟不要错过哟~");
 	  $("#beuser").hide();
 	  $("#bevip").hide();
 	  $("#submit").show().attr("data","不用了");
@@ -1340,7 +1349,6 @@ function popUp(type){
 	  ccmap.init(".coocaabtn", "#submit", "btnFocus");
 	}else if(type == "useUp"){//抽奖次数用完
 	  $("#text1").html("拆礼物机会用完啦~可TA的礼物还没送，");
-	  $("#text2").html("");
 	  $("#text3").html("想再次获得机会吗？");
 	  $("#bevip").show();
 	  $("#submit").show();
@@ -1355,10 +1363,25 @@ function popUp(type){
 			"open_id":_openId
 		} 
 		webDataLog("web_page_show_new",_dateObj);
-	}else if(type == "over"){//奖品已领完或已结束
+	}else if(type == "noone"){//抽奖次数用完
+		$("#text1").html("抱歉啦，您还没有获得拆礼物的机会哟~");
+		$("#text3").html("");
+		$("#bevip").show();
+		$("#submit").show();
+		$("#beuser").hide();
+		ccmap.init(".coocaabtn", "#bevip", "btnFocus");
+		  var _dateObj = {
+			  "page_name":"抽奖结果页",
+			  "page_state":"无抽奖机会",
+			  "page_type":"activityWindow",
+			  "activity_name":"七夕活动",
+			  "activity_id":actionId,
+			  "open_id":_openId
+		  } 
+		  webDataLog("web_page_show_new",_dateObj);
+	  }else if(type == "over"){//奖品已领完或已结束
 	  $("#text1").html("七夕活动已于8月8日结束~");
-	  $("#text2").html("下一个七夕再相会");
-	  $("#text3").html("");
+	  $("#text3").html("下一个七夕再相会");
 	  $("#bevip").hide();
 	  $("#beuser").hide();
 	  $("#submit").show();
@@ -1367,14 +1390,22 @@ function popUp(type){
 	}else if(type == "getfocus"){
 		console.log("---------");
 	  $("#text1").html("啊哦，未能成功领取！");
-	  $("#text2").html("");
 	  $("#text3").html("如有疑问，请关注微信公众号[酷开会员]-在线客服进行查询");
 	  $("#bevip").hide();
 	  $("#beuser").hide();
 	  $("#submit").show();
 	  $("#submit").attr({ rightTarget: "#submit"});
 	  ccmap.init(".coocaabtn", "#submit", "btnFocus");
-	}   
+	}else if(type == "thanks"){
+	  $("#text1").html("只差一步");
+	  $("#text3").html("就能为TA送一份七夕礼物了");
+	  $("#bevip").hide();
+	  $("#beuser").hide();
+	  $("#submit").show();
+	  $("#submitImg").attr({src: "images/btn4.png"});
+	  $("#submit").attr({ rightTarget: "#submit"});
+	  ccmap.init(".coocaabtn", "#submit", "btnFocus");
+	}  
   }
 
 

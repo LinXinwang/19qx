@@ -259,7 +259,7 @@ body .goldContent .list_Content.rulesActivity {
 	width: 731px;
 	height: 519px;
 	margin: -259px -365px 0 0;
-	padding-top: 30px;
+	padding-top: 0px;
 	box-sizing: border-box;
 	z-index: 9999
 }
@@ -448,7 +448,7 @@ body .goldContent .list_Content.rulesActivity {
 	cursor: pointer;
 }
 .font26 {
-	font-size: 30px;
+	font-size: 34px;
 }
 .font24 {
 	font-size: 24px;
@@ -952,4 +952,7 @@ body .goldContent .list_Content.rulesActivity {
 	100%{
 		background-position:-3982px 0px;
 	}
+}
+#popUp p{
+	line-height: 50px
 }
