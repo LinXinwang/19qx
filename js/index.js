@@ -69,19 +69,19 @@ var app = {
 		ccApp.bindEvents("menubutton", function() {
 			console.log("this menuButton>>>>>>>>>new>>>>>>>>>")
 		});
-		coocaaApp.bindEvents("backbuttondown", function() {
+		ccApp.bindEvents("backbuttondown", function() {
 			console.log("this backbuttondown>>>>>>>>>new>>>>>>>>>");
 			backButtonDown();
 		});
-		coocaaApp.bindEvents("homebutton", function() {
+		ccApp.bindEvents("homebutton", function() {
 			console.log("this homebutton>>>>>>>>>new>>>>>>>>>");
 			navigator.app.exitApp();
 		});
-		coocaaApp.bindEvents("resume", function() {
+		ccApp.bindEvents("resume", function() {
 			console.log("on resume");
 			onResumeFunc();
 		});
-		coocaaApp.bindEvents("pause", function() {
+		ccApp.bindEvents("pause", function() {
 			console.log("on pause");
 		});
 	},
