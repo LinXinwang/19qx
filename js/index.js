@@ -41,12 +41,62 @@ var actionId = getUrlParam("id");
 var adressIp = "http://beta.restful.lottery.coocaatv.com";
 var enurl = "http://beta.webapp.skysrt.com/zy/address/index.html?"; //实体奖url
 
-coocaaApp.bindEvents("menubutton", function() {
-	console.log("this menuButton>>>>>>>>>new>>>>>>>>>")
-});
+var app = {
+	canonical_uri: function(src, base_path) {
+		var root_page = /^[^?#]*\//.exec(location.href)[0],
+			root_domain = /^\w+\:\/\/\/?[^\/]+/.exec(root_page)[0],
+			absolute_regex = /^\w+\:\/\//;
+		if(/^\/\/\/?/.test(src)) {
+			src = location.protocol + src;
+		} else if(!absolute_regex.test(src) && src.charAt(0) != "/") {
+			src = (base_path || "") + src;
+		}
+		return absolute_regex.test(src) ? src : ((src.charAt(0) == "/" ? root_domain : root_page) + src);
+	},
+	rel_html_imgpath: function(iconurl) {
+		return app.canonical_uri(iconurl.replace(/.*\/([^\/]+\/[^\/]+)$/, '$1'));
+	},
+	initialize: function() {
+		console.log("initialize");
+		this.bindEvents();		
+	},
+	bindEvents: function() {
+		console.log("bindEvents");
+		ccApp.deviceReady(app.onDeviceReady);
+		ccApp.bindEvents("menubutton", function() {
+			console.log("this menuButton>>>>>>>>>new>>>>>>>>>")
+		});
+		ccApp.bindEvents("menubutton", function() {
+			console.log("this menuButton>>>>>>>>>new>>>>>>>>>")
+		});
+		coocaaApp.bindEvents("backbuttondown", function() {
+			console.log("this backbuttondown>>>>>>>>>new>>>>>>>>>");
+			backButtonDown();
+		});
+		coocaaApp.bindEvents("homebutton", function() {
+			console.log("this homebutton>>>>>>>>>new>>>>>>>>>");
+			navigator.app.exitApp();
+		});
+		coocaaApp.bindEvents("resume", function() {
+			console.log("on resume");
+			onResumeFunc();
+		});
+		coocaaApp.bindEvents("pause", function() {
+			console.log("on pause");
+		});
+	},
+	onDeviceReady: function() {
+		console.log('deviceReady');
+		_appversion = accountVersion;
+		listenUserChange();
+		buttonInitBefore();
+		getDeviceInfo();
+	}
+};
 
-coocaaApp.bindEvents("backbuttondown", function() {
-	console.log("this backbuttondown>>>>>>>>>new>>>>>>>>>");
+app.initialize();
+
+function backButtonDown(){
 	if(document.getElementById('prize').style.display == "block") {
 		if (document.getElementById('bgMask').style.display == "block") {
 			$("#bgMask").css("display", "none");
@@ -76,17 +126,8 @@ coocaaApp.bindEvents("backbuttondown", function() {
 		navigator.app.exitApp();
 	}
 	//navigator.app.exitApp();
-});
-
-coocaaApp.bindEvents("homebutton", function() {
-	console.log("this homebutton>>>>>>>>>new>>>>>>>>>");
-
-	navigator.app.exitApp();
-});
-
-coocaaApp.bindEvents("resume", function() {
-	console.log("on resume");
-
+}
+function onResumeFunc(){
 	console.log("======其他页面返回============");
 	closeWindow();
 	document.getElementById('popUp').style.display = "none";
@@ -127,26 +168,10 @@ coocaaApp.bindEvents("resume", function() {
 			//     getMyAwards(actionId,2);
 		}
 	}
-});
-
-coocaaApp.bindEvents("pause", function() {
-	console.log("on pause");
-});
-
-coocaaApp.ready = function() {
-	console.log("this is todo function----------");
-};
-
-coocaaApp.triggleButton = function() {
-	_appversion = accountVersion;
-	listenUserChange();
-	buttonInitBefore();
-	getDeviceInfo();
-	ccmap.init(".coocaabtn", "#egg0", "btnFocus");
-};
+}
 //判断是否登录
 function hasLogin(needQQ, area) {
-	coocaaosapi.hasCoocaaUserLogin(function(message) {
+	ccApp.hasCoocaaUserLogin(function(message) {
 		console.log(area + "======haslogin======== " + message.haslogin);
 		_loginstatus = message.haslogin;
 		if(_loginstatus == "false") {
@@ -165,7 +190,7 @@ function hasLogin(needQQ, area) {
 			$("#user_login").show();
 			initChance();
 		} else {
-			coocaaosapi.getUserInfo(function(message) {
+			ccApp.getUserInfo(function(message) {
 				exterInfo = message.external_info;
 				_openId = message.open_id;
 				data_openId = message.open_id;
@@ -175,7 +200,7 @@ function hasLogin(needQQ, area) {
 				} else {
 					face = message.avatar;
 				}
-				coocaaosapi.getUserAccessToken(function(message) {
+				ccApp.getUserAccessToken(function(message) {
 					_accessToken = message.accesstoken;
 					console.log("_accessToken===============" + _accessToken);
 					if(exterInfo == "[]") {
@@ -356,18 +381,6 @@ function initChance(){
 		}
     });
 } 
-
-
-
-function handleBackButtonFunc(){
-	navigator.app.exitApp();
-}
-
-
-function handleBackButtonFunc() {
-	navigator.app.exitApp();
-}
-
 function buttonInitBefore() {
 	//点击金蛋
 	$(".startBtn").bind('itemClick', function(event) {
@@ -421,15 +434,13 @@ function buttonInitBefore() {
 		}else{
 			var id = "1";
 		}
-		coocaaosapi.startMovieMemberCenter2(id,function(message) {
+		ccApp.startMovieMemberCenter2(id,function(message) {
 			console.log(message);
 			_czc.push(['_trackEvent', '七夕活动', '跳转会员中心次数', '', '']);
 		}, function(error) {
 			console.log(error);
 		});
 	});
-
-
 	//跳转成为会员
 	$("#buy_vip").bind('itemClick', function(event) {
 		if(_qsource == "tencent"){
@@ -437,7 +448,7 @@ function buttonInitBefore() {
 		}else{
 			var id = "1";
 		}
-		coocaaosapi.startMovieMemberCenter2(id,function(message) {
+		ccApp.startMovieMemberCenter2(id,function(message) {
 			console.log(message);
 			_czc.push(['_trackEvent', '七夕活动', '跳转会员中心次数', '', '']);
 		}, function(error) {
@@ -521,11 +532,10 @@ function buttonInitBefore() {
 		console.log("bywhat：" + bywhat);
 		console.log("byvalue:" + byvalue);
 		console.log("sources:" + sources)
-		coocaaosapi.startParamAction(bywhat, byvalue, sources, function(message) {}, function(error) {
+		ccApp.startParamAction(bywhat, byvalue, sources, function(message) {}, function(error) {
 			console.log("判断失败" + error);
 		});
-
-		 webDataLog("web_button_clicked",_dateObj);
+		webDataLog("web_button_clicked",_dateObj);
 	});
 
 	$("#go_experience").bind('itemClick', function(event) {
@@ -540,10 +550,8 @@ function buttonInitBefore() {
         }   
 		webDataLog("web_button_clicked",_dateObj);
 		var coinUrl = 'https://goldshop.coocaa.com/';
-		coocaaosapi.startNewBrowser5(coinUrl, function() {}, function() {});
+		ccApp.startNewBrowser5(coinUrl, function() {}, function() {});
 	});
-
-
 	$("#my_prize").bind('itemClick', function(event) {
 		if (_loginstatus == "false") {
 			needSentUserLog = true;
@@ -580,8 +588,6 @@ function buttonInitBefore() {
 			_dateObj.page_state = "无礼品（未结束）";
 		}
 		webDataLog("web_button_clicked", _dateObj);
-				
-				
 		$("#index").css("display", "block");
 		$("#prize").css("display", "none");
 		$("#prize_null").css("display", "none");
@@ -594,12 +600,12 @@ function buttonInitBefore() {
 		$("#prize").css("display", "block");
 		getMyAwards(actionId,2);
 	});
-	
 }
 
 //剩余抽奖次数
 function chanceCount(num) {
-	if(overNum > 0){		
+	if(overNum > 0){
+		
 		$.ajax({
 			type: "POST",
 			async: true,
@@ -882,7 +888,7 @@ function dealAfterGetAward(obj,num) {
 						if(objItem.state == 0) {
 							var awardDivBox = '<div id="'+objItem.awardElementId+'" myObj='+JSON.stringify(objItem)+' myAwardInfo='+objItem2+' class="awardBoxs coocaabtn2"><div class="awardDivs"><img class="imgPart" src="images/award/entity1.png" alt=""/><div class="infoPart"><p class="awardName">' + obj.data[i].awardName + '</p><p class="remarks remarks1">注：我们会按照您录入的奖品邮寄地址给您寄送奖品；</p></div><div class="btnPart"><img class="btnImgBlur" src="images/award/getnow.png" alt=""/><img class="btnImgFocus" src="images/award/focus.png" alt=""/></div></div><div class="line"></div></div>';
 						} else {
-							var awardDivBox = '<div id="'+objItem.awardElementId+'" myObj='+JSON.stringify(objItem)+' myAwardInfo='+objItem2+' class="awardBoxs coocaabtn2"><div class="awardDivs"><img class="imgPart" src="images/award/entity4.png" alt=""/><div class="infoPart"><p class="awardName">' + obj.data[i].awardName + '</p><p class="remarks remarks2">收件人信息：广东省深圳市宝安区创维工业园创维工业园创维工业园创维工业园创维创新谷100楼 1378989227<br/>注：我们会按照您录入的奖品邮寄地址给您寄送奖品；</p></div><div class="btnPart"><img class="btnImgBlur" src="images/award/success.png" alt=""/><img class="btnImgFocus" src="images/award/focus.png" alt=""/></div></div><div class="line"></div></div>';
+							var awardDivBox = '<div id="'+objItem.awardElementId+'" myObj='+JSON.stringify(objItem)+' myAwardInfo='+objItem2+' class="awardBoxs coocaabtn2"><div class="awardDivs"><img class="imgPart" src="images/award/entity4.png" alt=""/><div class="infoPart"><p class="awardName">' + obj.data[i].awardName + '</p><p class="remarks remarks2">收件人信息："'+obj.data[i].awardAddress+'"&nbsp;"'+obj.data[i].userPhone+'"<br/>注：我们会按照您录入的奖品邮寄地址给您寄送奖品；</p></div><div class="btnPart"><img class="btnImgBlur" src="images/award/success.png" alt=""/><img class="btnImgFocus" src="images/award/focus.png" alt=""/></div></div><div class="line"></div></div>';
 						}
 					}
 					if(objItem.awardType == 4) {
@@ -988,7 +994,7 @@ function sendPrizes(oAwardId, oRememberId, oType, oUserKeyId, oActiveId, oQsourc
 						sources = JSON.stringify(sources);
 						console.log(packageName + "--" + byvalue + "--" + bywhat + "--" + sources);
 						console.log("跳转使用页面");
-						coocaaosapi.startParamAction(bywhat, byvalue, sources, function(message) {}, function(error) {
+						ccApp.startParamAction(bywhat, byvalue, sources, function(message) {}, function(error) {
 							console.log(error);
 						});
 					} else {
@@ -1106,7 +1112,7 @@ function buttonInitAfter() {
 					sources = JSON.stringify(sources);
 					console.log(packageName + "--" + byvalue + "--" + bywhat + "--" + sources);
 					console.log("跳转使用页面");
-					coocaaosapi.startParamAction(bywhat, byvalue, sources, function(message) {}, function(error) {
+					ccApp.startParamAction(bywhat, byvalue, sources, function(message) {}, function(error) {
 						console.log(error);
 					});
 				} else {
@@ -1139,7 +1145,7 @@ function buttonInitAfter() {
 				_dateObj.button_name = "已领取";
 				webDataLog("web_button_clicked", _dateObj);
 				var coinUrl = 'https://goldshop.coocaa.com/';
-				coocaaosapi.startNewBrowser5(coinUrl, function() {}, function() {});
+				ccApp.startNewBrowser5(coinUrl, function() {}, function() {});
 			}
 		}
 	});
@@ -1154,7 +1160,7 @@ function getUrlParam(name) {
 
 //监听账户变化
 function listenUserChange() {
-	coocaaosapi.addUserChanggedListener(function(message) {
+	ccApp.addUserChanggedListener(function(message) {
 		needSentUserLog2 = true;
 	});
 	console.log("账户状态变化" + needSentUserLog2);
@@ -1163,8 +1169,7 @@ function listenUserChange() {
 function getDeviceInfo() {
 	getNameList("awardul");
 	startmarquee(400, 30, 0, 1,"awardListTwo"); //滚动获奖名单 
-
-	coocaaosapi.getDeviceInfo(function(message) {
+	ccApp.getDeviceInfo(function(message) {
 		_mac = message.mac;
 		if(message.activeid == "" || message.activeid == undefined || message.activeid== null){
 		  if(message.mac == "" || message.mac == undefined || message.mac== null){
@@ -1216,26 +1221,26 @@ function startLogin(needQQ, area) {
 	if(needQQ) {
 		if(accountVersion > 4030000) {
 			if(_tencentWay == "qq") {
-				coocaaosapi.startWeixinOrQQ2("LOGIN_QQ", function(message) {
+				ccApp.startWeixinOrQQ2("LOGIN_QQ", function(message) {
 					console.log(message);
 				}, function(error) {
 					console.log(error);
 				});
 			} else if(_tencentWay == "weixin") {
-				coocaaosapi.startWeixinOrQQ2("LOGIN_WEIXIN", function(message) {
+				ccApp.startWeixinOrQQ2("LOGIN_WEIXIN", function(message) {
 					console.log(message);
 				}, function(error) {
 					console.log(error);
 				});
 			} else if(_tencentWay == "both") {
-				coocaaosapi.startWeixinOrQQ2("TENCENT", function(message) {
+				ccApp.startWeixinOrQQ2("TENCENT", function(message) {
 					console.log(message);
 				}, function(error) {
 					console.log(error);
 				});
 			}
 		} else {
-			coocaaosapi.startThirdQQAccount(function(message) {
+			ccApp.startThirdQQAccount(function(message) {
 				console.log(message);
 			}, function(error) {
 				console.log(error);
@@ -1243,13 +1248,13 @@ function startLogin(needQQ, area) {
 		}
 	} else {
 		if(_version.replace(/\./g, "") < 550000000 && accountVersion > 4030000) {
-			coocaaosapi.startUserSettingAndFinish2(function(message) {
+			ccApp.startUserSettingAndFinish2(function(message) {
 				console.log(message);
 			}, function(error) {
 				console.log(error);
 			});
 		} else {
-			coocaaosapi.startUserSettingAndFinish(function(message) {
+			ccApp.startUserSettingAndFinish(function(message) {
 				console.log(message);
 			}, function(error) {
 				console.log(error);
@@ -1403,7 +1408,7 @@ function popUp(type){
 	  $("#submitImg").attr({src: "images/btn4.png"});
 	  $("#submit").attr({ rightTarget: "#submit"});
 	  ccmap.init(".coocaabtn", "#submit", "btnFocus");
-	}  
+	}   
   }
 
 
@@ -1445,5 +1450,5 @@ function generateQRCode(id,url,wh) {
 function webDataLog(logname, dateObj) {
 	var _dataString = JSON.stringify(dateObj);
 	console.log(logname + "--" + _dataString);
-	coocaaosapi.notifyJSLogInfo(logname, _dataString, function(message) {console.log(message);}, function(error) {console.log(error);});
+	ccApp.notifyJSLogInfo(logname, _dataString, function(message) {console.log(message);}, function(error) {console.log(error);});
 }

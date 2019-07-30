@@ -9,31 +9,28 @@
 		<meta http-equiv="expires" content="0">
 		<meta http-equiv="pragma" content="no-cache">
 		<meta http-equiv="cache-control" content="no-cache">
-		<link rel="stylesheet" href="css/style.css">
-		<title>拆礼盒</title>
-		<script>
-			var adjust = function() {
-				if(/Android (\d+\.\d+)/.test(navigator.userAgent)) {
-					var version = parseFloat(RegExp.$1);
-					if(version > 2.3) {
-						var phoneScale = parseInt(window.screen.width) / 1920;
-						document.write('<meta name="viewport" content="width=1920, minimum-scale = ' + phoneScale + ', maximum-scale = ' + phoneScale + ', target-densitydpi=device-dpi">');
-					} else {
-						document.write('<meta name="viewport" content="width=1920, target-densitydpi=device-dpi">');
-					}
+	<title>拆礼盒</title>
+	<link rel="stylesheet" href="css/style.css"/>
+	
+	<script type="text/javascript">
+		; (function () {
+			console.log('navigator.userAgent = ' + navigator.userAgent + ", window.screen.width = " + window.screen.width);
+			if (/Android (\d+\.\d+)/.test(navigator.userAgent)) {
+				var version = parseFloat(RegExp.$1);
+				if (version > 2.3) {
+					var phoneScale = parseInt(window.screen.width) / 1920;
+					document.write('<meta name="viewport" content="width=1920, minimum-scale = ' + phoneScale + ', maximum-scale = ' + phoneScale + ', target-densitydpi=device-dpi">');
 				} else {
-					document.write('<meta name="viewport" content="width=1920, user-scalable=no, target-densitydpi=device-dpi">');
+					document.write('<meta name="viewport" content="width=1920">');
 				}
+			} else {
+				document.write('<meta name="viewport" content="width=1920, user-scalable=no">');
 			}
-			adjust();
-
-			//声明_czc对象:
-			var _czc = _czc || [];
-			//绑定siteid，请用您的siteid替换下方"XXXXXXXX"部分
-			_czc.push(["_setAccount", "1271484075"]);
-			//_czc.push(["_setAccount", "1261823837"]);
-		</script>
-	</head>
+		})();
+		
+		var _czc = _czc || [];
+		_czc.push(["_setAccount", "1271484075"]);
+	</script>
 
 	<body>
 
@@ -261,26 +258,24 @@
 			<div id="toastQrcode" class="coocaabtn"></div>
 		</div>
 
-		<div class="coocaabtn" id="rule_box" style="display:none;">
-				<img src="images/rule.jpg" />
-		</div>
-
-		<script type="text/javascript" src="js/jquery-1.8.3.min.js"></script>
-		<script type="text/javascript" src="js/qrcode.js"></script>
-		<script type="text/javascript" src="js/ccmap-2.1.js"></script>
-		<script type="text/javascript" src="cordova.js"></script>
-		<script type="text/javascript" src="js/md5.js"></script>
-		<script type="text/javascript" src="js/index.js"></script>
-		<script type="text/javascript">
-			var cnzz_protocol = (("https:" == document.location.protocol) ? " https://" : " http://");
-			document.write(unescape("%3Cspan style='display:none;' id='cnzz_stat_icon_1271484075'%3E%3C/span%3E%3Cscript src='" + cnzz_protocol + "s4.cnzz.com/z_stat.php%3Fid%3D1271484075' type='text/javascript'%3E%3C/script%3E"));
-			
-			setTimeout(otherPartInit,100);
-			function otherPartInit(){
-				//$("#showBox").css("background-image", "url(ice.png)");
-			}
-		</script>
-
-	</body>
+	<div class="coocaabtn" id="rule_box" style="display:none;">
+		<img src="images/rule.jpg"/>
+	</div>
+	<script type="text/javascript" src="js/jquery-1.8.3.min.js"></script>
+	<script type="text/javascript" src="js/ccmap-2.1.js"></script>
+	<script type="text/javascript" src="js/ccsdk-1.0.js"></script>
+	<!-- <script type="text/javascript" src="js/ccsdk-common-1.0.js"></script> -->
+	<script type="text/javascript" src="js/index.js"></script>
+	
+	<script type="text/javascript">
+		var cnzz_protocol = (("https:" == document.location.protocol) ? " https://" : " http://");
+		document.write(unescape("%3Cspan style='display:none;' id='cnzz_stat_icon_1271484075'%3E%3C/span%3E%3Cscript src='" + cnzz_protocol + "s4.cnzz.com/z_stat.php%3Fid%3D1271484075' type='text/javascript'%3E%3C/script%3E"));
+		
+		setTimeout(otherPartInit,100);
+		function otherPartInit(){
+			//$("#showBox").css("background-image", "url(ice.png)");
+		}
+	</script>
+</body>
 
 </html>

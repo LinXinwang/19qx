@@ -1,24 +1,3 @@
-// fis.match('::packager', {
-//   spriter: fis.plugin('csssprites')
-// });
-
-// fis.match('*', {
-//   useHash: false
-// });
-
-// fis.match('*.js', {
-//   optimizer: fis.plugin('uglify-js')
-// });
-
-// fis.match('*.css', {
-//   useSprite: true,
-//   optimizer: fis.plugin('clean-css')
-// });
-
-// fis.match('*.png', {
-//   optimizer: fis.plugin('png-compressor')
-// });
-// 加 md5
 fis.hook('relative');
 fis.match('**', {
 	relative: true 
@@ -57,9 +36,6 @@ fis.match('*.png', {
   optimizer: fis.plugin('png-compressor')
 });
 
-fis.match('donothashme.js', {
-  useHash: false
-});
 fis.match('jquery-1.8.3.min.js', {
   useHash: false
 });
