@@ -142,6 +142,7 @@ coocaaApp.triggleButton = function() {
 	listenUserChange();
 	buttonInitBefore();
 	getDeviceInfo();
+	ccmap.init(".coocaabtn", "#egg0", "btnFocus");
 };
 //判断是否登录
 function hasLogin(needQQ, area) {
@@ -768,15 +769,12 @@ function getGold(awardId, awardTypeId, lotteryAwardMemberId, awardExchangeFlag, 
 					} else {
 						console.log("未配置");
 					}
-
-
 					$("#type5").show();
 					$("#type5").siblings().hide();
 					$("#shop").show();
 					$("#go_experience").hide();
 					$("#subInfo").attr("data","获得优惠券");
-					ccmap.init(".coocaabtn", "#shop", "btnFocus");
-					
+					ccmap.init(".coocaabtn", "#shop", "btnFocus");					
 				} else {
 					$("#type19").show();
 					$("#type19").siblings().hide();
