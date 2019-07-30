@@ -46,17 +46,17 @@
 							<ul class="jinDanUl" id="jinDanUl1">
 								<li id="start" class="egg0">
 									<div class="coocaabtn startBtn" id="egg0" data="1">
-										<img src="images/egg0.png">
+										<img class="startImg" src="images/egg0.png">
 									</div>
 								</li>
 								<li class="egg1">
 									<div class="coocaabtn startBtn" data="2">
-										<img src="images/egg1.png">
+										<img class="startImg" src="images/egg1.png">
 									</div>
 								</li>
 								<li class="egg2">
 									<div class="coocaabtn startBtn" data="3">
-										<img src="images/egg2.png">
+										<img class="startImg" src="images/egg2.png">
 									</div>
 								</li>
 							</ul>
@@ -71,7 +71,7 @@
 					</div>
 					<div id="rule">
 						<p style="height:40px; line-height:40px"><span id="chanceCount">0</span></p>
-						<p class="rule-text">活动期间，购买影视包季会员可得1次拆礼物的机会，购买包年会员可得2次机会。
+						<p class="rule-text">活动期间，购买影视包季会员可得1次拆礼物的机会，购买包年会员可得3次机会。
 							<a class="coocaabtn" id="ruleMore" rightTarget="#my_prize">更多>></a>
 						</p>
 					</div>
@@ -84,8 +84,11 @@
 					</div>
 				</div>
 			</div>
-
 		</div>
+		
+		<div id="showBox" class="box"></div>
+		
+		
 		<div id="prize">
 			<div class="prize_list" id="prize_list">
 				<div class="awardBoxs coocaabtn2">
@@ -244,6 +247,14 @@
 				<div class="coocaabtn submit" id="subInfo" rightTarget="#subInfo" upTarget="#subInfo" downTarget="#subInfo"><img id="changeImg" src="images/btn4.png"></div>
 			</div>
 		</div>
+		
+		<div class="jiangPinResult" id="toastBox" style="display:none;">
+			<div id="toastInfo1">奖品名称:&nbsp;&nbsp;科沃斯扫地机</div>
+			<div id="toastInfo2">发放时间:&nbsp;&nbsp;2019-08-15</div>
+			<div class="awardLine"></div>
+			<div id="toastInfo3">使用<span class="wxtext">微信</span>扫码完善收货信息,确保奖品能送达您手中~</div>
+			<div id="toastQrcode" class="coocaabtn"></div>
+		</div>
 
 		<div class="coocaabtn" id="rule_box" style="display:none;">
 				<img src="images/rule.jpg" />
@@ -258,6 +269,11 @@
 		<script type="text/javascript">
 			var cnzz_protocol = (("https:" == document.location.protocol) ? " https://" : " http://");
 			document.write(unescape("%3Cspan style='display:none;' id='cnzz_stat_icon_1271484075'%3E%3C/span%3E%3Cscript src='" + cnzz_protocol + "s4.cnzz.com/z_stat.php%3Fid%3D1271484075' type='text/javascript'%3E%3C/script%3E"));
+			
+			setTimeout(otherPartInit,100);
+			function otherPartInit(){
+				//$("#showBox").css("background-image", "url(ice.png)");
+			}
 		</script>
 
 	</body>

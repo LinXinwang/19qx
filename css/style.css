@@ -326,6 +326,72 @@ body .goldContent .list_Content.rulesActivity {
 	top: 10px;
 	cursor: pointer;
 }
+#toastBox{
+	margin: -245px -365px 0 0;
+}
+#toastInfo1,#toastInfo2{
+    position: absolute;
+    height: 50px;
+    width: 580px;
+    top: 62px;
+    left: 78px;
+    font-size: 42px;
+    font-weight: 900;
+    line-height: 50px;
+    color: #ffffff;
+}
+#toastInfo2{
+	top: 112px;
+    font-size: 26px;
+    font-weight: 200;
+}
+.awardLine{
+	position: absolute;
+    top: 162px;
+    height: 1px;
+    left: 75px;
+    width: 615px;
+    font-size: 55px;
+    overflow: hidden;
+    border-bottom: 1px dashed #964c00;
+}
+#toastInfo3{
+	position: absolute;
+    top: 200px;
+    left: 80px;
+    height: 90px;
+    width: 394px;
+    line-height: 46px;
+    font-size: 28px;
+    color: #FFFFFF;
+}
+.wxtext{
+	display: inline-block;
+    height: 40px;
+    width: 110px;
+    margin: 0 5px;
+    text-align: center;
+    font-size: 29px;
+    color: #feff81;
+    border-radius: 20px;
+    background-color: #d82626;
+}
+#toastQrcode{
+	position: absolute;
+    top: 183px;
+    left: 480px;
+    height: 190px;
+    width: 190px;
+    border: 5px solid white;
+}
+.thirdToasrImg{
+	position: absolute;
+	top: 0;
+	left: 0;
+	height: 100%;
+	width: 100%;
+	overflow: hidden;
+}
 
 /*#i_konw,#back{width:196px; height: 90px; margin: 0 auto; line-height: 90px}*/
 #back{width:196px; height: 90px; margin: 0 auto; line-height: 90px}
@@ -838,4 +904,52 @@ body .goldContent .list_Content.rulesActivity {
 	overflow: hidden;
     white-space: nowrap;
     text-overflow: ellipsis;
+}
+#showBox{
+    position: absolute;
+    top: 440px;
+    width: 362px;
+    height: 288px;
+    z-index: 10;
+	display: none;
+}
+.box1{
+	-webkit-animation:mov 1750ms steps(11,end) 0ms 1 normal forwards;
+	animation:mov 1750ms steps(11,end) 0ms 1 normal forwards;
+}
+@keyframes mov{
+	0%{
+		background-position:0 0px;
+	}
+	100%{
+		background-position:-3982px 0px;
+	}
+}
+@-webkit-keyframes mov {
+	0%{
+		background-position:0 0px;
+	}
+	100%{
+		background-position:-3982px 0px;
+	}
+}
+.box2{
+	-webkit-animation:mov2 1750ms steps(11,end) 0ms 1 normal forwards;
+	animation:mov2 1750ms steps(11,end) 0ms 1 normal forwards;
+}
+@keyframes mov2{
+	0%{
+		background-position:0 0px;
+	}
+	100%{
+		background-position:-3982px 0px;
+	}
+}
+@-webkit-keyframes mov2 {
+	0%{
+		background-position:0 0px;
+	}
+	100%{
+		background-position:-3982px 0px;
+	}
 }
