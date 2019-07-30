@@ -634,6 +634,9 @@ function lastWindow(awardId, awardTypeId, lotteryAwardMemberId, awardExchangeFla
 
 //领奖品
 function getGold(awardId, awardTypeId, lotteryAwardMemberId, awardExchangeFlag, awardPictureUrl, awardName) {
+	var token = calcMD5("activeId="+actionId+"&rememberId="+lotteryAwardMemberId+"&userKeyId="+userKeyId+"&cOpenId="+_openId+"&8baf4554ce0d7753");
+	console.log(token);
+	console.log("activeId="+actionId+"&rememberId="+lotteryAwardMemberId+"&userKeyId="+userKeyId+"&cOpenId="+_openId);
 	$.ajax({
 		async: true,
 		url: adressIp + "/v4/lottery/verify/receive",
@@ -651,10 +654,11 @@ function getGold(awardId, awardTypeId, lotteryAwardMemberId, awardExchangeFlag, 
 			cChip: _chip,
 			cOpenId: _openId,
 			userKeyId: userKeyId,
-			source:_qsource
+			source:_qsource,
+			token:token
 		},
 		success: function(data) {
-			console.log("--------确认成功：" + JSON.stringify(data.data));
+			console.log("--------确认成功llllllllllll------------：" + JSON.stringify(data));
 			if(data.code == 50100) {
 				$(".matter").html(awardName);
 				$(".type-img").attr("src", awardPictureUrl);
