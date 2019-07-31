@@ -926,40 +926,35 @@ function dealAfterGetAward(obj,num) {
 				"lotteryActiveId": obj.data[i].activeId
 			}
 			var objItem2 = obj.data[i].awardInfo;
+			var awardDivBox = "";
 			if(objItem.awardType == 2) {
 				awardLength++;
 				if(objItem.state == 0) {
-					var awardDivBox = '<div id="'+objItem.awardElementId+'" myObj='+JSON.stringify(objItem)+' myAwardInfo='+objItem2+' class="awardBoxs coocaabtn2"><div class="awardDivs"><img class="imgPart" src="'+objItem.awardUrl+'" alt=""/><div class="infoPart"><p class="awardName">' + obj.data[i].awardName + '</p><p class="remarks remarks1">注：我们会按照您录入的奖品邮寄地址给您寄送奖品；</p></div><div class="btnPart"><img class="btnImgBlur" src="images/award/getnow.png" alt=""/><img class="btnImgFocus" src="images/award/focus.png" alt=""/></div></div><div class="line"></div></div>';
+					awardDivBox = '<div id="'+objItem.awardElementId+'" myObj='+JSON.stringify(objItem)+' myAwardInfo='+objItem2+' class="awardBoxs coocaabtn2"><div class="awardDivs"><img class="imgPart" src="'+objItem.awardUrl+'" alt=""/><div class="infoPart"><p class="awardName">' + obj.data[i].awardName + '</p><p class="remarks remarks1">注：我们会按照您录入的奖品邮寄地址给您寄送奖品；</p></div><div class="btnPart"><img class="btnImgBlur" src="images/award/getnow.png" alt=""/><img class="btnImgFocus" src="images/award/focus.png" alt=""/></div></div><div class="line"></div></div>';
 				} else {
 					if (obj.data[i].awardAddressEntity.userProvince == obj.data[i].awardAddressEntity.userCity) {
                         var entityInfo = obj.data[i].awardAddressEntity.userCity + obj.data[i].awardAddressEntity.userArea + obj.data[i].awardAddressEntity.userAddress;
                     } else {
                         var entityInfo = obj.data[i].awardAddressEntity.userProvince + obj.data[i].awardAddressEntity.userCity + obj.data[i].awardAddressEntity.userArea + obj.data[i].awardAddressEntity.userAddress;
                     }
-					var awardDivBox = '<div id="'+objItem.awardElementId+'" myObj='+JSON.stringify(objItem)+' myAwardInfo='+objItem2+' class="awardBoxs coocaabtn2"><div class="awardDivs"><img class="imgPart" src="'+objItem.awardUrl+'" alt=""/><div class="infoPart"><p class="awardName">' + obj.data[i].awardName + '</p><p class="remarks remarks2">收件人信息："'+entityInfo+'"&nbsp;"'+obj.data[i].awardAddressEntity.userPhone+'"<br/>注：我们会按照您录入的奖品邮寄地址给您寄送奖品；</p></div><div class="btnPart"><img class="btnImgBlur" src="images/award/success.png" alt=""/><img class="btnImgFocus" src="images/award/focus.png" alt=""/></div></div><div class="line"></div></div>';
+					awardDivBox = '<div id="'+objItem.awardElementId+'" myObj='+JSON.stringify(objItem)+' myAwardInfo='+objItem2+' class="awardBoxs coocaabtn2"><div class="awardDivs"><img class="imgPart" src="'+objItem.awardUrl+'" alt=""/><div class="infoPart"><p class="awardName">' + obj.data[i].awardName + '</p><p class="remarks remarks2">收件人信息："'+entityInfo+'"&nbsp;"'+obj.data[i].awardAddressEntity.userPhone+'"<br/>注：我们会按照您录入的奖品邮寄地址给您寄送奖品；</p></div><div class="btnPart"><img class="btnImgBlur" src="images/award/success.png" alt=""/><img class="btnImgFocus" src="images/award/focus.png" alt=""/></div></div><div class="line"></div></div>';
 				}
 			}
-			if(objItem.awardType == 4) {
+			if(objItem.awardType == "4") {
 				awardLength++;
-				var awardDivBox = '<div id="'+objItem.awardElementId+'" myObj='+JSON.stringify(objItem)+' myAwardInfo='+objItem2+' class="awardBoxs coocaabtn2"><div class="awardDivs"><img class="imgPart" src="'+objItem.awardUrl+'" alt=""/><div class="infoPart"><p class="awardName thirdAward">' + obj.data[i].awardName + '</p><p class="remarks remarks3">注：扫描二维码即可领取！</p></div><div class="btnPart"><img class="btnImgBlur" src="images/award/qrcode.png" alt=""/><img class="btnImgFocus" src="images/award/focus.png" alt=""/></div></div><div class="line"></div></div>';
+				awardDivBox = '<div id="'+objItem.awardElementId+'" myObj='+JSON.stringify(objItem)+' myAwardInfo='+objItem2+' class="awardBoxs coocaabtn2"><div class="awardDivs"><img class="imgPart" src="'+objItem.awardUrl+'" alt=""/><div class="infoPart"><p class="awardName thirdAward">' + obj.data[i].awardName + '</p><p class="remarks remarks3">注：扫描二维码即可领取！</p></div><div class="btnPart"><img class="btnImgBlur" src="images/award/qrcode.png" alt=""/><img class="btnImgFocus" src="images/award/focus.png" alt=""/></div></div><div class="line"></div></div>';
 			}
 			if(objItem.awardType == 5) {
 				awardLength++;
-				//if(objItem.state == 0) {
-					var awardDivBox = '<div id="'+objItem.awardElementId+'" myObj='+JSON.stringify(objItem)+' myAwardInfo='+objItem2+' class="awardBoxs coocaabtn2"><div class="awardDivs"><img class="imgPart" src="'+objItem.awardUrl+'" alt=""/><div class="infoPart"><p class="awardName couponAward">' + obj.data[i].awardName + '</p></div><div class="btnPart"><img class="btnImgBlur" src="images/award/getnow3.png" alt=""/><img class="btnImgFocus" src="images/award/focus.png" alt=""/></div></div><div class="line"></div></div>';
-				//} else {
-					//var awardDivBox = '<div id="'+objItem.awardElementId+'" myObj='+JSON.stringify(objItem)+' myAwardInfo='+objItem2+' class="awardBoxs coocaabtn2"><div class="awardDivs"><img class="imgPart" src="'+objItem.awardUrl+'" alt=""/><div class="infoPart"><p class="awardName couponAward">' + obj.data[i].awardName + '</p></div><div class="btnPart"><img class="btnImgBlur" src="images/award/success.png" alt=""/><img class="btnImgFocus" src="images/award/focus.png" alt=""/></div></div><div class="line"></div></div>';
-				//}
+				awardDivBox = '<div id="'+objItem.awardElementId+'" myObj='+JSON.stringify(objItem)+' myAwardInfo='+objItem2+' class="awardBoxs coocaabtn2"><div class="awardDivs"><img class="imgPart" src="'+objItem.awardUrl+'" alt=""/><div class="infoPart"><p class="awardName couponAward">' + obj.data[i].awardName + '</p></div><div class="btnPart"><img class="btnImgBlur" src="images/award/getnow3.png" alt=""/><img class="btnImgFocus" src="images/award/focus.png" alt=""/></div></div><div class="line"></div></div>';
 			}
 			if(objItem.awardType == 19) {
 				awardLength++;
-				//if(objItem.state == 0) {
-					var awardDivBox = '<div id="'+objItem.awardElementId+'" myObj='+JSON.stringify(objItem)+' myAwardInfo='+objItem2+' class="awardBoxs coocaabtn2"><div class="awardDivs"><img class="imgPart" src="'+objItem.awardUrl+'" alt=""/><div class="infoPart"><p class="awardName coinAward">' + obj.data[i].awardName + '</p></div><div class="btnPart"><img class="btnImgBlur" src="images/award/getnow2.png" alt=""/><img class="btnImgFocus" src="images/award/focus.png" alt=""/></div></div><div class="line"></div></div>';
-				//} else {
-					//var awardDivBox = '<div id="'+objItem.awardElementId+'" myObj='+JSON.stringify(objItem)+' myAwardInfo='+objItem2+' class="awardBoxs coocaabtn2"><div class="awardDivs"><img class="imgPart" src="'+objItem.awardUrl+'" alt=""/><div class="infoPart"><p class="awardName coinAward">' + obj.data[i].awardName + '</p></div><div class="btnPart"><img class="btnImgBlur" src="images/award/success.png" alt=""/><img class="btnImgFocus" src="images/award/focus.png" alt=""/></div></div><div class="line"></div></div>';
-				//}
+				awardDivBox = '<div id="'+objItem.awardElementId+'" myObj='+JSON.stringify(objItem)+' myAwardInfo='+objItem2+' class="awardBoxs coocaabtn2"><div class="awardDivs"><img class="imgPart" src="'+objItem.awardUrl+'" alt=""/><div class="infoPart"><p class="awardName coinAward">' + obj.data[i].awardName + '</p></div><div class="btnPart"><img class="btnImgBlur" src="images/award/getnow2.png" alt=""/><img class="btnImgFocus" src="images/award/focus.png" alt=""/></div></div><div class="line"></div></div>';
 			}
-			$("#prize_list").append(awardDivBox);
+			if (awardDivBox!=null&&awardDivBox!="") {
+				$("#prize_list").append(awardDivBox);
+			}
 		}
 		
 		if (awardLength == 0) {
@@ -1092,6 +1087,7 @@ function buttonInitAfter() {
 	$("#prize .awardBoxs").unbind("focus").bind("focus", function() {
 		console.log("----myAwards focus----");
 		_curFocusId = $(this).attr("id");
+		console.log(_curFocusId);
         var _index1 = $("#prize .awardBoxs").index($(this)); //btn是第几个
         var myScrollTopValue = $(".awardBoxs")[0].offsetHeight * _index1;
         console.log(myScrollTopValue);
@@ -1100,7 +1096,7 @@ function buttonInitAfter() {
 
 	$(".awardBoxs").unbind("itemClick").bind("itemClick", function() {
 		_curFocusId = $(this).attr("id");
-		console.log(_curFocusId)
+		console.log(_curFocusId);
 		var thisStr = $(this).attr("myObj");
 		var thisInfo = $(this).attr("myAwardInfo");
 		console.log(thisStr);
