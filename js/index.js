@@ -410,7 +410,7 @@ function buttonInitBefore() {
 		        } 
 		        webDataLog("web_page_show_new",_dateObj);
 			} else {
-				setTimeout(function(){clickFlag = false}, 5000);
+				setTimeout(function(){clickFlag = false}, 3000);
 				if(gameStatus == 0) {
 					popUp("notStar");
 				} else if(gameStatus == 2) {
@@ -421,8 +421,6 @@ function buttonInitBefore() {
 				}
 			}
 		}
-
-
 	});
 
 	//跳转成为会员
