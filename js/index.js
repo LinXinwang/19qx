@@ -134,35 +134,33 @@ function onResumeFunc(){
 	closeWindow();
 	document.getElementById('popUp').style.display = "none";
 	document.getElementById('confirmInfo').style.display = "none";
-	var _dateObj = {
-		"page_name": "活动主页面登录弹窗",
-		"login_result": "",
-		"activity_name": "七夕活动",
-		"activity_id": getUrlParam("id"),
-		"open_id": _openId
-	}
+
 	console.log(needSentUserLog + "登录监听=====" + needSentUserLog2);
 	if(needSentUserLog == true) {
 		needSentUserLog = false;
 		if(needSentUserLog2 == true) {
-			needSentUserLog2 = false;
-			_dateObj.login_result = "登录成功";
 			if(document.getElementById("index").style.display == "block") {
 				hasLogin(needQQ, 0); //0走初始化，1我的奖品
 			} else if(document.getElementById("prize").style.display == "block") {
 				hasLogin(needQQ, 1);
 			}
-
 		} else {
 			needSentUserLog2 = false;
-			_dateObj.login_result = "登录失败";
+			var _dateObj = {
+				"page_name": "活动主页面登录弹窗",
+				"login_result": "登录失败",
+				"activity_name": "七夕活动",
+				"activity_id": getUrlParam("id"),
+				"open_id": _openId
+			}
+			webDataLog("result_event",_dateObj);
 			if(document.getElementById("index").style.display == "block") {
 				initChance();
 			} else if(document.getElementById("prize").style.display == "block") {
 				getMyAwards(actionId,2); //0 需要数据采集 
 			}
 		}
-		webDataLog("result_event",_dateObj);
+
 	} else {
 		if(document.getElementById("index").style.display == "block") {
 			initChance();
@@ -308,7 +306,21 @@ function hasLogin(needQQ, area) {
 						$("#user_login").hide();
 						$("#userName").show();
 						$("#userName").html(_nickName);
-						console.log(_nickName);
+
+						if(needSentUserLog2 == true){
+							needSentUserLog2 = false;
+							var _dateObj = {
+								"page_name": "活动主页面登录弹窗",
+								"login_result": "登录成功",
+								"activity_name": "七夕活动",
+								"activity_id": getUrlParam("id"),
+								"open_id": _openId
+							}
+							webDataLog("result_event",_dateObj);
+						}
+
+
+
 					}
 					initChance();
 				}, function(error) {
@@ -664,7 +676,7 @@ function chanceCount(num) {
 				}else if(data.code == 50023){
 					popUp("thanks"); //奖品已被抽完
 				}else if(data.code == 50003){
-					popUp("over"); //奖品已被抽完
+					popUp("over"); //活动已结束
 				}
 			},
 			error: function() {
@@ -1437,7 +1449,7 @@ function popUp(type){
 	  $("#text1").html("拆礼物机会用完啦~可TA的礼物还没送，");
 	  $("#text3").html("想再次获得机会吗？");
 	  $("#bevip").show();
-	  $("#submit").show();
+	  $("#submit").show().attr("data","我明白了");
 	  $("#beuser").hide();
 	  ccmap.init(".coocaabtn", "#bevip", "btnFocus");
 		var _dateObj = {
@@ -1453,8 +1465,8 @@ function popUp(type){
 		$("#text1").html("抱歉啦，您还没有获得拆礼物的机会哟~");
 		$("#text3").html("");
 		$("#bevip").show();
-		$("#submit").show();
-		$("#beuser").hide();
+		$("#submit").show().attr("data","我明白了");
+		$("#beuser").hide();		
 		ccmap.init(".coocaabtn", "#bevip", "btnFocus");
 		  var _dateObj = {
 			  "page_name":"抽奖结果页",
@@ -1470,7 +1482,7 @@ function popUp(type){
 	  $("#text3").html("下一个七夕再相会");
 	  $("#bevip").hide();
 	  $("#beuser").hide();
-	  $("#submit").show();
+	  $("#submit").show().attr("data","我明白了");
 	  $("#submit").attr({ rightTarget: "#submit"});
 	  ccmap.init(".coocaabtn", "#submit", "btnFocus");
 	}else if(type == "getfocus"){
@@ -1479,7 +1491,7 @@ function popUp(type){
 	  $("#text3").html("如有疑问，请关注微信公众号[酷开会员]-在线客服进行查询");
 	  $("#bevip").hide();
 	  $("#beuser").hide();
-	  $("#submit").show();
+	  $("#submit").show().attr("data","我明白了");
 	  $("#submit").attr({ rightTarget: "#submit"});
 	  ccmap.init(".coocaabtn", "#submit", "btnFocus");
 	}else if(type == "thanks"){
@@ -1487,7 +1499,7 @@ function popUp(type){
 	  $("#text3").html("就能为TA送一份七夕礼物了");
 	  $("#bevip").hide();
 	  $("#beuser").hide();
-	  $("#submit").show();
+	  $("#submit").show().attr("data","我明白了");
 	  $("#submitImg").attr({src: "images/btn4.png"});
 	  $("#submit").attr({ rightTarget: "#submit"});
 	  ccmap.init(".coocaabtn", "#submit", "btnFocus");
