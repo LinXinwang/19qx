@@ -36,7 +36,7 @@ var changeLoginFlag = false;
 var needSentUserLog = false; //判断是否点了登录
 var needSentUserLog2 = false; //判断是否登录成功
 var actionId = getUrlParam("id");
-
+var gameStatus = "";
 //var adressIp = "https://restful.skysrt.com";
 //var enurl = "https://webapp.skysrt.com/activity618/Address/index.html?";
 var adressIp = "http://beta.restful.lottery.coocaatv.com";
@@ -370,7 +370,7 @@ function initChance(){
 				gameStatusTxt = "已结束";
 			} else if(data.code == 50049) {
 				gameStatusTxt = "未登录";
-				_dateObj.page_state = "异常";
+				_dateObj.page_state = "未登录";
 				console.log("活动必须登陆才能玩");
 			}else{
 				gameStatusTxt = "异常";
@@ -388,7 +388,7 @@ function buttonInitBefore() {
 	var clickFlag = false;
 	$(".startBtn").bind('itemClick', function(event) {
 		var data = $(this).attr("data")
-		var _dateObj = {
+		var dateObj = {
 			"page_name":"砸金蛋活动主页面",
 			"button_name":"礼物盒",
 			"button_postion":data,
@@ -397,7 +397,7 @@ function buttonInitBefore() {
 			"activity_id":actionId,
 			"open_id":_openId
 		} 
-		webDataLog("web_page_show_new",_dateObj);
+		webDataLog("web_button_clicked",dateObj);
 		console.log("-------------------------------是否登录" + _loginstatus);
 		if(clickFlag == false){
 			clickFlag = true;
@@ -468,7 +468,7 @@ function buttonInitBefore() {
 	$("#beuser,#user_login").bind('itemClick', function(event) {
 		var _dateObj = {
 			"page_name":"砸金蛋活动主页面",
-			"button_name":"成为会员",
+			"button_name":"登录会员",
 			"button_postion":"",
 			"page_state":gameStatusTxt,
 			"activity_name":"七夕活动",
@@ -561,20 +561,26 @@ function buttonInitBefore() {
 		ccApp.startNewBrowser5(coinUrl, function() {}, function() {});
 	});
 	$("#my_prize").bind('itemClick', function(event) {
+		var _dateObj = {
+            "page_name":"砸金蛋活动主页面",
+            "button_name":"我的奖品",
+            "page_state":gameStatus,
+            "activity_id":actionId,
+			"activity_name":"七夕活动",
+            "open_id":_openId
+        }   
+		webDataLog("web_button_clicked",_dateObj);
+		_czc.push(['_trackEvent', '砸金蛋活动主页面', "按钮点击-我的奖品", gameStatus, '1' ,'']);
 		if (_loginstatus == "false") {
+	        var _dateObj = {
+	            "page_name":"活动主页面登录弹窗",
+	            "activity_name":"七夕活动",
+	            "activity_id":actionId,
+	        } 
+	        webDataLog("web_page_show_new",_dateObj);
 			needSentUserLog = true;
 			startLogin(needQQ, 0);
 		} else{
-			var _dateObj = {
-	            "page_name":"砸金蛋活动主页面",
-	            "button_name":"我的奖品",
-	            "page_state":gameStatus,
-	            "activity_id":actionId,
-				"activity_name":"七夕活动",
-	            "open_id":_openId
-	        }   
-			webDataLog("web_button_clicked",_dateObj);
-			_czc.push(['_trackEvent', '砸金蛋活动主页面', "按钮点击-我的奖品", gameStatus, '1' ,'']);
 			$("#index").css("display", "none");
 			$("#prize").css("display", "block");
 			getMyAwards(actionId,0);
@@ -652,7 +658,8 @@ function chanceCount(num) {
 			success: function(data) {
 				console.log(overNum+"抽奖结果" + JSON.stringify(data));
 				if(data.code == 50100) {
-					$("#chanceCount").html(overNum - 1);
+					overNum = overNum - 1
+					$("#chanceCount").html(overNum);
 					showTheGif(data,num);
 				}else if(data.code == 50023){
 					popUp("thanks"); //奖品已被抽完
@@ -1417,16 +1424,14 @@ function popUp(type){
 	$("#submitImg").attr({src: "images/btn1.png"});
 	$("#submit").attr("data","");
 	if(type == "notStar"){//未开始
-	  var aTime = $("#startTime").html();
-	  console.log("开始时间为："+aTime);
-	  var ohtml = '七夕活动将于<span style="color:#ffff33" id="activeTime">'+aTime+'</span>开始';
-	  $("#text1").append(ohtml);
+	  var ohtml = '七夕活动将于8月2日00:00开始';
+	  $("#text1").html(ohtml);
 	  $("#text3").html("定好闹钟不要错过哟~");
 	  $("#beuser").hide();
-	  $("#bevip").hide();
-	  $("#submit").show().attr("data","不用了");
+	  $("#bevip").show();
+	  $("#submit").show().attr("data","我明白了");
 	  $("#submitImg").attr({src: "images/noneed.png"});
-	  $("#submit").attr({ rightTarget: "#submit"});
+	  $("#submit").attr({ rightTarget: "#bevip"});
 	  ccmap.init(".coocaabtn", "#submit", "btnFocus");
 	}else if(type == "useUp"){//抽奖次数用完
 	  $("#text1").html("拆礼物机会用完啦~可TA的礼物还没送，");
