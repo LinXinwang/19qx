@@ -1256,11 +1256,15 @@
                     // 如果我们刚刚附加了第一个处理程序或分离了最后一个处理程序，请让本机知道我们需要重写back按钮。
                     exec(null, null, APP_PLUGIN_NAME, "overrideBackbutton", [this.numHandlers == 1]);
                 };
+                var backButtonDownChannel = cordova.addDocumentEventHandler('backbuttondown');
+                backButtonDownChannel.onHasSubscribersChange = function () {
+                    // 如果我们刚刚附加了第一个处理程序或分离了最后一个处理程序，请让本机知道我们需要重写back按钮。
+                    exec(null, null, APP_PLUGIN_NAME, "overrideBackbuttondown", [this.numHandlers == 1]);
+                };
                 var homeButtonChannel = cordova.addDocumentEventHandler('homebutton');
                 homeButtonChannel.onHasSubscribersChange = function () {
                     exec(null, null, APP_PLUGIN_NAME, "overrideHomebutton", [this.numHandlers == 1]);
                 };
-
                 // 搜索按钮和文件菜单handlers硬件
                 var menuButtonChannel = cordova.addDocumentEventHandler('menubutton');
                 menuButtonChannel.onHasSubscribersChange = function () {
@@ -1374,6 +1378,9 @@
              */
             overrideBackbutton: function (override) {
                 exec(null, null, APP_PLUGIN_NAME, "overrideBackbutton", [override]);
+            },
+            overrideBackbuttondown: function (override) {
+                exec(null, null, APP_PLUGIN_NAME, "overrideBackbuttondown", [override]);
             },
             /**
              * 覆盖Android音量按钮的默认行为。
