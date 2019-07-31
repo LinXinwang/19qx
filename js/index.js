@@ -69,19 +69,19 @@ var app = {
 		ccApp.bindEvents("menubutton", function() {
 			console.log("this menuButton>>>>>>>>>new>>>>>>>>>")
 		});
-		coocaaApp.bindEvents("backbuttondown", function() {
+		ccApp.bindEvents("backbuttondown", function() {
 			console.log("this backbuttondown>>>>>>>>>new>>>>>>>>>");
 			backButtonDown();
 		});
-		coocaaApp.bindEvents("homebutton", function() {
+		ccApp.bindEvents("homebutton", function() {
 			console.log("this homebutton>>>>>>>>>new>>>>>>>>>");
 			navigator.app.exitApp();
 		});
-		coocaaApp.bindEvents("resume", function() {
+		ccApp.bindEvents("resume", function() {
 			console.log("on resume");
 			onResumeFunc();
 		});
-		coocaaApp.bindEvents("pause", function() {
+		ccApp.bindEvents("pause", function() {
 			console.log("on pause");
 		});
 	},
@@ -955,6 +955,8 @@ function sendPrizes(oAwardId, oRememberId, oType, oUserKeyId, oActiveId, oQsourc
 	if(oQsource != "tencent") {
 		oQsource = "iqiyi";
 	}
+	var token = calcMD5("activeId="+actionId+"&rememberId="+oRememberId+"&userKeyId="+oUserKeyId+"&cOpenId="+_openId+"&8baf4554ce0d7753");
+	console.log(token);
 	var ajaxTimeoutFive = $.ajax({
 		type: "GET",
 		async: true,
@@ -970,8 +972,11 @@ function sendPrizes(oAwardId, oRememberId, oType, oUserKeyId, oActiveId, oQsourc
 			"awardTypeId": oType,
 			"userKeyId": oUserKeyId,
 			"MAC": _mac,
+			"cModel": _model,
+			"cChip": _chip,
 			"cOpenId": _openId,
-			"source": oQsource
+			"source": oQsource,
+			"token":token
 		},
 		success: function(data) {
 			console.log(JSON.stringify(data));
@@ -1006,10 +1011,12 @@ function sendPrizes(oAwardId, oRememberId, oType, oUserKeyId, oActiveId, oQsourc
 				}
 			} else {
 				console.log("优惠券/金币领取失败,需要给出领取失败的提示.");
+				
 			}
 		},
 		error: function() {
 			console.log("获取失败");
+			
 		},
 		complete: function(XMLHttpRequest, status) {　　　　
 			console.log("-------------complete------------------" + status);
