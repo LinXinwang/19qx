@@ -713,6 +713,7 @@ function lastWindow(awardId, awardTypeId, lotteryAwardMemberId, awardExchangeFla
 		$("#type4").siblings().hide();
 		$("#shop").hide();
 		$("#subInfo").attr("data","获得第三方优惠券");
+		$("#subInfo").attr("leftTarget","#subInfo");
 		ccmap.init(".coocaabtn", "#subInfo", "btnFocus");
 	} else if(awardTypeId == 2) { //实物奖品
 		_dateObj.page_state = "获得实物奖";
@@ -721,6 +722,7 @@ function lastWindow(awardId, awardTypeId, lotteryAwardMemberId, awardExchangeFla
 		$('#qrcode').html("");
 		$("#shop").hide();
 		$("#subInfo").attr("data","获得实物奖");
+		$("#subInfo").attr("leftTarget","#subInfo");
 		var enstr = enurl + "activeId=" + actionId + "&rememberId=" + lotteryAwardMemberId + "&userKeyId=" + userKeyId + "&open_id=" + _openId;
 		generateQRCode("#qrcode",enstr,190);
 		ccmap.init(".coocaabtn", "#subInfo", "btnFocus");
@@ -787,6 +789,7 @@ function getGold(awardId, awardTypeId, lotteryAwardMemberId, awardExchangeFlag, 
 					$("#shop").show();
 					$("#go_experience").hide();
 					$("#subInfo").attr("data","获得优惠券");
+					$("#subInfo").attr("leftTarget","#shop");
 					ccmap.init(".coocaabtn", "#shop", "btnFocus");					
 				} else {
 					$("#type19").show();
@@ -794,6 +797,7 @@ function getGold(awardId, awardTypeId, lotteryAwardMemberId, awardExchangeFlag, 
 					$("#shop").hide();
 					$("#go_experience").show();
 					$("#subInfo").attr("data","获得金币");
+					$("#subInfo").attr("leftTarget","#go_experience");
 					ccmap.init(".coocaabtn", "#go_experience", "btnFocus");
 				}
 			}else{

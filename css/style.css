@@ -957,6 +957,18 @@ body .goldContent .list_Content.rulesActivity {
 #popUp p{
 	line-height: 50px
 }
+
+
+.img_box{
+	background: #fff;
+	border-radius: 10px;
+	width: 210px;
+	height: 210px;
+	margin: 0 auto
+}
+.img_box img{
+	border-radius: 10px;
+}
 #errorInfo{
 	position: fixed;
     top: 800px;
@@ -969,4 +981,5 @@ body .goldContent .list_Content.rulesActivity {
     font-size: 56px;
     background-color: rgba(0,0,0,0.5);
 	display: none;
+
 }
