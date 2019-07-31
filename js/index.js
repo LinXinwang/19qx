@@ -649,7 +649,7 @@ function chanceCount(num) {
 				cHomepageVersion:cAppVersion
 			},
 			success: function(data) {
-				console.log("抽奖结果" + JSON.stringify(data));
+				console.log(overNum+"抽奖结果" + JSON.stringify(data));
 				if(data.code == 50100) {
 					$("#chanceCount").html(overNum - 1);
 					showTheGif(data,num);
@@ -737,6 +737,7 @@ function lastWindow(awardId, awardTypeId, lotteryAwardMemberId, awardExchangeFla
 		$("#type4").show();
 		$("#type4").siblings().hide();
 		$("#shop").hide();
+		$("#go_experience").hide();
 		$("#subInfo").attr("data","获得第三方优惠券");
 		$("#subInfo").attr("leftTarget","#subInfo");
 		ccmap.init(".coocaabtn", "#subInfo", "btnFocus");
@@ -746,6 +747,7 @@ function lastWindow(awardId, awardTypeId, lotteryAwardMemberId, awardExchangeFla
 		$("#type2").siblings().hide();
 		$('#qrcode').html("");
 		$("#shop").hide();
+		$("#go_experience").hide();
 		$("#subInfo").attr("data","获得实物奖");
 		$("#subInfo").attr("leftTarget","#subInfo");
 		var enstr = enurl + "activeId=" + actionId + "&rememberId=" + lotteryAwardMemberId + "&userKeyId=" + userKeyId + "&open_id=" + _openId;
