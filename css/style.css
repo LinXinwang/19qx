@@ -680,6 +680,7 @@ body .goldContent .list_Content.rulesActivity {
 	height: 250px;
 	width: 250px;
 	background-color: rgba(255,255,255,1);
+	border-radius: 20px;
 }
 .infoPart{
 	position: absolute;
@@ -980,5 +981,4 @@ body .goldContent .list_Content.rulesActivity {
     font-size: 56px;
     background-color: rgba(0,0,0,0.5);
 	display: none;
-
 }

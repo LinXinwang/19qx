@@ -905,7 +905,6 @@ function dealAfterGetAward(obj,num) {
 		if(obj.code == "50100") {
 			if(obj.data.length != 0) {
 				for(var i = 0; i < obj.data.length; i++) {
-					console.log(obj.data[i].awardTypeId);
 					var _time = obj.data[i].awardTime;
 					_time = _time.substr(0, 10);
 					var awardElementId = "myAward" + i;
@@ -955,8 +954,8 @@ function dealAfterGetAward(obj,num) {
 			}
 			console.log(_curFocusId);
 			if(_curFocusId == "" || _curFocusId == null) {
-				$(".awardBoxs:eq(0)").trigger("focus");
 				ccmap.init(".coocaabtn2", ".awardBoxs:eq(0)", "btnFocus");
+				$(".awardBoxs:eq(0)").trigger("focus");
 			} else {
 				console.log(_curFocusId);
 				$("#" + _curFocusId).trigger("focus");
@@ -1069,6 +1068,7 @@ function sendPrizes(oAwardId, oRememberId, oType, oUserKeyId, oActiveId, oQsourc
 function buttonInitAfter() {
 	$("#prize .awardBoxs").unbind("focus").bind("focus", function() {
 		console.log("----myAwards focus----");
+		_curFocusId = $(this).attr("id");
         var _index1 = $("#prize .awardBoxs").index($(this)); //btn是第几个
         var myScrollTopValue = $(".awardBoxs")[0].offsetHeight * _index1;
         console.log(myScrollTopValue);
@@ -1177,7 +1177,7 @@ function buttonInitAfter() {
 			$("#toastInfo1").html("奖品名称:&nbsp;&nbsp;" + _awardName);
             $("#toastInfo2").html("发放时间:&nbsp;&nbsp;" + _awardTime);
 			$("#toastInfo3").html('使用<span class="wxtext">微信</span>扫一扫,立即领取奖品~');
-			var imgHtml = '<img class="thirdToasrImg" src="../images/award/thirdQrcode.png">';
+			var imgHtml = '<img class="thirdToasrImg" src="'+_awardUrl+'" alt="">';
 			$("#toastQrcode").append(imgHtml);
 			ccmap.init(".coocaabtn", "#toastQrcode", "btnFocus");
 		}
