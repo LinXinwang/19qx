@@ -36,7 +36,6 @@ var changeLoginFlag = false;
 var needSentUserLog = false; //判断是否点了登录
 var needSentUserLog2 = false; //判断是否登录成功
 var actionId = getUrlParam("id");
-var cAppVersion = "";
 
 //var adressIp = "https://restful.skysrt.com";
 //var enurl = "https://webapp.skysrt.com/activity618/Address/index.html?";
@@ -635,8 +634,7 @@ function checkVersion() {
 
 //剩余抽奖次数
 function chanceCount(num) {
-	if(overNum > 0){
-		
+	if(overNum > 0){		
 		$.ajax({
 			type: "POST",
 			async: true,
@@ -653,9 +651,12 @@ function chanceCount(num) {
 			success: function(data) {
 				console.log("抽奖结果" + JSON.stringify(data));
 				if(data.code == 50100) {
+					$("#chanceCount").html(overNum - 1);
 					showTheGif(data,num);
 				}else if(data.code == 50023){
 					popUp("thanks"); //奖品已被抽完
+				}else if(data.code == 50003){
+					popUp("over"); //奖品已被抽完
 				}
 			},
 			error: function() {
@@ -708,7 +709,6 @@ function showDrawResult(obj){
 	var awardExchangeFlag = obj.data.awardExchangeFlag;
 	var awardId = obj.data.awardId;
 	var awardPictureUrl = obj.data.awardUrl;
-	$("#chanceCount").html(overNum - 1);
 	lastWindow(awardId, awardTypeId, lotteryAwardMemberId, awardExchangeFlag, awardPictureUrl, awardName)
 }
 function lastWindow(awardId, awardTypeId, lotteryAwardMemberId, awardExchangeFlag, awardPictureUrl, awardName) {
