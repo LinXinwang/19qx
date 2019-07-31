@@ -410,7 +410,7 @@ function buttonInitBefore() {
 		        } 
 		        webDataLog("web_page_show_new",_dateObj);
 			} else {
-				setTimeout(function(){clickFlag = false}, 5000);
+				setTimeout(function(){clickFlag = false}, 3000);
 				if(gameStatus == 0) {
 					popUp("notStar");
 				} else if(gameStatus == 2) {
@@ -421,8 +421,6 @@ function buttonInitBefore() {
 				}
 			}
 		}
-
-
 	});
 
 	//跳转成为会员
@@ -963,6 +961,8 @@ function sendPrizes(oAwardId, oRememberId, oType, oUserKeyId, oActiveId, oQsourc
 	if(oQsource != "tencent") {
 		oQsource = "iqiyi";
 	}
+	var token = calcMD5("activeId="+actionId+"&rememberId="+oRememberId+"&userKeyId="+oUserKeyId+"&cOpenId="+_openId+"&8baf4554ce0d7753");
+	console.log(token);
 	var ajaxTimeoutFive = $.ajax({
 		type: "GET",
 		async: true,
@@ -978,8 +978,11 @@ function sendPrizes(oAwardId, oRememberId, oType, oUserKeyId, oActiveId, oQsourc
 			"awardTypeId": oType,
 			"userKeyId": oUserKeyId,
 			"MAC": _mac,
+			"cModel": _model,
+			"cChip": _chip,
 			"cOpenId": _openId,
-			"source": oQsource
+			"source": oQsource,
+			"token":token
 		},
 		success: function(data) {
 			console.log(JSON.stringify(data));
@@ -1014,10 +1017,12 @@ function sendPrizes(oAwardId, oRememberId, oType, oUserKeyId, oActiveId, oQsourc
 				}
 			} else {
 				console.log("优惠券/金币领取失败,需要给出领取失败的提示.");
+				
 			}
 		},
 		error: function() {
 			console.log("获取失败");
+			
 		},
 		complete: function(XMLHttpRequest, status) {　　　　
 			console.log("-------------complete------------------" + status);
