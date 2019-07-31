@@ -36,6 +36,7 @@ var changeLoginFlag = false;
 var needSentUserLog = false; //判断是否点了登录
 var needSentUserLog2 = false; //判断是否登录成功
 var actionId = getUrlParam("id");
+var cAppVersion = "";
 
 //var adressIp = "https://restful.skysrt.com";
 //var enurl = "https://webapp.skysrt.com/activity618/Address/index.html?";
@@ -92,6 +93,7 @@ var app = {
 		listenUserChange();
 		buttonInitBefore();
 		getDeviceInfo();
+		checkVersion();//获取版本
 	}
 };
 
@@ -609,6 +611,28 @@ function buttonInitBefore() {
 	});
 }
 
+
+function checkVersion() {
+    var apkArry = ["com.coocaa.activecenter","com.coocaa.app_browser","com.coocaa.mall","com.tianci.movieplatform"];
+    var app = '{ "pkgList": ["com.coocaa.activecenter","com.coocaa.app_browser","com.coocaa.mall","com.tianci.movieplatform"] }';
+    coocaaosapi.getAppInfo(app, function(message) {
+        var apkVersion = [];
+        console.log("getAppInfo====" + message);
+        for(var i=0;i<4;i++){
+            apkVersion.push(JSON.parse(message)[apkArry[i]].versionCode);
+        }
+        activityCenterVersion = apkVersion[0];
+        browserVersion = apkVersion[1];
+        mallVersion = apkVersion[2];
+        cAppVersion = apkVersion[3];
+        console.log("加载检测版本===activityCenterVersion=="+activityCenterVersion+"===browserVersion=="+browserVersion+"==mallVersion=="+mallVersion+"==cAppVersion=="+cAppVersion);
+     }, function(error) {
+        console.log("getAppInfo----error" + JSON.stringify(error));
+    });
+}
+
+
+
 //剩余抽奖次数
 function chanceCount(num) {
 	if(overNum > 0){
@@ -624,6 +648,7 @@ function chanceCount(num) {
 				cModel:_model,
 				cChip:_chip,
 				cOpenId:_openId,
+				cHomepageVersion:cAppVersion
 			},
 			success: function(data) {
 				console.log("抽奖结果" + JSON.stringify(data));
