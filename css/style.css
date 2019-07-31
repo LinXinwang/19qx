@@ -956,3 +956,14 @@ body .goldContent .list_Content.rulesActivity {
 #popUp p{
 	line-height: 50px
 }
+
+.img_box{
+	background: #fff;
+	border-radius: 10px;
+	width: 210px;
+	height: 210px;
+	margin: 0 auto
+}
+.img_box img{
+	border-radius: 10px;
+}
