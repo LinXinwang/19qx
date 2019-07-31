@@ -675,11 +675,11 @@ body .goldContent .list_Content.rulesActivity {
 }
 .imgPart{
 	position: absolute;
-	top: 25px;
-	left: 25px;
-	height: 251px;
-	width: 406px;
-	background-color: rgba(255,255,255,0.85);
+	top: 30px;
+	left: 30px;
+	height: 250px;
+	width: 250px;
+	background-color: rgba(255,255,255,1);
 }
 .infoPart{
 	position: absolute;
@@ -955,4 +955,17 @@ body .goldContent .list_Content.rulesActivity {
 }
 #popUp p{
 	line-height: 50px
+}
+#errorInfo{
+	position: fixed;
+    top: 800px;
+    left: 460px;
+    height: 120px;
+    width: 1000px;
+    line-height: 120px;
+    text-align: center;
+    color: white;
+    font-size: 56px;
+    background-color: rgba(0,0,0,0.5);
+	display: none;
 }

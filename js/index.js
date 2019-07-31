@@ -29,6 +29,7 @@ var _tencentWay = "";
 var dataObj = {}; //我的奖励数据
 var _curFocusId = null;
 var ani_status = 1;
+var dialogTime = null;
 var startLoginFlag = false;
 var changeLoginFlag = false;
 
@@ -58,31 +59,31 @@ var app = {
 	},
 	initialize: function() {
 		console.log("initialize");
-		this.bindEvents();		
+		this.bindEvents();	
 	},
 	bindEvents: function() {
 		console.log("bindEvents");
 		ccApp.deviceReady(app.onDeviceReady);
-		ccApp.bindEvents("menubutton", function() {
+		ccApp.bindEvent("menubutton", function() {
 			console.log("this menuButton>>>>>>>>>new>>>>>>>>>")
 		});
-		ccApp.bindEvents("menubutton", function() {
-			console.log("this menuButton>>>>>>>>>new>>>>>>>>>")
+		ccApp.bindEvent("backbutton", function() {
+			console.log("this backbutton>>>>>>>>>new>>>>>>>>>")
 		});
-		ccApp.bindEvents("backbuttondown", function() {
-			console.log("this backbuttondown>>>>>>>>>new>>>>>>>>>");
-			backButtonDown();
-		});
-		ccApp.bindEvents("homebutton", function() {
+		ccApp.bindEvent("homebutton", function() {
 			console.log("this homebutton>>>>>>>>>new>>>>>>>>>");
 			navigator.app.exitApp();
 		});
-		ccApp.bindEvents("resume", function() {
-			console.log("on resume");
+		ccApp.bindEvent("resume", function() {
+			console.log("this resume>>>>>>>>>new>>>>>>>>>");
 			onResumeFunc();
 		});
-		ccApp.bindEvents("pause", function() {
-			console.log("on pause");
+		ccApp.bindEvent("pause", function() {
+			console.log("this pause>>>>>>>>>new>>>>>>>>>");
+		});
+		ccApp.bindEvent("backbuttondown", function() {
+			console.log("this backbuttondown>>>>>>>>>new>>>>>>>>>");
+			backButtonDown();
 		});
 	},
 	onDeviceReady: function() {
@@ -597,7 +598,7 @@ function buttonInitBefore() {
 		$("#index").css("display", "block");
 		$("#prize").css("display", "none");
 		$("#prize_null").css("display", "none");
-		ccmap.init(".coocaabtn", null, "btnFocus");
+		ccmap.init(".coocaabtn", "#egg0", "btnFocus");
 	});
 	$("#toastQrcode").bind('itemClick', function(event) {
 		closeWindow();
@@ -865,7 +866,8 @@ function dealAfterGetAward(obj,num) {
 			_dateObj.page_state = "无礼品（未结束）";
 		}
 		$("#prize_null").css("display", "block");
-		ccmap.init(".coocaabtn", "#i_konw", "btnFocus");
+		$("#i_konw").trigger("focus");
+		ccmap.init(".coocaabtn2", "#i_konw", "btnFocus");
 	} else {
 		console.log("有奖励");
 		_dateObj.page_state = "有礼品";
@@ -892,49 +894,51 @@ function dealAfterGetAward(obj,num) {
 					var objItem2 = obj.data[i].awardInfo;
 					if(objItem.awardType == 2) {
 						if(objItem.state == 0) {
-							var awardDivBox = '<div id="'+objItem.awardElementId+'" myObj='+JSON.stringify(objItem)+' myAwardInfo='+objItem2+' class="awardBoxs coocaabtn2"><div class="awardDivs"><img class="imgPart" src="images/award/entity1.png" alt=""/><div class="infoPart"><p class="awardName">' + obj.data[i].awardName + '</p><p class="remarks remarks1">注：我们会按照您录入的奖品邮寄地址给您寄送奖品；</p></div><div class="btnPart"><img class="btnImgBlur" src="images/award/getnow.png" alt=""/><img class="btnImgFocus" src="images/award/focus.png" alt=""/></div></div><div class="line"></div></div>';
+							var awardDivBox = '<div id="'+objItem.awardElementId+'" myObj='+JSON.stringify(objItem)+' myAwardInfo='+objItem2+' class="awardBoxs coocaabtn2"><div class="awardDivs"><img class="imgPart" src="'+objItem.awardUrl+'" alt=""/><div class="infoPart"><p class="awardName">' + obj.data[i].awardName + '</p><p class="remarks remarks1">注：我们会按照您录入的奖品邮寄地址给您寄送奖品；</p></div><div class="btnPart"><img class="btnImgBlur" src="images/award/getnow.png" alt=""/><img class="btnImgFocus" src="images/award/focus.png" alt=""/></div></div><div class="line"></div></div>';
 						} else {
-							var awardDivBox = '<div id="'+objItem.awardElementId+'" myObj='+JSON.stringify(objItem)+' myAwardInfo='+objItem2+' class="awardBoxs coocaabtn2"><div class="awardDivs"><img class="imgPart" src="images/award/entity4.png" alt=""/><div class="infoPart"><p class="awardName">' + obj.data[i].awardName + '</p><p class="remarks remarks2">收件人信息："'+obj.data[i].awardAddress+'"&nbsp;"'+obj.data[i].userPhone+'"<br/>注：我们会按照您录入的奖品邮寄地址给您寄送奖品；</p></div><div class="btnPart"><img class="btnImgBlur" src="images/award/success.png" alt=""/><img class="btnImgFocus" src="images/award/focus.png" alt=""/></div></div><div class="line"></div></div>';
+							if (obj.data[i].awardAddressEntity.userProvince == obj.data[i].awardAddressEntity.userCity) {
+                                var entityInfo = obj.data[i].awardAddressEntity.userCity + obj.data[i].awardAddressEntity.userArea + obj.data[i].awardAddressEntity.userAddress;
+                            } else {
+                                var entityInfo = obj.data[i].awardAddressEntity.userProvince + obj.data[i].awardAddressEntity.userCity + obj.data[i].awardAddressEntity.userArea + obj.data[i].awardAddressEntity.userAddress;
+                            }
+							var awardDivBox = '<div id="'+objItem.awardElementId+'" myObj='+JSON.stringify(objItem)+' myAwardInfo='+objItem2+' class="awardBoxs coocaabtn2"><div class="awardDivs"><img class="imgPart" src="'+objItem.awardUrl+'" alt=""/><div class="infoPart"><p class="awardName">' + obj.data[i].awardName + '</p><p class="remarks remarks2">收件人信息："'+entityInfo+'"&nbsp;"'+obj.data[i].awardAddressEntity.userPhone+'"<br/>注：我们会按照您录入的奖品邮寄地址给您寄送奖品；</p></div><div class="btnPart"><img class="btnImgBlur" src="images/award/success.png" alt=""/><img class="btnImgFocus" src="images/award/focus.png" alt=""/></div></div><div class="line"></div></div>';
 						}
 					}
 					if(objItem.awardType == 4) {
-						var awardDivBox = '<div id="'+objItem.awardElementId+'" myObj='+JSON.stringify(objItem)+' myAwardInfo='+objItem2+' class="awardBoxs coocaabtn2"><div class="awardDivs"><img class="imgPart" src="images/award/third.png" alt=""/><div class="infoPart"><p class="awardName thirdAward">' + obj.data[i].awardName + '</p><p class="remarks remarks3">注：扫描二维码即可领取！</p></div><div class="btnPart"><img class="btnImgBlur" src="images/award/qrcode.png" alt=""/><img class="btnImgFocus" src="images/award/focus.png" alt=""/></div></div><div class="line"></div></div>';
+						var awardDivBox = '<div id="'+objItem.awardElementId+'" myObj='+JSON.stringify(objItem)+' myAwardInfo='+objItem2+' class="awardBoxs coocaabtn2"><div class="awardDivs"><img class="imgPart" src="'+objItem.awardUrl+'" alt=""/><div class="infoPart"><p class="awardName thirdAward">' + obj.data[i].awardName + '</p><p class="remarks remarks3">注：扫描二维码即可领取！</p></div><div class="btnPart"><img class="btnImgBlur" src="images/award/qrcode.png" alt=""/><img class="btnImgFocus" src="images/award/focus.png" alt=""/></div></div><div class="line"></div></div>';
 					}
 					if(objItem.awardType == 5) {
 						//if(objItem.state == 0) {
-							var awardDivBox = '<div id="'+objItem.awardElementId+'" myObj='+JSON.stringify(objItem)+' myAwardInfo='+objItem2+' class="awardBoxs coocaabtn2"><div class="awardDivs"><img class="imgPart" src="images/award/coupon.png" alt=""/><div class="infoPart"><p class="awardName couponAward">' + obj.data[i].awardName + '</p></div><div class="btnPart"><img class="btnImgBlur" src="images/award/getnow3.png" alt=""/><img class="btnImgFocus" src="images/award/focus.png" alt=""/></div></div><div class="line"></div></div>';
+							var awardDivBox = '<div id="'+objItem.awardElementId+'" myObj='+JSON.stringify(objItem)+' myAwardInfo='+objItem2+' class="awardBoxs coocaabtn2"><div class="awardDivs"><img class="imgPart" src="'+objItem.awardUrl+'" alt=""/><div class="infoPart"><p class="awardName couponAward">' + obj.data[i].awardName + '</p></div><div class="btnPart"><img class="btnImgBlur" src="images/award/getnow3.png" alt=""/><img class="btnImgFocus" src="images/award/focus.png" alt=""/></div></div><div class="line"></div></div>';
 						//} else {
-							//var awardDivBox = '<div id="'+objItem.awardElementId+'" myObj='+JSON.stringify(objItem)+' myAwardInfo='+objItem2+' class="awardBoxs coocaabtn2"><div class="awardDivs"><img class="imgPart" src="images/award/coupon.png" alt=""/><div class="infoPart"><p class="awardName couponAward">' + obj.data[i].awardName + '</p></div><div class="btnPart"><img class="btnImgBlur" src="images/award/success.png" alt=""/><img class="btnImgFocus" src="images/award/focus.png" alt=""/></div></div><div class="line"></div></div>';
+							//var awardDivBox = '<div id="'+objItem.awardElementId+'" myObj='+JSON.stringify(objItem)+' myAwardInfo='+objItem2+' class="awardBoxs coocaabtn2"><div class="awardDivs"><img class="imgPart" src="'+objItem.awardUrl+'" alt=""/><div class="infoPart"><p class="awardName couponAward">' + obj.data[i].awardName + '</p></div><div class="btnPart"><img class="btnImgBlur" src="images/award/success.png" alt=""/><img class="btnImgFocus" src="images/award/focus.png" alt=""/></div></div><div class="line"></div></div>';
 						//}
 					}
 					if(objItem.awardType == 19) {
 						//if(objItem.state == 0) {
-							var awardDivBox = '<div id="'+objItem.awardElementId+'" myObj='+JSON.stringify(objItem)+' myAwardInfo='+objItem2+' class="awardBoxs coocaabtn2"><div class="awardDivs"><img class="imgPart" src="images/award/coin.png" alt=""/><div class="infoPart"><p class="awardName coinAward">' + obj.data[i].awardName + '</p></div><div class="btnPart"><img class="btnImgBlur" src="images/award/getnow2.png" alt=""/><img class="btnImgFocus" src="images/award/focus.png" alt=""/></div></div><div class="line"></div></div>';
+							var awardDivBox = '<div id="'+objItem.awardElementId+'" myObj='+JSON.stringify(objItem)+' myAwardInfo='+objItem2+' class="awardBoxs coocaabtn2"><div class="awardDivs"><img class="imgPart" src="'+objItem.awardUrl+'" alt=""/><div class="infoPart"><p class="awardName coinAward">' + obj.data[i].awardName + '</p></div><div class="btnPart"><img class="btnImgBlur" src="images/award/getnow2.png" alt=""/><img class="btnImgFocus" src="images/award/focus.png" alt=""/></div></div><div class="line"></div></div>';
 						//} else {
-							//var awardDivBox = '<div id="'+objItem.awardElementId+'" myObj='+JSON.stringify(objItem)+' myAwardInfo='+objItem2+' class="awardBoxs coocaabtn2"><div class="awardDivs"><img class="imgPart" src="images/award/coin.png" alt=""/><div class="infoPart"><p class="awardName coinAward">' + obj.data[i].awardName + '</p></div><div class="btnPart"><img class="btnImgBlur" src="images/award/success.png" alt=""/><img class="btnImgFocus" src="images/award/focus.png" alt=""/></div></div><div class="line"></div></div>';
+							//var awardDivBox = '<div id="'+objItem.awardElementId+'" myObj='+JSON.stringify(objItem)+' myAwardInfo='+objItem2+' class="awardBoxs coocaabtn2"><div class="awardDivs"><img class="imgPart" src="'+objItem.awardUrl+'" alt=""/><div class="infoPart"><p class="awardName coinAward">' + obj.data[i].awardName + '</p></div><div class="btnPart"><img class="btnImgBlur" src="images/award/success.png" alt=""/><img class="btnImgFocus" src="images/award/focus.png" alt=""/></div></div><div class="line"></div></div>';
 						//}
 					}
 					$("#prize_list").append(awardDivBox);
 				}
+			}
+			console.log(_curFocusId);
+			if(_curFocusId == "" || _curFocusId == null) {
+				$(".awardBoxs:eq(0)").trigger("focus");
+				ccmap.init(".coocaabtn2", ".awardBoxs:eq(0)", "btnFocus");
+			} else {
+				console.log(_curFocusId);
+				$("#" + _curFocusId).trigger("focus");
+				ccmap.init(".coocaabtn2", "#"+_curFocusId, "btnFocus");
 			}
 		}
 	}
 	if (num == 0) {
 		webDataLog("web_page_show_new",_dateObj);
 	}
-	
-	
-	
 	buttonInitAfter();
-	console.log(_curFocusId);
-	if(_curFocusId == "" || _curFocusId == null) {
-		$(".awardBoxs:eq(0)").trigger("focus");
-		ccmap.init(".coocaabtn2", ".awardBoxs:eq(0)", "btnFocus");
-	} else {
-		console.log(_curFocusId);
-		$("#" + _curFocusId).trigger("focus");
-		ccmap.init(".coocaabtn2", "#"+_curFocusId, "btnFocus");
-	}
 }
 
 
@@ -1017,12 +1021,12 @@ function sendPrizes(oAwardId, oRememberId, oType, oUserKeyId, oActiveId, oQsourc
 				}
 			} else {
 				console.log("优惠券/金币领取失败,需要给出领取失败的提示.");
-				
+				dialogInfo(oType);
 			}
 		},
 		error: function() {
 			console.log("获取失败");
-			
+			dialogInfo(oType);
 		},
 		complete: function(XMLHttpRequest, status) {　　　　
 			console.log("-------------complete------------------" + status);
@@ -1075,6 +1079,7 @@ function buttonInitAfter() {
         } 
 		if(_awardType == 2) {
 			console.log("点击了实物奖+展示奖品");
+			$("#bgMask").css("display","block");
 			document.getElementById("toastQrcode").innerHTML = "";
 			if(_awardState == 0) {
 				console.log("点击了实物奖+显示二维码");
@@ -1162,6 +1167,14 @@ function buttonInitAfter() {
 			}
 		}
 	});
+}
+function dialogInfo(oAwardType){
+	if(oAwardType == "5"||oAwardType == "19"){
+		console.log("---------");
+		$("#errorInfo").css("display","block");
+		clearTimeout(dialogTime);
+		dialogTime = setTimeout(function(){$("#errorInfo").css("display","none");},4000);
+	}
 }
 //获取url中的参数
 function getUrlParam(name) {
