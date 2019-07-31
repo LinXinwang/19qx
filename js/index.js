@@ -383,6 +383,7 @@ function initChance(){
 } 
 function buttonInitBefore() {
 	//点击金蛋
+	var clickFlag = false;
 	$(".startBtn").bind('itemClick', function(event) {
 		var data = $(this).attr("data")
 		var _dateObj = {
@@ -395,26 +396,33 @@ function buttonInitBefore() {
 			"open_id":_openId
 		} 
 		webDataLog("web_page_show_new",_dateObj);
-		console.log("-------------------------------是否登录" + _loginstatus)
-		if(_loginstatus == "false") {
-			needSentUserLog = true;
-			startLogin(needQQ, 0);
-	        var _dateObj = {
-	            "page_name":"活动主页面登录弹窗",
-	            "activity_name":"七夕活动",
-	            "activity_id":actionId,
-	        } 
-	        webDataLog("web_page_show_new",_dateObj);
-		} else {
-			if(gameStatus == 0) {
-				popUp("notStar");
-			} else if(gameStatus == 2) {
-				popUp("over");
+		console.log("-------------------------------是否登录" + _loginstatus);
+		if(clickFlag == false){
+			clickFlag = true;
+			if(_loginstatus == "false") {
+				setTimeout(function(){clickFlag = false}, 5000);
+				needSentUserLog = true;
+				startLogin(needQQ, 0);
+		        var _dateObj = {
+		            "page_name":"活动主页面登录弹窗",
+		            "activity_name":"七夕活动",
+		            "activity_id":actionId,
+		        } 
+		        webDataLog("web_page_show_new",_dateObj);
 			} else {
-				//活动已开始
-				chanceCount(data); //剩余次数
+				setTimeout(function(){clickFlag = false}, 5000);
+				if(gameStatus == 0) {
+					popUp("notStar");
+				} else if(gameStatus == 2) {
+					popUp("over");
+				} else {
+					//活动已开始
+					chanceCount(data); //剩余次数
+				}
 			}
 		}
+
+
 	});
 
 	//跳转成为会员
