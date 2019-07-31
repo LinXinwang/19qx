@@ -2524,13 +2524,21 @@
             exec(success, error, 'CoocaaOSApi', 'setBusinessData', [{ 'cc_data': cc_data }, { 'cc_type': cc_type }]);
         }
         // 启动传参action, 包名、版本号、startActivity、action、action名、拓展参数[{key1:"value1"},{key2:"value2"}]
-        CoocaaOSApi.prototype.startParamAction = function (pkname, version, activity, action, param, str, success, error) {
-            console.log("启动传参action")
-            argscheck.checkArgs('ssssssff', 'CoocaaOSApi.startParamAction', arguments);
-            str = JSON.parse(str);
-            startapp.start([
-                ["action", param, pkname], str
-            ], success, error);
+        // CoocaaOSApi.prototype.startParamAction = function (pkname, version, activity, action, param, str, success, error) {
+        //     console.log("启动传参action")
+        //     argscheck.checkArgs('ssssssff', 'CoocaaOSApi.startParamAction', arguments);
+        //     str = JSON.parse(str);
+        //     startapp.start([
+        //         ["action", param, pkname], str
+        //     ], success, error);
+        // }
+
+        CoocaaOSApi.prototype.startParamAction = function(bywhat, byvalue, sources, success, error) {
+            console.log(typeof sources);
+            argscheck.checkArgs('sssff', 'CoocaaOSApi.startParamAction', arguments);
+            sources = JSON.parse(sources);
+            console.log(typeof sources);
+            startapp.start([[bywhat, byvalue], sources], success, error);
         }
         // 拓展参数[{key1:"value1"},{key2:"value2"}]
         // 用activity方式启动：1,2传参为包名、类名；3、4、5为空；
