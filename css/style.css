@@ -304,6 +304,13 @@ body .goldContent .list_Content.rulesActivity {
 	width: 100%;
 	position: relative;
 }
+.noPrize{
+	position: absolute;
+    top: 0;
+    left: 0;
+    height: 100%;
+    width: 100%;
+}
 #submitborder,#receive,#confirmborder,#subborder,#phoneborder {
 	position: absolute;
 	top: -16px;
