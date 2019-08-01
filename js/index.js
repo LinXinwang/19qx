@@ -131,41 +131,49 @@ function backButtonDown(){
 }
 function onResumeFunc(){
 	console.log("======其他页面返回============");
-	closeWindow();
-	document.getElementById('popUp').style.display = "none";
-	document.getElementById('confirmInfo').style.display = "none";
-
-	console.log(needSentUserLog + "登录监听=====" + needSentUserLog2);
-	if(needSentUserLog == true) {
-		needSentUserLog = false;
-		if(needSentUserLog2 == true) {
-			if(document.getElementById("index").style.display == "block") {
-				hasLogin(needQQ, 0); //0走初始化，1我的奖品
-			} else if(document.getElementById("prize").style.display == "block") {
-				hasLogin(needQQ, 1);
+	if (document.getElementById('prize').style.display == "block") {
+		if (document.getElementById('bgMask').style.display == "block") {
+			console.log("do nothing");
+		} else{
+			$("#prize").css("display", "block");
+			getMyAwards(actionId,2);
+		}
+	} else{
+		closeWindow();
+		document.getElementById('popUp').style.display = "none";
+		document.getElementById('confirmInfo').style.display = "none";
+	
+		console.log(needSentUserLog + "登录监听=====" + needSentUserLog2);
+		if(needSentUserLog == true) {
+			needSentUserLog = false;
+			if(needSentUserLog2 == true) {
+				if(document.getElementById("index").style.display == "block") {
+					hasLogin(needQQ, 0); //0走初始化，1我的奖品
+				} else if(document.getElementById("prize").style.display == "block") {
+					hasLogin(needQQ, 1);
+				}
+			} else {
+				needSentUserLog2 = false;
+				var _dateObj = {
+					"page_name": "活动主页面登录弹窗",
+					"login_result": "登录失败",
+					"activity_name": "七夕活动",
+					"activity_id": getUrlParam("id"),
+					"open_id": _openId
+				}
+				webDataLog("result_event",_dateObj);
+				if(document.getElementById("index").style.display == "block") {
+					initChance();
+				} else if(document.getElementById("prize").style.display == "block") {
+					getMyAwards(actionId,2); //0 需要数据采集 
+				}
 			}
 		} else {
-			needSentUserLog2 = false;
-			var _dateObj = {
-				"page_name": "活动主页面登录弹窗",
-				"login_result": "登录失败",
-				"activity_name": "七夕活动",
-				"activity_id": getUrlParam("id"),
-				"open_id": _openId
-			}
-			webDataLog("result_event",_dateObj);
 			if(document.getElementById("index").style.display == "block") {
 				initChance();
 			} else if(document.getElementById("prize").style.display == "block") {
-				getMyAwards(actionId,2); //0 需要数据采集 
+				//     getMyAwards(actionId,2);
 			}
-		}
-
-	} else {
-		if(document.getElementById("index").style.display == "block") {
-			initChance();
-		} else if(document.getElementById("prize").style.display == "block") {
-			//     getMyAwards(actionId,2);
 		}
 	}
 }
