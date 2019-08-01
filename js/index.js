@@ -37,10 +37,10 @@ var needSentUserLog = false; //判断是否点了登录
 var needSentUserLog2 = false; //判断是否登录成功
 var actionId = getUrlParam("id");
 var gameStatus = "";
-//var adressIp = "https://restful.skysrt.com";
-//var enurl = "https://webapp.skysrt.com/activity618/Address/index.html?";
-var adressIp = "http://beta.restful.lottery.coocaatv.com";
-var enurl = "http://beta.webapp.skysrt.com/zy/address/index.html?"; //实体奖url
+var adressIp = "https://restful.skysrt.com";
+var enurl = "https://webapp.skysrt.com/zy/19qx_a/index.html?";
+// var adressIp = "http://beta.restful.lottery.coocaatv.com";
+// var enurl = "http://beta.webapp.skysrt.com/zy/address/index.html?"; //实体奖url
 
 var app = {
 	canonical_uri: function(src, base_path) {
