@@ -526,7 +526,7 @@ function buttonInitBefore() {
 			"activity_id":actionId,
 			"open_id":_openId
 		} 
-		webDataLog("web_page_show_new",_dateObj);
+		webDataLog("web_button_clicked",_dateObj);
 		closeWindow();
 		document.getElementById("popUp").style.display = "none";
 		ccmap.init(".coocaabtn", "#egg0", "btnFocus");
@@ -1478,6 +1478,14 @@ function popUp(type){
 		  } 
 		  webDataLog("web_page_show_new",_dateObj);
 	  }else if(type == "over"){//奖品已领完或已结束
+		var _dateObj = {
+			"page_name":"砸金蛋活动主页面",
+			"page_state":"已结束",
+			"activity_name":"七夕活动",
+			"activity_id":actionId,
+			"open_id":_openId
+		}  webDataLog("web_page_show_new",_dateObj);
+
 	  $("#text1").html("七夕活动已于8月8日结束~");
 	  $("#text3").html("下一个七夕再相会");
 	  $("#bevip").hide();
