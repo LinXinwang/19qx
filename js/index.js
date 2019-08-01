@@ -513,11 +513,19 @@ function buttonInitBefore() {
 
 	$("#submit").bind('itemClick', function(event) {
 		var data = $(this).attr("data");
-		if(data == "再拆一次"){
+		if(data == "再拆一次" || data == "不用了" || data == "抽奖次数用完"){
+				if(data == "再拆一次"){
+					var page_state = "未中奖";
+				}else{
+					var page_state = "无抽奖机会";
+				}
+				if(data == "抽奖次数用完"){
+					data = "我明白了";
+				}
 		        var _dateObj = {
 		            "page_name":"抽奖结果页",
-		            "button_name":"再拆一次",
-		            "page_state":awardType,
+		            "button_name":data,
+		            "page_state":page_state,
 					"page_type":"activityWindow",
 		            "activity_name":"七夕活动",
 		            "activity_id":actionId,
@@ -526,7 +534,7 @@ function buttonInitBefore() {
 		        webDataLog("web_button_clicked",_dateObj);
 		}else{
 			if(data == ""){
-				data == "我明白了"
+				data = "我明白了"
 			}
 			var _dateObj = {
 				"page_name":"砸金蛋活动主页面",
@@ -1463,7 +1471,7 @@ function popUp(type){
 		$("#text1").html("抱歉啦，您还没有获得拆礼物的机会哟~");
 		$("#text3").html("");
 		$("#bevip").show();
-		$("#submit").show().attr("data","我明白了");
+		$("#submit").show().attr("data","抽奖次数用完");
 		$("#beuser").hide();		
 		ccmap.init(".coocaabtn", "#bevip", "btnFocus");
 		  var _dateObj = {
