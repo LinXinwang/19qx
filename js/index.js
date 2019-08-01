@@ -464,26 +464,11 @@ function buttonInitBefore() {
 		}
 		ccApp.startMovieMemberCenter2(id,function(message) {
 			console.log(message);
-			_czc.push(['_trackEvent', '七夕活动', '跳转会员中心次数', '', '']);
+			_czc.push(['_trackEvent', '砸金蛋活动主页面', '跳转会员中心次数', '', '']);
 		}, function(error) {
 			console.log(error);
 		});
 	});
-	//跳转成为会员
-	$("#buy_vip").bind('itemClick', function(event) {
-		if(_qsource == "tencent"){
-			var id = "5";
-		}else{
-			var id = "1";
-		}
-		ccApp.startMovieMemberCenter2(id,function(message) {
-			console.log(message);
-			_czc.push(['_trackEvent', '七夕活动', '跳转会员中心次数', '', '']);
-		}, function(error) {
-			console.log(error);
-		});
-	});
-
 
 	$("#beuser,#user_login").bind('itemClick', function(event) {
 		var _dateObj = {
@@ -498,6 +483,7 @@ function buttonInitBefore() {
 		webDataLog("web_button_clicked",_dateObj);
 		needSentUserLog = true;
 		startLogin(needQQ, 0);
+		_czc.push(['_trackEvent', '砸金蛋活动主页面', "按钮点击-登录会员", "", '1' ,'']);
 	});
 
 	//最后一部确认信息
@@ -513,10 +499,10 @@ function buttonInitBefore() {
             "open_id":_openId
         } 
         webDataLog("web_button_clicked",_dateObj);
-
 		closeWindow();
 		$("#confirmInfo").hide();
 		ccmap.init(".coocaabtn", "#egg0", "btnFocus");
+		_czc.push(['_trackEvent', '砸金蛋活动主页面', "按钮点击-再拆一次", "", '1' ,'']);
 	//	initChance();
 	});
 
@@ -529,7 +515,7 @@ function buttonInitBefore() {
 			"page_name":"砸金蛋活动主页面",
 			"button_name":data,
 			"button_postion":"",
-			"page_state":gameStatus,
+			"page_state":gameStatusTxt,
 			"activity_name":"七夕活动",
 			"activity_id":actionId,
 			"open_id":_openId
@@ -538,9 +524,20 @@ function buttonInitBefore() {
 		closeWindow();
 		document.getElementById("popUp").style.display = "none";
 		ccmap.init(".coocaabtn", "#egg0", "btnFocus");
+		_czc.push(['_trackEvent', '砸金蛋活动主页面', "按钮点击-"+data, gameStatusTxt, '1' ,'']);
 	});
 	$("#ruleMore").bind('itemClick', function(event) {
-		_czc.push(['_trackEvent', '双旦', '打开活动规则', '', '']);
+		var _dateObj = {
+			"page_name":"砸金蛋活动主页面",
+			"button_name":"活动规则",
+			"button_postion":"",
+			"page_state":gameStatusTxt,
+			"activity_name":"七夕活动",
+			"activity_id":actionId,
+			"open_id":_openId
+		} 
+		webDataLog("web_button_clicked",_dateObj);
+		_czc.push(['_trackEvent', '砸金蛋活动主页面', "按钮点击-活动规则", gameStatusTxt, '1' ,'']);
 		document.getElementById('rule_box').style.display = "block";
 		document.getElementById('index').style.display = "none";
 		ccmap.init(".coocaabtn", "#rule_box", "btnFocus");
