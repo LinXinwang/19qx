@@ -513,23 +513,38 @@ function buttonInitBefore() {
 
 	$("#submit").bind('itemClick', function(event) {
 		var data = $(this).attr("data");
-		if(data == ""){
-			data == "我明白了"
+		if(data == "再拆一次"){
+		        var _dateObj = {
+		            "page_name":"抽奖结果页",
+		            "button_name":"再拆一次",
+		            "page_state":awardType,
+					"page_type":"activityWindow",
+		            "activity_name":"七夕活动",
+		            "activity_id":actionId,
+		            "open_id":_openId
+		        } 
+		        webDataLog("web_button_clicked",_dateObj);
+		}else{
+			if(data == ""){
+				data == "我明白了"
+			}
+			var _dateObj = {
+				"page_name":"砸金蛋活动主页面",
+				"button_name":data,
+				"button_postion":"",
+				"page_state":gameStatusTxt,
+				"activity_name":"七夕活动",
+				"activity_id":actionId,
+				"open_id":_openId
+			} 
+			webDataLog("web_button_clicked",_dateObj);
 		}
-		var _dateObj = {
-			"page_name":"砸金蛋活动主页面",
-			"button_name":data,
-			"button_postion":"",
-			"page_state":gameStatusTxt,
-			"activity_name":"七夕活动",
-			"activity_id":actionId,
-			"open_id":_openId
-		} 
-		webDataLog("web_button_clicked",_dateObj);
+
 		closeWindow();
 		document.getElementById("popUp").style.display = "none";
 		ccmap.init(".coocaabtn", "#egg0", "btnFocus");
 		_czc.push(['_trackEvent', '砸金蛋活动主页面', "按钮点击-"+data, gameStatusTxt, '1' ,'']);
+
 	});
 	$("#ruleMore").bind('itemClick', function(event) {
 		var _dateObj = {
@@ -1424,15 +1439,15 @@ function popUp(type){
 	  $("#text3").html("定好闹钟不要错过哟~");
 	  $("#beuser").hide();
 	  $("#bevip").show();
-	  $("#submit").show().attr("data","不用了");
-	  $("#submitImg").attr({src: "images/noneed.png"});
+	  $("#submit").show().attr("data","我明白了");	  
 	  $("#submit").attr({ rightTarget: "#bevip"});
 	  ccmap.init(".coocaabtn", "#submit", "btnFocus");
 	}else if(type == "useUp"){//抽奖次数用完
 	  $("#text1").html("拆礼物机会用完啦~可TA的礼物还没送，");
 	  $("#text3").html("想再次获得机会吗？");
 	  $("#bevip").show();
-	  $("#submit").show().attr("data","我明白了");
+	  $("#submit").show().attr("data","不用了");
+	  $("#submitImg").attr({src: "images/noneed.png"});
 	  $("#beuser").hide();
 	  ccmap.init(".coocaabtn", "#bevip", "btnFocus");
 		var _dateObj = {
