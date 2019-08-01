@@ -15,7 +15,7 @@ var _cSdk = "";
 var _cBrand = "";
 var _cFMode = "Default";
 var _appversion = "";
-var _qsource = "yinhe";
+var _qsource = getUrlParam("source");
 var _userKeyId0 = "";
 var _openId = null;
 var _mobile = null;
@@ -93,6 +93,11 @@ var app = {
 		buttonInitBefore();
 		getDeviceInfo();
 		checkVersion();//获取版本
+		if(_qsource == "tencent"){
+			$(".goldContent").css("background-image","url(images/tx.jpg)");
+		}else{
+			$(".goldContent").css("background-image","url(images/iqy.jpg)");
+		}
 	}
 };
 
@@ -1282,33 +1287,10 @@ function getDeviceInfo() {
 		_chip = message.chip;
 		_version = message.version;
 		_udid = message.activeid;
-		$.ajax({
-			type: "post",
-			async: true,
-			url: "https://restful.skysrt.com/light/active/tv/source",
-			data: { cNickName: _nickName, MAC: _mac, cChip: _chip, cModel: _model, cEmmcCID: _emmcCID, cUDID: _udid, cSize: message.panel, cChannel: "coocaa", aSdk: message.androidsdk, cTcVersion: message.version.replace(/\.*/g, ""), cBrand: message.brand },
-			dataType: "json",
-			// timeout: 20000,
-			success: function(data) {                        
-				console.log("电视源返回状态：" + JSON.stringify(data));
-				if (data.code == 0) {                            
-					if (data.data.source == "tencent") {
-						needQQ = true;
-						_qsource = "tencent";
-					}else if(data.data.source == "yinhe"){
-						_qsource = "iqiyi";
-					}
-				}
-				hasLogin(needQQ,0);//0走初始化，1我的奖品
-			},
-			error: function(error) {
-				needQQ = true;
-				hasLogin(needQQ,0);//0走初始化，1我的奖品
-				console.log("-----------访问失败---------" + JSON.stringify(error));
-			}
-		});
-
-		
+		if(_qsource == "tencent"){
+			needQQ = true;			
+		}
+		hasLogin(needQQ,0);//0走初始化，1我的奖品		
   },function(error) { console.log(error);})
 }
 
@@ -1442,7 +1424,7 @@ function popUp(type){
 	  $("#text3").html("定好闹钟不要错过哟~");
 	  $("#beuser").hide();
 	  $("#bevip").show();
-	  $("#submit").show().attr("data","我明白了");
+	  $("#submit").show().attr("data","不用了");
 	  $("#submitImg").attr({src: "images/noneed.png"});
 	  $("#submit").attr({ rightTarget: "#bevip"});
 	  ccmap.init(".coocaabtn", "#submit", "btnFocus");
@@ -1500,7 +1482,7 @@ function popUp(type){
 	  $("#text3").html("就能为TA送一份七夕礼物了");
 	  $("#bevip").hide();
 	  $("#beuser").hide();
-	  $("#submit").show().attr("data","我明白了");
+	  $("#submit").show().attr("data","再拆一次");
 	  $("#submitImg").attr({src: "images/btn4.png"});
 	  $("#submit").attr({ rightTarget: "#submit"});
 	  ccmap.init(".coocaabtn", "#submit", "btnFocus");

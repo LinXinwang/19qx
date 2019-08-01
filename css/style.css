@@ -59,7 +59,7 @@ ul li{list-style: none}
   overflow: hidden;
   position: absolute;
   top: 0;
-  background: url("../images/tx.jpg")
+/*  background: url("../images/tx.jpg")*/
 }
 .goldContent .goldEggsDiv {
   width: 1920px;
