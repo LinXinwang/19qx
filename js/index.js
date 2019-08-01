@@ -576,13 +576,13 @@ function buttonInitBefore() {
 		var _dateObj = {
             "page_name":"砸金蛋活动主页面",
             "button_name":"我的奖品",
-            "page_state":gameStatus,
+            "page_state":gameStatusTxt,
             "activity_id":actionId,
 			"activity_name":"七夕活动",
             "open_id":_openId
         }   
 		webDataLog("web_button_clicked",_dateObj);
-		_czc.push(['_trackEvent', '砸金蛋活动主页面', "按钮点击-我的奖品", gameStatus, '1' ,'']);
+		_czc.push(['_trackEvent', '砸金蛋活动主页面', "按钮点击-我的奖品", gameStatusTxt, '1' ,'']);
 		if (_loginstatus == "false") {
 	        var _dateObj = {
 	            "page_name":"活动主页面登录弹窗",
@@ -1478,14 +1478,6 @@ function popUp(type){
 		  } 
 		  webDataLog("web_page_show_new",_dateObj);
 	  }else if(type == "over"){//奖品已领完或已结束
-		var _dateObj = {
-			"page_name":"砸金蛋活动主页面",
-			"page_state":"已结束",
-			"activity_name":"七夕活动",
-			"activity_id":actionId,
-			"open_id":_openId
-		}  webDataLog("web_page_show_new",_dateObj);
-
 	  $("#text1").html("七夕活动已于8月8日结束~");
 	  $("#text3").html("下一个七夕再相会");
 	  $("#bevip").hide();

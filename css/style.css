@@ -399,6 +399,8 @@ body .goldContent .list_Content.rulesActivity {
 #header img{
   width: 189px;
   height: 86px;
+      position: absolute;
+    left: 0;
 }
 #chance{position: absolute;
         top:95px;
@@ -468,16 +470,16 @@ body .goldContent .list_Content.rulesActivity {
 	display: inline-block;
 	margin: 0 10px;
 	text-align: right;
+	position: relative;
+	font-size: 36px
 }
 #header ul {
 	display: inline-block;
 	float: left
 }
-.header_prize .btnFocus,
-.header_user .btnFocus {
-	background-image: url(../images/a123.png);
-	background-repeat: no-repeat;
-	background-size: 100%;
+.header_prize .btnFocus .focus,
+.header_user .btnFocus .focus{
+	display: block;
 }
 #my_prize,
 #user_login {
@@ -580,16 +582,20 @@ body .goldContent .list_Content.rulesActivity {
 #chance .btnFocus {
 	border-bottom: solid 1px #ffff59;
 }
-.btn_Get .btnFocus {
-	background-image: url(../images/logo.png);
-	background-repeat: no-repeat;
-	background-size: 100%;
+.focus{
+	display: none;
+	position: absolute;
+	left: 0
+}
+.btn_Get .btnFocus .focus{
+	display: block;
 }
 .btn_Get .submit {
 	width: 245px;
 	height: 116px;
 	line-height: 116px;
 	display: inline-block;
+	position: relative;
 }
 .startBtn {
 	height: 288px;
@@ -900,7 +906,7 @@ body .goldContent .list_Content.rulesActivity {
 
 #userName{
 	height: 86px;
-	line-height: 76px;
+	line-height: 86px;
 	width: 200px;
 	overflow: hidden;
     white-space: nowrap;
